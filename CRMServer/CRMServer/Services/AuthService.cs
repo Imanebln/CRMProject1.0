@@ -156,6 +156,45 @@ namespace CRMServer.Services
             return "Success";
         }
 
+        //Forgot password
+        public async Task<string> ForgotPasswordAsync(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user is not null)
+            {
+                var ptoken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                /*var uriBuilder = new UriBuilder("https://localhost:7270/api/Auth/ResetPassword?");
+                var buildlink = uriBuilder + "userid=" + user.Id + "&token=" + ptoken;*/
+
+                Email message = new Email();
+                message.To = user.Email;
+                message.Subject = "Reset PassWord";
+                message.Content = "Please click the link below to reset your password!";
+               // message.Link = buildlink;
+                await _emailSender.SendEmailAsync(message);
+                return "Succeeded";
+            }
+
+            return "Failed";
+        }
+
+        //Reset Password
+         public async Task<string> ResetPasswordAsync(string email, string password)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            var ptoken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            if (user == null)
+            {
+                return "User not found";
+            }
+            var result = await _userManager.ResetPasswordAsync(user, ptoken, password);
+            if (result.Succeeded)
+            {
+                return "Succeeded";
+            }
+            return "Failed";
+        }
+
 
     }
 }

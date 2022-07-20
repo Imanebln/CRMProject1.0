@@ -9,5 +9,9 @@ namespace CRMServer.Services
         public Task<JwtSecurityToken> CreateJwtToken(AppUser user);
         public Task<AuthModel> RegisterAsync(RegisterModel model);
         public Task<string> ValidationEmail(AppUser user);
-    }
+        public Task<string> ForgotPasswordAsync(string email);
+        public Task<string> ResetPasswordAsync(string email, string password);
+
+
+        }
 }
