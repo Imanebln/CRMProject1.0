@@ -1,0 +1,3 @@
+﻿using CRMClient;
+
+ContactService.GetToken();

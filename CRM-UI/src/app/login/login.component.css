@@ -1,0 +1,117 @@
+:host {
+    position: absolute;
+    display: block;
+    background: url('/assets/Background.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 100vw;
+    height: 100vh;
+}
+
+.logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.logo::before{
+    position: absolute;
+    content: '';
+    top: -150%;
+    left: -150%;
+    width: 300%;
+    height: 300%;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.logo-mini {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    width: 2em;
+}
+
+.logo > img {
+    max-width: 200px;
+    width: 10vw;
+    color: white;
+}
+
+.main {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    max-width: 900px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    backdrop-filter: hue-rotate(340deg);
+    background-position: center;
+    border-radius: 10px;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.menu {
+    /* position: absolute;
+    top: 50px; */
+    width: 50%;
+    min-width: 350px;
+    color: var(--disabled);
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+    font-size: 16px;
+}
+
+.menu img {
+    width: 30px;
+}
+
+.menu .active {
+    color: #00b4d8;
+}
+
+.menu .active img {
+    filter: saturate(100%);
+}
+
+
+.welcome {
+    color: #fff;
+}
+
+.welcome > p {
+    font-size: 12px;
+    font-weight: 100;
+}
+
+.wrapper {
+    display: flex;
+    justify-self: flex-end;
+    justify-content: space-between;
+    background-color: white;
+    padding: 40px 20px;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    margin-bottom: 5%;
+}
+
+.wrapper a {
+    font-size: 12px;
+    text-decoration: none;
+    color: #3a86ff;
+}
+
+@media only screen and (max-width: 800px){
+    .main {
+        width: 90%;
+    }
+}

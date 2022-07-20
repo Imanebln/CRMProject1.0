@@ -1,0 +1,29 @@
+
+
+:root {
+    --primary: #602B70;
+    --secondary: #AD2D5A;
+    --disabled: #B7B0B0;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+.btn-primary:hover {
+    background-color: var(--secondary);
+    border-color: var(--primary);
+}
+
+
+.red {
+    background-color: red;
+}
+
+.green {
+    background-color: green;
+}
+
+.blue {
+    background-color: blue;
+}
