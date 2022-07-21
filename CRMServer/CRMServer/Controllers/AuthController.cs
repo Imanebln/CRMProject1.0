@@ -55,7 +55,7 @@ namespace CRMServer.Controllers
             var result = await _authService.GetTokenAsync(model);
 
             if (!result.IsAuthenticated)
-                return BadRequest(result.Message);
+                return NotFound(result.Message);
 
             return Ok(result);
         }

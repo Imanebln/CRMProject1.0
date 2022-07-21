@@ -1,3 +1,1 @@
-﻿using CRMClient;
-
-ContactService.GetToken();
+﻿Console.WriteLine("Hello");
