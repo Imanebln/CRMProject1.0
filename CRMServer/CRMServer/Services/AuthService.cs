@@ -1,6 +1,5 @@
 ﻿using CRMServer.Data;
 using CRMServer.Models;
-using CRMServer.Models;
 using EmailService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -37,17 +36,18 @@ namespace CRMServer.Services
 
             var user = await _userManager.FindByEmailAsync(model.Email);
 
+            
+            if (user is null || !await _userManager.CheckPasswordAsync(user, model.Password))
+            {
+                authModel.Message = "Email or Password is incorrect!";
+                return authModel;
+            }
             if (!await _userManager.IsEmailConfirmedAsync(user))
             {
                 authModel.Message = "Email not confirmed yet, please confirm your email!";
                 await ValidationEmail(user);
                 return authModel;
 
-            }
-            if (user is null || !await _userManager.CheckPasswordAsync(user, model.Password))
-            {
-                authModel.Message = "Email or Password is incorrect!";
-                return authModel;
             }
             var jwtSecurityToken = await CreateJwtToken(user);
             var rolesList = await _userManager.GetRolesAsync(user);
@@ -95,18 +95,20 @@ namespace CRMServer.Services
         }
 
         //Register 
-        public async Task<AuthModel> RegisterAsync(RegisterModel model)
+        public async Task<AuthModel> RegisterAsync(string email)
         {
-            if (await _userManager.FindByEmailAsync(model.Email) is not null)
+            if (await _userManager.FindByEmailAsync(email) is not null)
                 return new AuthModel { Message = "Email is already registered!" };
 
             var user = new AppUser
             {
-                UserName = model.Email,
-                Email = model.Email,
+                UserName = email,
+                Email = email,
                 FullName = "heheheh"
             };
-            var result = await _userManager.CreateAsync(user, model.Password);
+            var Pass = "CRMContact@2022";
+
+            var result = await _userManager.CreateAsync(user, Pass);
 
             if (!result.Succeeded)
             {
@@ -163,7 +165,7 @@ namespace CRMServer.Services
             if (user is not null)
             {
                 var ptoken = await _userManager.GeneratePasswordResetTokenAsync(user);
-                /*var uriBuilder = new UriBuilder("https://localhost:7270/api/Auth/ResetPassword?");
+                /*var uriBuilder = new UriBuilder("");
                 var buildlink = uriBuilder + "userid=" + user.Id + "&token=" + ptoken;*/
 
                 Email message = new Email();

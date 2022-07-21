@@ -31,6 +31,21 @@ namespace CRMServer.Controllers
             _authService = authService;
         }
 
+        //GET: CRMVerification
+        [HttpGet("CRMVerification")]
+        public async Task<IActionResult> CRMVerification(string email)
+        {
+            //Inject CRMService and check if contact exists
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.RegisterAsync(email);
+
+            if (result.Token is null)
+                return BadRequest(result.Message);
+            return Ok(result);
+        }
+
         //GET: Login
         [HttpPost("SignIn")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
@@ -48,14 +63,17 @@ namespace CRMServer.Controllers
         [HttpPost("SignUp")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var result = await _authService.ResetPasswordAsync(model.Email, model.Password);
+            if (result == "Succeeded")
+            {
+                return Ok(new { str = "Succeeded" });
+            }
+            else if (result == "Failed")
+            {
+                return BadRequest(new { str = "Failed" });
 
-            var result = await _authService.RegisterAsync(model);
-
-            if (result.Token is null)
-                return BadRequest(result.Message);
-            return Ok(result);
+            }
+            return BadRequest(new { str = "user not found" });
         }
 
         // API Validation Email
