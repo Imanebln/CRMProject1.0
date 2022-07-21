@@ -142,20 +142,38 @@ namespace CRMServer.Services
         // Send email to confirm CRM
         public async Task<string> ValidationEmail(AppUser user)
         {
-            var ctoken = HttpUtility.UrlEncode(await _userManager.GenerateEmailConfirmationTokenAsync(user));
+           /* var ctoken = HttpUtility.UrlEncode(await _userManager.GenerateEmailConfirmationTokenAsync(user));*/
 
+            var token = HttpUtility.UrlEncode(await _userManager.GetSecurityStampAsync(user));
             // API Emailvalidation
-            var confirmationlink = "https://localhost:7270/api/Auth/ValidationEmail?token=" + ctoken + "&email=" + user.Email;
+/*            var confirmationlink = "https://localhost:7270/api/Auth/ValidationEmail?token=" + ctoken + "&email=" + user.Email;
+ *            
+*/            var confirmationlink2 = "http://localhost:4200/newpassword?token=" + token + "&email=" + user.Email;
 
             var message = new Email();
             message.To = user.Email;
             message.Subject = "CRM Email Confirmation";
             message.Content = "Please confirm your email!";
-            message.Link = confirmationlink;
+            message.Link = confirmationlink2;
 
             await _emailSender.SendEmailAsync(message);
 
             return "Success";
+        }
+        // API Validation Email
+        public async Task<string> ValidationEmail(string email, string token)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return "User not found";
+            }
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (!result.Succeeded)
+            {
+                return "Failed" ;
+            }
+            return "Succeeded";
         }
 
         //Forgot password
@@ -192,6 +210,7 @@ namespace CRMServer.Services
             var result = await _userManager.ResetPasswordAsync(user, ptoken, password);
             if (result.Succeeded)
             {
+               
                 return "Succeeded";
             }
             return "Failed";

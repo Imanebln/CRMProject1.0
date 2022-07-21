@@ -9,6 +9,7 @@ using CRMServer.Data;
 using CRMServer.Models;
 using Microsoft.AspNetCore.Identity;
 using CRMServer.Services;
+using System.Web;
 
 namespace CRMServer.Controllers
 {
@@ -61,9 +62,10 @@ namespace CRMServer.Controllers
         }
 
         [HttpPost("SignUp")]
-        public async Task<IActionResult> Register([FromBody] RegisterModel model)
+        public async Task<IActionResult> Register(RegisterModel model,string token)
         {
             var result = await _authService.ResetPasswordAsync(model.Email, model.Password);
+            
             if (result == "Succeeded")
             {
                 return Ok(new { str = "Succeeded" });
@@ -81,15 +83,15 @@ namespace CRMServer.Controllers
         public async Task<IActionResult> ValidationEmail(string email, string token)
         {
             var user = await userManager.FindByEmailAsync(email);
+
             if (user == null)
             {
                 return BadRequest(new { str = "User not found" });
             }
-            var result = await userManager.ConfirmEmailAsync(user, token);
-            if (!result.Succeeded)
-            {
-                return BadRequest(new { str = "Failed" });
-            }
+            bool valid = userManager.GetSecurityStampAsync(user).Result == token;
+            if (!valid) return BadRequest(new { str = "Invalid token!" });
+
+            await userManager.ConfirmEmailAsync(user, userManager.GenerateEmailConfirmationTokenAsync(user).Result);
             return Ok(new { str = "Succeeded" });
 
         }
