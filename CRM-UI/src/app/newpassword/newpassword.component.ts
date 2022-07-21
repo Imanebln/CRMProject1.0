@@ -19,8 +19,7 @@ import { AuthServiceService } from '../Services/auth-service.service';
 })
 export class NewpasswordComponent implements OnInit {
   passwordForm!: FormGroup;
-  password: Password = <Password>{};
-  token: string;
+  passwordModel: Password = <Password>{};
 
   constructor(private authService: AuthServiceService) {}
 
@@ -33,8 +32,14 @@ export class NewpasswordComponent implements OnInit {
   }
 
   onSubmit() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    this.passwordModel.token = urlParams.get('token') + '';
+    this.passwordModel.email = urlParams.get('email') + '';
+    this.passwordModel.password = this.passwordForm.value.password;
+
     this.authService
-      .signUp(this.passwordForm.value)
+      .signUp(this.passwordModel)
       .subscribe((value) => console.log(value));
   }
 }

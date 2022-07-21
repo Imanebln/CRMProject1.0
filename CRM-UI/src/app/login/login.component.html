@@ -72,7 +72,10 @@ ss
         >
           Login
         </button>
-        <a *ngIf="isLogin == true" href="#" class="align-self-center mt-1"
+        <a
+          *ngIf="isLogin == true"
+          [routerLink]="['/resetpassword']"
+          class="align-self-center mt-1"
           >Forgot your password ?</a
         >
       </form>

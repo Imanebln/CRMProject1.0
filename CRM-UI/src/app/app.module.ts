@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { NewpasswordComponent } from './newpassword/newpassword.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, NewpasswordComponent],
+  declarations: [AppComponent, LoginComponent, NewpasswordComponent, ResetPasswordComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
