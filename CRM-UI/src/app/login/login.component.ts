@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -74,9 +75,15 @@ export class LoginComponent implements OnInit {
 
       console.log(this.signInForm.value);
 
-      this.authService
-        .signIn(this.signInForm.value)
-        .subscribe((value) => console.log(value));
+      this.authService.signIn(this.signInForm.value).subscribe({
+        next: (response: any) => {
+          const token = response.token;
+          console.log(token);
+          localStorage.setItem('jwt', token);
+          this.router.navigate(['dashbord']);
+        },
+        error: (err: HttpErrorResponse) => console.log(err),
+      });
     } else if (this.isLogin == false) {
       this.authService
         .crmVerification(this.signUpForm.value.email)

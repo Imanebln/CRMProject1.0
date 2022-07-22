@@ -8,6 +8,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Password } from '../Models/Password';
 import { AuthServiceService } from '../Services/auth-service.service';
 
@@ -20,7 +21,10 @@ export class NewpasswordComponent implements OnInit {
   passwordForm!: FormGroup;
   passwordModel: Password = <Password>{};
 
-  constructor(private authService: AuthServiceService) {}
+  constructor(
+    private authService: AuthServiceService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     //passwordForm
@@ -33,12 +37,14 @@ export class NewpasswordComponent implements OnInit {
   onSubmit() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    this.passwordModel.token = 'L6DMKBQ6K63OAK3VYQZRJJKDX6YXNC6S';
+    this.passwordModel.token = 'Y3QPBYMXTMPT6F2WLENYB2BBQO36KGRJ';
     this.passwordModel.email = 'heriberto@northwindtraders.com';
     this.passwordModel.password = this.passwordForm.value.password;
 
     this.authService
       .signUp(this.passwordModel)
       .subscribe((value) => console.log(value));
+
+    this.router.navigate(['/login']);
   }
 }
