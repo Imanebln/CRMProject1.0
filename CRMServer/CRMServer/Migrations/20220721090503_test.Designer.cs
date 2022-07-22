@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRMServer.Migrations
 {
     [DbContext(typeof(CRMContext))]
-    [Migration("20220719094634_initial")]
-    partial class initial
+    [Migration("20220721090503_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

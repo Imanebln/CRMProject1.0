@@ -9,6 +9,7 @@ using CRMServer.Data;
 using CRMServer.Models;
 using Microsoft.AspNetCore.Identity;
 using CRMServer.Services;
+using System.Web;
 
 namespace CRMServer.Controllers
 {
@@ -31,6 +32,21 @@ namespace CRMServer.Controllers
             _authService = authService;
         }
 
+        //GET: CRMVerification
+        [HttpGet("CRMVerification")]
+        public async Task<IActionResult> CRMVerification(string email)
+        {
+            //Inject CRMService and check if contact exists
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.RegisterAsync(email);
+
+            if (result.Token is null)
+                return BadRequest(result.Message);
+            return Ok(result);
+        }
+
         //GET: Login
         [HttpPost("SignIn")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
@@ -40,22 +56,26 @@ namespace CRMServer.Controllers
             var result = await _authService.GetTokenAsync(model);
 
             if (!result.IsAuthenticated)
-                return BadRequest(result.Message);
+                return NotFound(result.Message);
 
             return Ok(result);
         }
 
         [HttpPost("SignUp")]
-        public async Task<IActionResult> Register([FromBody] RegisterModel model)
+        public async Task<IActionResult> Register(RegisterModel model,string token)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var result = await _authService.ResetPasswordAsync(model.Email, model.Password);
+            
+            if (result == "Succeeded")
+            {
+                return Ok(new { str = "Succeeded" });
+            }
+            else if (result == "Failed")
+            {
+                return BadRequest(new { str = "Failed" });
 
-            var result = await _authService.RegisterAsync(model);
-
-            if (result.Token is null)
-                return BadRequest(result.Message);
-            return Ok(result);
+            }
+            return BadRequest(new { str = "user not found" });
         }
 
         // API Validation Email
@@ -63,17 +83,50 @@ namespace CRMServer.Controllers
         public async Task<IActionResult> ValidationEmail(string email, string token)
         {
             var user = await userManager.FindByEmailAsync(email);
+
             if (user == null)
             {
                 return BadRequest(new { str = "User not found" });
             }
-            var result = await userManager.ConfirmEmailAsync(user, token);
-            if (!result.Succeeded)
-            {
-                return BadRequest(new { str = "Failed" });
-            }
+            bool valid = userManager.GetSecurityStampAsync(user).Result == token;
+            if (!valid) return BadRequest(new { str = "Invalid token!" });
+
+            await userManager.ConfirmEmailAsync(user, userManager.GenerateEmailConfirmationTokenAsync(user).Result);
             return Ok(new { str = "Succeeded" });
 
+        }
+
+        // POST: api/RecoverPassword
+        [HttpPost("RecoverPassword")]
+        public async Task<ActionResult<string>> ForgotPassword(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return BadRequest(new { str = "User not found" });
+            }
+            var result = await _authService.ForgotPasswordAsync(email);
+            if (result == "Succeeded")
+            {
+                return Ok(new { str = "Succeeded" });
+            }
+            return BadRequest(new { str = "Failed" });
+        }
+        // POST: api/ResetPassword
+        [HttpPost("ResetPassword")]
+        public async Task<ActionResult<string>> ResetPassword(string email,string NewPassword)
+        {
+            var result = await _authService.ResetPasswordAsync(email, NewPassword);
+            if (result == "Succeeded")
+            {
+                return Ok(new { str = "Succeeded" });
+            }
+            else if (result == "Failed")
+            {
+                return BadRequest(new { str = "Failed" });
+
+            }
+            return BadRequest(new { str = "user not found" });
         }
     }
 }
