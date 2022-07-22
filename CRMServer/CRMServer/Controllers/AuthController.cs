@@ -10,6 +10,8 @@ using CRMServer.Models;
 using Microsoft.AspNetCore.Identity;
 using CRMServer.Services;
 using System.Web;
+using CRMClient;
+using CRMServer.Models.CRM;
 
 namespace CRMServer.Controllers
 {
@@ -22,14 +24,16 @@ namespace CRMServer.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IConfiguration _configuration;
         private readonly IAuthService _authService;
+        private readonly CRMService _crm;
 
-        public AuthController(CRMContext context, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IAuthService authService)
+        public AuthController(CRMContext context, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IAuthService authService, CRMService crmService)
         {
             _context = context;
             this.userManager = userManager;
             this.roleManager = roleManager;
             _configuration = configuration;
             _authService = authService;
+            _crm = crmService;
         }
 
         //GET: CRMVerification
@@ -37,14 +41,24 @@ namespace CRMServer.Controllers
         public async Task<IActionResult> CRMVerification(string email)
         {
             //Inject CRMService and check if contact exists
+            Contact contact = _crm.contacts.GetContactByEmail(email);
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _authService.RegisterAsync(email);
-
-            if (result.Token is null)
-                return BadRequest(result.Message);
-            return Ok(result);
+            if (contact == null)
+            {
+                return BadRequest("Contact not found");
+            }
+            else
+            {
+                var result = await _authService.RegisterAsync(email);
+                if (result.Token is null) { 
+                    return BadRequest(result.Message);
+                }
+                return Ok(result);
+            }
+            return Ok();
         }
 
         //GET: Login
@@ -62,20 +76,43 @@ namespace CRMServer.Controllers
         }
 
         [HttpPost("SignUp")]
-        public async Task<IActionResult> Register(RegisterModel model,string token)
+        public async Task<IActionResult> Register(RegisterModel model)
         {
-            var result = await _authService.ResetPasswordAsync(model.Email, model.Password);
-            
-            if (result == "Succeeded")
+            if(!ModelState.IsValid)
             {
-                return Ok(new { str = "Succeeded" });
+                return BadRequest(ModelState);
             }
-            else if (result == "Failed")
-            {
-                return BadRequest(new { str = "Failed" });
+            var user = await userManager.FindByEmailAsync(model.Email);
 
+            if (user == null)
+            {
+                return BadRequest(new { str = "User not found" });
             }
-            return BadRequest(new { str = "user not found" });
+
+            bool valid = userManager.GetSecurityStampAsync(user).Result == model.Token;
+            if (!valid) return BadRequest(new { str = "Invalid token!" });
+
+            var result1 = await userManager.ConfirmEmailAsync(user, userManager.GenerateEmailConfirmationTokenAsync(user).Result);
+            if (result1.Succeeded)
+            {
+                var result = await _authService.ResetPasswordAsync(model.Email, model.Password);
+
+                if (result == "Succeeded")
+                {
+                    return Ok(new { str = "Succeeded" });
+                }
+                else
+                {
+                    return BadRequest(new { str = "Failed" });
+                }
+            }
+            else
+            {
+                return Ok(new { str = "Email not confirmed" });
+            }
+
+           
+
         }
 
         // API Validation Email

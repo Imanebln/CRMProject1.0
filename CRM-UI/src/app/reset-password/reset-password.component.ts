@@ -16,11 +16,13 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit(): void {
     //resetpasswordForm
     this.resetpasswordForm = new FormGroup({
-      email: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
     });
   }
 
   onSubmit() {
-    console.log(this.resetpasswordForm.value);
+    this.authService
+      .recoverPassword(this.resetpasswordForm.value.email)
+      .subscribe((value) => console.log(value));
   }
 }

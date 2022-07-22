@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit {
       this.authService
         .crmVerification(this.signUpForm.value.email)
         .subscribe((value) => console.log(value));
-      // console.log(this.signUpForm.value.email);
+      console.log(this.signUpForm.value.email);
     }
   }
 }
