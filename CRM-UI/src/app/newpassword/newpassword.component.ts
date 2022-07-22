@@ -9,7 +9,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { Password } from '../Models/Password';
-import { User } from '../Models/User';
 import { AuthServiceService } from '../Services/auth-service.service';
 
 @Component({
@@ -34,8 +33,8 @@ export class NewpasswordComponent implements OnInit {
   onSubmit() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    this.passwordModel.token = urlParams.get('token') + '';
-    this.passwordModel.email = urlParams.get('email') + '';
+    this.passwordModel.token = 'L6DMKBQ6K63OAK3VYQZRJJKDX6YXNC6S';
+    this.passwordModel.email = 'heriberto@northwindtraders.com';
     this.passwordModel.password = this.passwordForm.value.password;
 
     this.authService

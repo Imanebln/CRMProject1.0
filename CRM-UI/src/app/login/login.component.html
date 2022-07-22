@@ -91,13 +91,13 @@ ss
         />
         <span *ngIf="isLogin == false" class="help-block" style="color: red">
           <span
-            *ngIf="!signUpForm.get('email')?.valid && signUpForm.touched"
+            *ngIf="!signUpForm.get('email')?.valid && signUpForm.touched && !signUpForm.get('email')?.errors?.['required']"
             style="display: block"
           >
             Email is not valid
           </span>
           <span
-            *ngIf="signUpForm.get('email')?.errors?.['required'] && signUpForm.touched
+            *ngIf="signUpForm.get('email')?.errors?.['required'] && signUpForm.touched 
           "
             style="display: block"
           >
