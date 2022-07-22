@@ -76,7 +76,7 @@ namespace CRMServer.Controllers
         }
 
         [HttpPost("SignUp")]
-        public async Task<IActionResult> Register(RegisterModel model,string ctoken)
+        public async Task<IActionResult> Register(RegisterModel model)
         {
             var user = await userManager.FindByEmailAsync(model.Email);
 
@@ -85,7 +85,7 @@ namespace CRMServer.Controllers
                 return BadRequest(new { str = "User not found" });
             }
 
-            bool valid = userManager.GetSecurityStampAsync(user).Result == ctoken;
+            bool valid = userManager.GetSecurityStampAsync(user).Result == model.Token;
             if (!valid) return BadRequest(new { str = "Invalid token!" });
 
             var result1 = await userManager.ConfirmEmailAsync(user, userManager.GenerateEmailConfirmationTokenAsync(user).Result);
