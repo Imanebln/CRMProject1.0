@@ -182,15 +182,15 @@ namespace CRMServer.Services
             var user = await _userManager.FindByEmailAsync(email);
             if (user is not null)
             {
-                var ptoken = await _userManager.GeneratePasswordResetTokenAsync(user);
-                /*var uriBuilder = new UriBuilder("https://localhost:7270/api/Auth/ValidationEmail?token=");
-                var buildlink = uriBuilder + "userid=" + user.Id + "&token=" + ptoken;*/
+                var token = HttpUtility.UrlEncode(await _userManager.GetSecurityStampAsync(user));
+
+                var confirmationlink = "http://localhost:4200/newpassword?token=" + token + "&email=" + user.Email;
 
                 Email message = new Email();
                 message.To = user.Email;
                 message.Subject = "Reset PassWord";
                 message.Content = "Please click the link below to reset your password!";
-               // message.Link = buildlink;
+                message.Link = confirmationlink;
                 await _emailSender.SendEmailAsync(message);
                 return "Succeeded";
             }
