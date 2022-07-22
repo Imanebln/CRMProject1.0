@@ -183,7 +183,7 @@ namespace CRMServer.Services
             if (user is not null)
             {
                 var ptoken = await _userManager.GeneratePasswordResetTokenAsync(user);
-                /*var uriBuilder = new UriBuilder("");
+                /*var uriBuilder = new UriBuilder("https://localhost:7270/api/Auth/ValidationEmail?token=");
                 var buildlink = uriBuilder + "userid=" + user.Id + "&token=" + ptoken;*/
 
                 Email message = new Email();

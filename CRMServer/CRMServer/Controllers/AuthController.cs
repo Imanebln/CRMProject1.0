@@ -131,7 +131,7 @@ namespace CRMServer.Controllers
 
         // POST: api/RecoverPassword
         [HttpPost("RecoverPassword")]
-        public async Task<ActionResult<string>> ForgotPassword(string email)
+        public async Task<ActionResult<string>> ForgotPassword([FromBody] string email)
         {
             var user = await userManager.FindByEmailAsync(email);
             if (user == null)
