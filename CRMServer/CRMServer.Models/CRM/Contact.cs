@@ -26,7 +26,7 @@
 			}
 		}
 		public override string? ToString() {
-			return $"Contact({ContactId}, {Firstname}, {Lastname}, {Birthdate}, {EmailAddress1}, {MobilePhone}, {Fax}, {isPrimary})";
+			return $"Contact({ContactId}, {Firstname}, {Lastname}, {Birthdate}, {EmailAddress1}, {MobilePhone}, {Fax}, {IsPrimary})";
 		}
 	}
 }

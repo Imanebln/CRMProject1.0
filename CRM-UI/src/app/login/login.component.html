@@ -1,35 +1,125 @@
+ss
 <div class="logo">
-    <img src="/assets/sqli-animated.svg" alt="">
+  <img src="/assets/sqli-animated.svg" alt="" />
 </div>
 <div class="main">
-    <div class="menu d-flex justify-content-around mb-3">
-        <div class="d-flex align-items-center active">
-            <i class="fa-solid fa-arrow-right-to-bracket mx-2"></i>
-            Login
-        </div>
-        <div class="d-flex align-items-center">
-            <i class="fa-solid fa-user-plus mx-2"></i>
-            Sign Up
-        </div>
+  <div class="menu d-flex justify-content-around mb-3">
+    <div
+      class="d-flex align-items-center"
+      (click)="loginTrue()"
+      [class.active]="routeName == 'login'"
+    >
+      <i class="fa-solid fa-arrow-right-to-bracket mx-2"></i>
+      Login
     </div>
-    <div class="welcome w-50">
-        <h4>Welcome to <br/> SQLI Customer Portal</h4>
-        <p>The offical portal for SQLI customers</p>
+    <div
+      class="d-flex align-items-center"
+      (click)="loginFalse()"
+      [class.active]="routeName == 'signUp'"
+    >
+      <i class="fa-solid fa-user-plus mx-2"></i>
+      Sign Up
     </div>
-    <div class="wrapper">
-        <div class="form w-50 d-flex flex-column">
-            <h4 class="mb-3">Login</h4>
-            <input type="text" class="form-control mb-3" placeholder="Username">
-            <input type="text" class="form-control mb-3" placeholder="Password">
-            <button class="btn btn-primary w-100">Login</button>
-            <a href="#" class="align-self-center mt-1">Forgot your password ?</a>
-        </div>
-        <div class="w-50 d-flex align-items-center justify-content-end">
-            <img src="/assets/crm.png" width="80%" alt="">
-        </div>
+  </div>
+  <div class="welcome w-50">
+    <h4>Welcome to SQLI Customer Portal</h4>
+    <p>The offical portal for SQLI customers</p>
+  </div>
+  <div class="wrapper">
+    <div class="form w-50 d-flex flex-column">
+      <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+        <h4 *ngIf="isLogin == true" class="mb-3">Login</h4>
+        <input
+          *ngIf="isLogin == true"
+          type="email"
+          class="form-control"
+          placeholder="Email"
+          name="email"
+          formControlName="email"
+        />
+        <span
+          *ngIf="isLogin == true"
+          class="help-block margin-control"
+          style="color: red"
+        >
+          <span
+            *ngIf="signInForm.get('email')?.errors?.['required'] && signInForm.touched
+          "
+          >
+            Username is required
+          </span>
+        </span>
+        <input
+          *ngIf="isLogin == true"
+          type="text"
+          class="form-control"
+          placeholder="Password"
+          name="password"
+          formControlName="password"
+        />
+        <span *ngIf="isLogin == true" class="help-block" style="color: red">
+          <span
+            *ngIf="signInForm.get('password')?.errors?.['required'] && signInForm.touched
+          "
+          >
+            Password is required
+          </span>
+        </span>
+        <button
+          *ngIf="isLogin == true"
+          class="btn btn-primary w-100"
+          [disabled]="!signInForm.valid"
+        >
+          Login
+        </button>
+        <a
+          *ngIf="isLogin == true"
+          [routerLink]="['/resetpassword']"
+          class="align-self-center mt-1"
+          >Forgot your password ?</a
+        >
+      </form>
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <h4 *ngIf="isLogin == false" class="mb-3">Sign Up</h4>
+        <input
+          *ngIf="isLogin == false"
+          type="text"
+          class="form-control mb-3"
+          placeholder="Email"
+          name="email"
+          formControlName="email"
+        />
+        <span *ngIf="isLogin == false" class="help-block" style="color: red">
+          <span
+            *ngIf="!signUpForm.get('email')?.valid && signUpForm.touched"
+            style="display: block"
+          >
+            Email is not valid
+          </span>
+          <span
+            *ngIf="signUpForm.get('email')?.errors?.['required'] && signUpForm.touched
+          "
+            style="display: block"
+          >
+            Email is required
+          </span>
+        </span>
+
+        <button
+          *ngIf="isLogin == false"
+          class="btn btn-primary w-100"
+          [disabled]="!signUpForm.valid"
+        >
+          Sign Up
+        </button>
+      </form>
     </div>
+    <div class="w-50 d-flex align-items-center justify-content-end">
+      <img src="/assets/crm.png" width="80%" alt="" />
+    </div>
+  </div>
 </div>
 
 <div class="logo-mini">
-    <img src="/assets/sqli-mini.png" alt="" width="100%">
+  <img src="/assets/sqli-mini.png" alt="" width="100%" />
 </div>
