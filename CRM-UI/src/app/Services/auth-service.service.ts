@@ -27,4 +27,10 @@ export class AuthServiceService {
   signUp(password: Password) {
     return this.http.post(this.apiUrl + 'Auth/SignUp', password);
   }
+  recoverPassword(email: any) {
+    return this.http.post(
+      this.apiUrl + 'Auth/RecoverPassword?email=' + email,
+      {}
+    );
+  }
 }

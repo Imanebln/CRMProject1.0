@@ -78,6 +78,10 @@ namespace CRMServer.Controllers
         [HttpPost("SignUp")]
         public async Task<IActionResult> Register(RegisterModel model)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var user = await userManager.FindByEmailAsync(model.Email);
 
             if (user == null)
@@ -131,7 +135,7 @@ namespace CRMServer.Controllers
 
         // POST: api/RecoverPassword
         [HttpPost("RecoverPassword")]
-        public async Task<ActionResult<string>> ForgotPassword([FromBody] string email)
+        public async Task<ActionResult<string>> ForgotPassword(string email)
         {
             var user = await userManager.FindByEmailAsync(email);
             if (user == null)
