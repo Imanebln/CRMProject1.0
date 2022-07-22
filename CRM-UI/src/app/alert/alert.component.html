@@ -1,0 +1,23 @@
+<!--To Use this compoenent you need to call -->
+<div #alert>
+  <div *ngIf="isSuccess">
+    <div class="alert alert-success alert-dismissible fade show " role="alert" >
+      <button type = "button" (click) ="Close()" class ="close" data-dismiss="alert">&times;</button>
+       
+     
+      <h4 class="alert-heading">{{messageHeader}}</h4>
+      <p>{{messageContent}}</p>
+     
+      </div>
+  </div>
+  <div *ngIf = "isError">
+    <div class="alert alert-info alert-dismissible fade show" role="alert" >
+      <button type = "button" (click) ="Close()" class ="close" data-dismiss="alert">&times;</button>     
+      <h4 class="alert-heading">{{messageHeader}}</h4>
+      <p>{{messageContent}}</p>
+     
+      </div>
+  </div>
+  
+</div>
+<!--<ng-content></ng-content> Use it when you want to be specifyign the message using the component's selector in another template-->
