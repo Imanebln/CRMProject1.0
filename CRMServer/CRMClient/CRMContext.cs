@@ -3,13 +3,13 @@ using Microsoft.Identity.Client;
 using System.Net.Http.Headers;
 
 namespace CRMClient {
-	public class CRMContext {
+	public class CRMProvider {
 		private readonly IConfiguration _configuration;
         private readonly string BaseUrl;
 	    public HttpClient httpClient;
 		protected string ApiKey;
 		
-		public CRMContext(IConfiguration configuration) {
+		public CRMProvider(IConfiguration configuration) {
 			_configuration = configuration;
             BaseUrl = _configuration["CRMConfiguration:CrmUrl"];
             httpClient = new HttpClient();

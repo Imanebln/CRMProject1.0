@@ -8,7 +8,7 @@ using System.Text;
 namespace CRMClient.Impl {
 	public abstract class CRMBaseService<T> : ICRMBaseService<T> where T : ICrmEntity{
 		protected readonly HttpClient _client;
-		public CRMBaseService(CRMContext context) {
+		public CRMBaseService(CRMProvider context) {
 			_client = context.httpClient;
 		}
 

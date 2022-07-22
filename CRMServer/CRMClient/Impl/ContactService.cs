@@ -9,7 +9,7 @@ using System.Text;
 namespace CRMClient.Impl {
 	public class ContactService : CRMBaseService<Contact>, IContactService {
 		private readonly string BaseQuery = "/api/data/v9.1/contacts?$expand=parentcustomerid_account";
-		public ContactService(CRMContext context) : base(context){}
+		public ContactService(CRMProvider context) : base(context){}
 
 		public IEnumerable<Contact> GetAllContacts() {
 			return GetFromCrm(BaseQuery);
