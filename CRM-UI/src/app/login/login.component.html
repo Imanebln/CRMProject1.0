@@ -1,4 +1,4 @@
-ss
+<app-alert></app-alert>
 <div class="logo">
   <img src="/assets/sqli-animated.svg" alt="" />
 </div>
@@ -79,6 +79,7 @@ ss
           >Forgot your password ?</a
         >
       </form>
+
       <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
         <h4 *ngIf="isLogin == false" class="mb-3">Sign Up</h4>
         <input

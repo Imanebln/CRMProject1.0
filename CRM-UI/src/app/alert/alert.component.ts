@@ -1,73 +1,59 @@
-
-import { Component, 
-          OnInit,
-          Input,
-          Output,
-          EventEmitter,
-          ViewChild,
-          ElementRef} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',
-  styleUrls: ['./alert.component.css']
+  styleUrls: ['./alert.component.css'],
 })
-
-
 export class AlertComponent implements OnInit {
-//Type of alert that is going to be received
-//Type should be either error or success
-  @Input() type : 'error' | 'success';
-  @Input() messageHeader : string;
-  @Input() messageContent : string;
-  @Output() onClose = new EventEmitter<any>();
-  
-  
-  //View Child should be in the component in which we want to use it 
- // @ViewChild('alert', { static: false }) divAlert: ElementRef;
-  
-  
- 
+  ngOnInit(): void {}
+  Alert: AlertModel = <AlertModel>{
+    type: 'success',
+    icon: 'circle-check',
+  };
+  style: any = {
+    border: '2px solid var(--alert-success-border)',
+    display: 'none',
+  };
+  loading: any = {};
+  timeout: number = 3000;
 
-  isSuccess : boolean = false;
-  isError : boolean = false;
-  
-  constructor() { }
+  ShowAlert = (alertmodel: AlertModel) => {
+    this.Alert.content = alertmodel.content;
+    if (alertmodel.icon != null) this.Alert.icon = alertmodel.icon;
+    if (alertmodel.type != null) this.Alert.type = alertmodel.type;
 
-  ngOnInit(): void { 
-  }
+    this.style.border = `2px solid var(--alert-${alertmodel.type}-border)`;
+    this.style.animation = 'DisplayAnimation 600ms ease';
+    this.style.display = 'block';
 
-  Close(){
-    this.onClose.emit()
-  }
+    this.loading.animation = 'LoadingAnimation 3s linear';
+    setTimeout(() => {
+      this.style.animation = 'CollapseAnimation 600ms ease';
+      setTimeout(() => {
+        this.style.display = 'none';
+      }, 600);
+    }, this.timeout);
+  };
 
-  //Implement functions that is going to be called in other components 
-  //createAlert(type : string,messageHeader : string, messageContent : string){
-  createAlert(){
-          if (this.type == "error"){
-            this.isError = true;
-          }
-          if(this.type == "success"){
-            this.isSuccess = true;
-          }
-  }
+  CloseAlert = () => {
+    this.style.animation = 'CollapseAnimation 600ms ease';
+    setTimeout(() => {
+      this.style.display = 'none';
+    }, 600);
+  };
+}
 
-
-  //TODO : when using this component you need only to add its tag where you wannna
-  // be using it and specifying the type of the alert it is only custom 
-  
-
-  
-  //The following code needs to be added in the component class with a property isAlert and needs to be tested with ngIf 
-  
-  // onAlertClose(){
-  //   this.isAlert = false;
-  // }
-  // onAlertOpen(){
-  //   this.isAlert = true;
-  // }
-  
-  //The followong code needs to be added to html
-  //<app-alert *ngIf="isAlert" [type]="''" (onClose)="onAlertClose()"
-  // [messageHeader] ="''" [messageContent]="''" ></app-alert>
+export interface AlertModel {
+  type?: string;
+  icon?: string;
+  content: string;
 }

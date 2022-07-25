@@ -1,6 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import {
   AsyncValidatorFn,
   FormControl,
@@ -9,6 +15,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AlertComponent } from '../alert/alert.component';
 import { User } from '../Models/User';
 import { AuthServiceService } from '../Services/auth-service.service';
 
@@ -24,11 +31,14 @@ export class LoginComponent implements OnInit {
   signUpForm!: FormGroup;
   signInForm!: FormGroup;
   user: User = <User>{};
+  isAlert: boolean;
 
   constructor(
     private authService: AuthServiceService,
     private router: Router
   ) {}
+
+  @ViewChild(AlertComponent) alert: AlertComponent;
 
   ngOnInit(): void {
     //signUpForm
@@ -68,21 +78,44 @@ export class LoginComponent implements OnInit {
     return promise;
   }
 
+  onAlertClose() {
+    this.isAlert = false;
+  }
+
+  onAlertOpen() {
+    this.isAlert = true;
+  }
+
   onSubmit() {
     if (this.isLogin == true) {
       // this.user.email = this.signInForm.value.email;
       // this.user.password = this.signInForm.value.password;
-
-      console.log(this.signInForm.value);
-
+      this.alert.ShowAlert({
+        type: 'warning',
+        icon: 'circle-exclamation',
+        content: 'This is the body of the alert !',
+      });
       this.authService.signIn(this.signInForm.value).subscribe({
         next: (response: any) => {
           const token = response.token;
           console.log(token);
           localStorage.setItem('jwt', token);
-          this.router.navigate(['dashbord']);
+
+          // this.isAlert = true;
+          setTimeout(() => {
+            // this.onAlertClose();
+            this.router.navigate(['dashbord']);
+          }, 3000);
+          console.log('Ben1');
         },
-        error: (err: HttpErrorResponse) => console.log(err),
+        error: (err: HttpErrorResponse) => {
+          this.isAlert = true;
+          setTimeout(() => {
+            // this.onAlertClose();
+            this.router.navigate(['login']);
+          }, 3000);
+          console.log('Ben2');
+        },
       });
     } else if (this.isLogin == false) {
       this.authService

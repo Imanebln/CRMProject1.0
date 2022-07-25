@@ -1,29 +1,32 @@
-
-
 :root {
-    --primary: #602B70;
-    --secondary: #AD2D5A;
-    --disabled: #B7B0B0;
+  --primary: #602b70;
+  --secondary: #ad2d5a;
+  --disabled: #b7b0b0;
+  --alert-success: #d1e7dd;
+  --alert-warning: #fff3cd;
+  --alert-error: #f8d7da;
+  --alert-success-border: #cce4d9;
+  --alert-warning-border: #ffeebe;
+  --alert-error-border: #ffeebe;
 }
 
 .btn-primary {
-    background-color: var(--primary);
-    border-color: var(--primary);
+  background-color: var(--primary);
+  border-color: var(--primary);
 }
 .btn-primary:hover {
-    background-color: var(--secondary);
-    border-color: var(--primary);
+  background-color: var(--secondary);
+  border-color: var(--primary);
 }
 
-
 .red {
-    background-color: red;
+  background-color: red;
 }
 
 .green {
-    background-color: green;
+  background-color: green;
 }
 
 .blue {
-    background-color: blue;
+  background-color: blue;
 }

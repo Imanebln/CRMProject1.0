@@ -1,23 +1,31 @@
-<!--To Use this compoenent you need to call -->
-<div #alert>
-  <div *ngIf="isSuccess">
-    <div class="alert alert-success alert-dismissible fade show " role="alert" >
-      <button type = "button" (click) ="Close()" class ="close" data-dismiss="alert">&times;</button>
-       
-     
-      <h4 class="alert-heading">{{messageHeader}}</h4>
-      <p>{{messageContent}}</p>
-     
-      </div>
+<div
+  [ngClass]="{
+    alert: true,
+    type: true
+  }"
+  [ngStyle]="style"
+>
+  <i class="fa-solid fa-xmark" (click)="CloseAlert()"></i>
+  <i
+    [ngClass]="['icon fa-solid fa-' + Alert.icon, 'text-' + this.Alert.type]"
+  ></i>
+  <div class="main">
+    <div [ngClass]="['header', 'text-' + this.Alert.type]">
+      {{ Alert.type }}
+    </div>
+    <div [ngClass]="['content']">
+      <p>{{ Alert.content }}</p>
+    </div>
+    <button
+      [ngClass]="['btn', 'btn-' + this.Alert.type]"
+      (click)="CloseAlert()"
+    >
+      CLOSE
+    </button>
   </div>
-  <div *ngIf = "isError">
-    <div class="alert alert-info alert-dismissible fade show" role="alert" >
-      <button type = "button" (click) ="Close()" class ="close" data-dismiss="alert">&times;</button>     
-      <h4 class="alert-heading">{{messageHeader}}</h4>
-      <p>{{messageContent}}</p>
-     
-      </div>
-  </div>
-  
+
+  <span
+    [ngClass]="['loader', 'btn-' + this.Alert.type]"
+    [ngStyle]="loading"
+  ></span>
 </div>
-<!--<ng-content></ng-content> Use it when you want to be specifyign the message using the component's selector in another template-->
