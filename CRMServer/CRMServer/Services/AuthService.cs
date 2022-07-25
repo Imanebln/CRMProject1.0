@@ -17,9 +17,9 @@ namespace CRMServer.Services
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly CRMContext _context;
         private readonly IConfiguration _configuration;
-        private readonly IEmailSender _emailSender;
+        private readonly IPrettyEmail _emailSender;
 
-        public AuthService(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, CRMContext context, IConfiguration configuration, IEmailSender emailSender)
+        public AuthService(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, CRMContext context, IConfiguration configuration, IPrettyEmail emailSender)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -148,14 +148,9 @@ namespace CRMServer.Services
 /*            var confirmationlink = "https://localhost:7270/api/Auth/ValidationEmail?token=" + ctoken + "&email=" + user.Email;
  *            
 */            var confirmationlink2 = "http://localhost:4200/newpassword?token=" + token + "&email=" + user.Email;
+            _emailSender.SendRegister(user.Email, confirmationlink2);
+            
 
-            var message = new Email();
-            message.To = user.Email;
-            message.Subject = "CRM Email Confirmation";
-            message.Content = "Please confirm your email!";
-            message.Link = confirmationlink2;
-
-            await _emailSender.SendEmailAsync(message);
 
             return "Success";
         }
@@ -185,12 +180,7 @@ namespace CRMServer.Services
 
                 var confirmationlink = "http://localhost:4200/newpassword?token=" + token + "&email=" + user.Email;
 
-                Email message = new Email();
-                message.To = user.Email;
-                message.Subject = "Reset PassWord";
-                message.Content = "Please click the link below to reset your password!";
-                message.Link = confirmationlink;
-                await _emailSender.SendEmailAsync(message);
+                _emailSender.SendPasswordReset(user.Email, confirmationlink);
                 return "Succeeded";
             }
 

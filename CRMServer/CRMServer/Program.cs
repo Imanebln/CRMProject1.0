@@ -10,6 +10,7 @@ using EmailService;
 using CRMClient;
 using CRMServer.Models.Email;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add DBContext
@@ -50,7 +51,7 @@ builder.Services.AddCors(options =>
 
 // Add dependency injection 
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IPrettyEmail, PrettyEmail>();
 
 // Email config
 var emailConfig = builder.Configuration
