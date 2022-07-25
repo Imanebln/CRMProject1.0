@@ -7,7 +7,11 @@ using CRMServer.Models;
 using System.Text;
 using CRMServer.Services;
 using EmailService;
+<<<<<<< Updated upstream
 using CRMClient;
+=======
+using CRMServer.Models.Email;
+>>>>>>> Stashed changes
 
 var builder = WebApplication.CreateBuilder(args);
 

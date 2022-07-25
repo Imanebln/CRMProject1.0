@@ -1,4 +1,4 @@
-﻿namespace EmailService
+﻿namespace CRMServer.Models.Email
 {
     public class EmailConfiguration
     {

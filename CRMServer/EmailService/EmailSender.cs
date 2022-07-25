@@ -1,17 +1,12 @@
-﻿using MailKit.Net.Smtp;
+﻿using CRMServer.Models.Email;
+using MailKit.Net.Smtp;
 using MimeKit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CRMServer.Models;
 
 namespace EmailService
 {
     public class EmailSender : IEmailSender
     {
-        private readonly EmailConfiguration _emailConfiguration;
+        protected readonly EmailConfiguration _emailConfiguration;
 
         public EmailSender(EmailConfiguration emailConfiguration)
         {
@@ -28,14 +23,14 @@ namespace EmailService
         {
             var emailMessage = CreateEmailMessage(email);
 
-           await SendAsync(emailMessage);
+            await SendAsync(emailMessage);
 
         }
 
-        private MimeMessage CreateEmailMessage(Email email)
+        protected virtual MimeMessage CreateEmailMessage(Email email)
         {
             var emailMessage = new MimeMessage();
-            //emailMessage.From.Add(new MailboxAddress("email", _emailConfiguration.From));
+            emailMessage.From.Add(new MailboxAddress("email", _emailConfiguration.From));
             emailMessage.From.Add(new MailboxAddress(_emailConfiguration.DisplayName, _emailConfiguration.From));
             emailMessage.To.Add(MailboxAddress.Parse(email.To));
             emailMessage.Subject = email.Subject;

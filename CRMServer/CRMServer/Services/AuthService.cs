@@ -1,9 +1,8 @@
 ﻿using CRMServer.Data;
 using CRMServer.Models;
+using CRMServer.Models.Email;
 using EmailService;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CRMClient\CRMClient.csproj" />
+    <ProjectReference Include="..\EmailService\EmailService.csproj" />
   </ItemGroup>
 
 </Project>

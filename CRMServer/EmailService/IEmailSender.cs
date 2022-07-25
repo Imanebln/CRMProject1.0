@@ -1,9 +1,4 @@
-﻿using MimeKit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CRMServer.Models.Email;
 
 namespace EmailService
 {

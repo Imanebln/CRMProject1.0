@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EmailService
+﻿namespace CRMServer.Models.Email
 {
     public class Email
     {
@@ -16,5 +10,6 @@ namespace EmailService
         public string Content { get; set; } = string.Empty;
         public string Link { get; set; } = string.Empty;
 
+        public EmailBody EmailBody { get; set; } = new EmailBody();
     }
 }
