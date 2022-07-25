@@ -7,11 +7,9 @@ using CRMServer.Models;
 using System.Text;
 using CRMServer.Services;
 using EmailService;
-<<<<<<< Updated upstream
 using CRMClient;
-=======
 using CRMServer.Models.Email;
->>>>>>> Stashed changes
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,7 +51,7 @@ builder.Services.AddCors(options =>
 
 // Add dependency injection 
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IPrettyEmail, PrettyEmail>();
 
 // Email config
 var emailConfig = builder.Configuration

@@ -17,15 +17,5 @@
     <ProjectReference Include="..\CRMServer.Models\CRMServer.Models.csproj" />
   </ItemGroup>
 
-    <ItemGroup>
-	    <Content Include="resources\*">
-		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	    </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="resources\DefaultEmail.json" />
-    </ItemGroup>
-
 
 </Project>
