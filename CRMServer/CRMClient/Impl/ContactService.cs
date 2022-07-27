@@ -2,7 +2,6 @@
 using CRMServer.Models.CRM;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Reflection;
 using CRMServer.Models.Parameters;
 using System.Text;
 
@@ -44,6 +43,18 @@ namespace CRMClient.Impl {
 				if (account != null)
 					entities[i].Account = JsonConvert.DeserializeObject<Account>(account);
 			}
+		}
+
+		public async Task<Contact?> InsertContact(Contact contact) {
+			return await Insert(contact, GetContactByEmail, BaseQuery);
+		}
+
+		public async Task<Contact?> UpdateContact(Contact contact) {
+			return await Update(contact, GetContactById, BaseQuery);
+		}
+
+		public async Task<Contact?> DeleteContact(Contact contact) {
+			return await Delete(contact, GetContactById, BaseQuery);
 		}
 	}
 }

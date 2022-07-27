@@ -15,10 +15,35 @@ namespace CRMClient.Impl {
 			return this.GetFromCrm(BaseQuery);
 		}
 
+		public Account? GetAccountByName(string name){
+			AccountParameters parameters = new() { Name = name};
+			string filteredQuery = GetFilterQuery(BaseQuery, parameters);
+			return GetFromCrm(filteredQuery).FirstOrDefault();
+		}
+
+		public Account? GetAccountById(Guid id) {
+			AccountParameters parameters = new() { AccountId =  id};
+			string filteredQuery = GetFilterQuery(BaseQuery, parameters);
+			return GetFromCrm(filteredQuery).FirstOrDefault();
+		}
+
 		public IEnumerable<Account> GetAccountsWhere(AccountParameters account) {
 			string query = GetFilterQuery(BaseQuery, account);
 			return GetFromCrm(query);
 		}
+
+		public async Task<Account?> InsertAccount(Account account) {
+			return await Insert(account, GetAccountByName, BaseQuery);
+		}
+
+		public async Task<Account?> UpdateAccount(Account account) {
+			return await Update(account, GetAccountById, BaseQuery);
+		}
+
+		public async Task<Account?> DeleteAccount(Account account) {
+			return await Delete(account, GetAccountById, BaseQuery);
+		}
+
 
 		protected override void Populate(ref List<Account> entities, JObject doc) {
 		    for(int i=0; i<entities.Count; i++){

@@ -4,7 +4,7 @@
 		public string? Firstname { get; set; }
 		public string? Lastname { get; set; }
 		public string? Birthdate { get; set; }
-		public string? EmailAddress1 { get; set; }
+		public string EmailAddress1 { get; set; } = String.Empty;
 		public string? MobilePhone { get; set; }
 		public string? Fax { get; set; }
 		public string? JobTitle { get; set; }
@@ -25,6 +25,15 @@
 				return ContactId.ToString() == Account._primarycontactid_value;
 			}
 		}
+
+		public Guid GetId() {
+			return ContactId;
+		}
+
+		public string GetUnique() {
+			return EmailAddress1;
+		}
+
 		public override string? ToString() {
 			return $"Contact({ContactId}, {Firstname}, {Lastname}, {Birthdate}, {EmailAddress1}, {MobilePhone}, {Fax}, {IsPrimary})";
 		}

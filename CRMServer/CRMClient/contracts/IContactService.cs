@@ -8,5 +8,9 @@ namespace CRMClient.contracts {
 		Contact? GetContactByEmail(string email);
 		Contact? GetContactByPhone(string phone);
 		Contact? GetContactById(Guid guid);
+
+		Task<Contact?> InsertContact(Contact contact);
+		Task<Contact?> UpdateContact(Contact contact);
+		Task<Contact?> DeleteContact(Contact contact);
 	}
 }
