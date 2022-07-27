@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AlertComponent } from '../alert/alert.component';
 import { Password } from '../Models/Password';
 import { AuthServiceService } from '../Services/auth-service.service';
 
@@ -10,6 +12,7 @@ import { AuthServiceService } from '../Services/auth-service.service';
 })
 export class ResetPasswordComponent implements OnInit {
   resetpasswordForm!: FormGroup;
+  @ViewChild(AlertComponent) alert: AlertComponent;
 
   constructor(private authService: AuthServiceService) {}
 
@@ -23,6 +26,23 @@ export class ResetPasswordComponent implements OnInit {
   onSubmit() {
     this.authService
       .recoverPassword(this.resetpasswordForm.value.email)
-      .subscribe((value) => console.log(value));
+      .subscribe({
+        next: (response: any) => {
+          //Alert Suc
+          this.alert.ShowAlert({
+            type: 'success',
+            icon: 'circle-exclamation',
+            content: 'Password is confirmed',
+          });
+        },
+        error: (err: HttpErrorResponse) => {
+          //Alert Err
+          this.alert.ShowAlert({
+            type: 'warning',
+            icon: 'circle-exclamation',
+            content: err.error,
+          });
+        },
+      });
   }
 }

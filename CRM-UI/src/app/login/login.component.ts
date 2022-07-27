@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
   signUpForm!: FormGroup;
   signInForm!: FormGroup;
   user: User = <User>{};
-  isAlert: boolean;
 
   constructor(
     private authService: AuthServiceService,
@@ -41,6 +40,11 @@ export class LoginComponent implements OnInit {
   @ViewChild(AlertComponent) alert: AlertComponent;
 
   ngOnInit(): void {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      this.router.navigate(['dashbord']);
+    }
+
     //signUpForm
     this.signUpForm = new FormGroup({
       email: new FormControl(
@@ -78,50 +82,52 @@ export class LoginComponent implements OnInit {
     return promise;
   }
 
-  onAlertClose() {
-    this.isAlert = false;
-  }
-
-  onAlertOpen() {
-    this.isAlert = true;
-  }
-
   onSubmit() {
     if (this.isLogin == true) {
       // this.user.email = this.signInForm.value.email;
       // this.user.password = this.signInForm.value.password;
-      this.alert.ShowAlert({
-        type: 'warning',
-        icon: 'circle-exclamation',
-        content: 'This is the body of the alert !',
-      });
       this.authService.signIn(this.signInForm.value).subscribe({
         next: (response: any) => {
+          //Alert Suc
           const token = response.token;
-          console.log(token);
           localStorage.setItem('jwt', token);
-
-          // this.isAlert = true;
+          this.alert.ShowAlert({
+            type: 'success',
+            icon: 'circle-exclamation',
+            content: 'Welcome',
+          });
           setTimeout(() => {
-            // this.onAlertClose();
             this.router.navigate(['dashbord']);
-          }, 3000);
-          console.log('Ben1');
+          }, 2000);
         },
         error: (err: HttpErrorResponse) => {
-          this.isAlert = true;
-          setTimeout(() => {
-            // this.onAlertClose();
-            this.router.navigate(['login']);
-          }, 3000);
-          console.log('Ben2');
+          //Alert Err
+          this.alert.ShowAlert({
+            type: 'warning',
+            icon: 'circle-exclamation',
+            content: err.error,
+          });
         },
       });
     } else if (this.isLogin == false) {
-      this.authService
-        .crmVerification(this.signUpForm.value.email)
-        .subscribe((value) => console.log(value));
-      console.log(this.signUpForm.value.email);
+      this.authService.crmVerification(this.signUpForm.value.email).subscribe({
+        next: (response: any) => {
+          //Alert Suc
+          this.alert.ShowAlert({
+            type: 'success',
+            icon: 'circle-exclamation',
+            content: 'Email send to gmail',
+          });
+        },
+        error: (err: HttpErrorResponse) => {
+          //Alert Err
+          this.alert.ShowAlert({
+            type: 'warning',
+            icon: 'circle-exclamation',
+            content: err.error,
+          });
+        },
+      });
     }
   }
 }

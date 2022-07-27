@@ -1,5 +1,6 @@
 import { JsonPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -9,6 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertComponent } from '../alert/alert.component';
 import { Password } from '../Models/Password';
 import { AuthServiceService } from '../Services/auth-service.service';
 
@@ -20,6 +22,7 @@ import { AuthServiceService } from '../Services/auth-service.service';
 export class NewpasswordComponent implements OnInit {
   passwordForm!: FormGroup;
   passwordModel: Password = <Password>{};
+  @ViewChild(AlertComponent) alert: AlertComponent;
 
   constructor(
     private authService: AuthServiceService,
@@ -41,10 +44,27 @@ export class NewpasswordComponent implements OnInit {
     this.passwordModel.email = 'heriberto@northwindtraders.com';
     this.passwordModel.password = this.passwordForm.value.password;
 
-    this.authService
-      .signUp(this.passwordModel)
-      .subscribe((value) => console.log(value));
+    this.authService.signUp(this.passwordModel).subscribe({
+      next: (response: any) => {
+        //Alert Suc
+        this.alert.ShowAlert({
+          type: 'success',
+          icon: 'circle-exclamation',
+          content: 'You have a new password',
+        });
+      },
+      error: (err: HttpErrorResponse) => {
+        //Alert Err
+        this.alert.ShowAlert({
+          type: 'warning',
+          icon: 'circle-exclamation',
+          content: err.error,
+        });
+      },
+    });
 
-    this.router.navigate(['/login']);
+    setTimeout(() => {
+      this.router.navigate(['login']);
+    }, 2000);
   }
 }
