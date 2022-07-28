@@ -7,6 +7,9 @@ import { DashboardComponent } from './Pages/dashboard/dashboard.component';
 import { SideBarComponent } from './Components/side-bar/side-bar.component';
 import { ProfileComponent } from './Pages/profile/profile.component';
 import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
+import { BarChartComponent } from './Components/Charts/bar-chart/bar-chart.component';
+import { LineChartComponent } from './Components/Charts/line-chart/line-chart.component';
+import { DoughnutChartComponent } from './Components/Charts/doughnut-chart/doughnut-chart.component';
 
 
 @NgModule({
@@ -15,7 +18,10 @@ import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
     DashboardComponent,
     SideBarComponent,
     ProfileComponent,
-    NavBarComponent
+    NavBarComponent,
+    BarChartComponent,
+    LineChartComponent,
+    DoughnutChartComponent
   ],
   imports: [
     CommonModule,
