@@ -1,0 +1,45 @@
+:host {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: var(--secondary);
+    padding: 20px 10px;
+    color: #FFF;
+}
+
+a {
+    text-decoration: none;
+    color: #FFF;
+}
+
+.logo p {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.items {
+    margin-top: 50px;
+}
+
+.items > a > div {
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.active {
+    background-color: white;
+    color: #000;
+}
+
+.active > img {
+    filter: invert(1);
+}
+
+.next {
+    filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.25));
+    position: absolute;
+    right: -13px;
+    top: 60px;
+    transform: rotateY(180deg);
+}

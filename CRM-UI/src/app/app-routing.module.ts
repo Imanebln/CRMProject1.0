@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'newpassword', component: NewpasswordComponent },
   { path: 'resetpassword', component: ResetPasswordComponent },
   { path: 'dashbord', component: DashbordComponent, canActivate: [AuthGuard] },
+  {path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
   { path: '', redirectTo: '/dashbord', pathMatch: 'full' },
 ];
 

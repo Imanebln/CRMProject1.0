@@ -1,0 +1,25 @@
+#main {
+
+}
+#sidebar {
+    position: fixed;
+    min-width: 250px;
+    top:0;
+    width: 15%;
+    height: 100%;
+    z-index: 10;
+}
+
+#navbar {
+    position: fixed;
+    height: 80px;
+    left: max(15%, 250px);
+    width: calc(100% - max(15%, 250px));
+    z-index: 10;
+}
+#content{
+    position: absolute;
+    top: 80px;
+    left: max(15%, 250px);
+    padding: 30px;
+}

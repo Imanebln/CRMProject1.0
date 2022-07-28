@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CRMServer.Migrations
 {
-    public partial class test : Migration
+    public partial class DatabaseInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
