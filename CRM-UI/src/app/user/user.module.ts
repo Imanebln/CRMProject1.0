@@ -7,6 +7,8 @@ import { DashboardComponent } from './Pages/dashboard/dashboard.component';
 import { SideBarComponent } from './Components/side-bar/side-bar.component';
 import { ProfileComponent } from './Pages/profile/profile.component';
 import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
+import { FormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
   ],
   imports: [
     CommonModule,
-    UserRoutingModule
+    UserRoutingModule,
+    FormsModule
   ]
 })
 export class UserModule { }

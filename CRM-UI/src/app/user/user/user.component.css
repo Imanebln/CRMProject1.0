@@ -3,23 +3,53 @@
 }
 #sidebar {
     position: fixed;
-    min-width: 250px;
     top:0;
-    width: 15%;
+    width: fit-content;
     height: 100%;
-    z-index: 10;
+    z-index: 12;
+    transition: all 400ms ease-out;
 }
 
 #navbar {
     position: fixed;
     height: 80px;
-    left: max(15%, 250px);
-    width: calc(100% - max(15%, 250px));
     z-index: 10;
+    transition: all 800ms ease-out;
 }
 #content{
     position: absolute;
     top: 80px;
-    left: max(15%, 250px);
     padding: 30px;
+    transition: all 800ms ease-out  ;
+}
+
+.navbar-toggle {
+    display: none;
+}
+
+@media only screen and (max-width: 768px){
+	#content {
+        left: 0 !important;
+    }
+    #navbar {
+        width: 100% !important;
+        left: 0 !important;
+    }
+    #sidebar {
+        transform: translateX(-300px);
+    }
+    .navbar-toggle {
+        display: block;
+        position: absolute;
+        top: 22px;
+        left: 25px;
+        z-index: 11;
+    }
+    .navbar-toggle > img {
+        width: 35px;
+    }
+    .sidebar-show {
+        transform: translateX(0) !important;
+        
+    }
 }

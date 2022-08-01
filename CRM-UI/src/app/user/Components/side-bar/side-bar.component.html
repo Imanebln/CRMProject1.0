@@ -1,22 +1,28 @@
-<div class="d-flex flex-column h-100">
-    <div class="d-flex align-items-center align-self-center logo">
+<div class="d-flex flex-column h-100" >
+    <div class="d-flex justify-content-center align-items-center logo">
         <img src="/assets/sqli-mini-white.svg" width="50px" alt="">
-        <p class="mb-0 ms-2">SQLI Customer Server</p>
+        <p class="mb-0 ms-2 toggleable" style="white-space: nowrap;">SQLI Customer Server</p>
     </div>
-    <img class="next" src="/assets/icons/arrow-right.png" width="25px" alt="">
-    <div class="items">
+    <img class="next" src="/assets/icons/arrow-right.png" width="25px" alt="" (click)="minimize(nextBtn)" #nextBtn>
+    <div class="items" >
             <a *ngFor="let item of navItems" [routerLink]="item.link">
-                <div [ngClass]="{'d-flex': true, 'active': item.link==active}" (click)="activeLink(item.link)">
+                <div [ngClass]="{'d-flex': true, 'active': item.link==active, 'item':true}" (click)="activeLink(item.link)" data-bs-toggle="popover" data-bs-trigger="hover focus" [attr.data-bs-content]="item.label" aria-expanded="false">
                     <img src="{{item.icon}}" width="25px" alt="">
-                    <p class="mb-0 ms-3">{{item.label}}</p>
+                    <p class="mb-0 ms-3 toggleable">{{item.label}}</p>
                 </div>
             </a>
     </div>
     
-    <div class="align-self-center mt-auto text-center w-100">
+    <div class="align-self-center mt-auto w-100 avatar">
         <hr width="100%" color="#FFF" size="3">
-        <p class="m-0">EL MESSOUAL El Mehdi</p>
-        <p class="m-0">Sof IT .Inc</p>
+        <div class="d-flex align-items-center justify-content-center">
+            <img src="/assets/icons/avatar.png" alt="" width="50px">
+            <div class="ms-3 toggleable" style="white-space: nowrap;">
+                <p class="my-0">El Mehdi El Messoual</p>
+                <p class="my-0">Soft IT .Inc</p>
+            </div>
+        </div>
+        
     </div>
     
 </div>

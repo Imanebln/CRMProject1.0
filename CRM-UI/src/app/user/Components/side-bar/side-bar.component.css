@@ -2,9 +2,11 @@
     display: block;
     width: 100%;
     height: 100%;
-    background-color: var(--secondary);
-    padding: 20px 10px;
-    color: #FFF;
+    background: url('/assets/SideBar.png');
+    background-size: cover;
+    color: #edf2f4;
+    transition: all 800ms ease-out;
+    box-shadow: 2px 0px 5px rgba(0,0,0,0.5);
 }
 
 a {
@@ -17,18 +19,27 @@ a {
     font-weight: 500;
 }
 
+.logo {
+    background-color: #95274e;
+    width: 100%;
+    height: 80px;
+}
+
 .items {
     margin-top: 50px;
+    padding: 10px 10px;
 }
 
 .items > a > div {
     margin: 10px 0;
     padding: 10px 15px;
     border-radius: 10px;
+    white-space: nowrap;
 }
 
 .active {
-    background-color: white;
+    background-color: #e5e5e5;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.25);
     color: #000;
 }
 
@@ -40,6 +51,56 @@ a {
     filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.25));
     position: absolute;
     right: -13px;
-    top: 60px;
+    top: 65px;
     transform: rotateY(180deg);
+    cursor: pointer;
+    transition: all 800ms ease-in-out;
+}
+
+.avatar > div {
+    padding: 0px 20px 10px 20px;
+}
+.avatar p:first-child {
+    font-weight: 500;
+    font-size: 16px;
+}
+.avatar p:last-child{
+    font-size: 12px;
+    font-weight: 200;
+}
+.avatar img {
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+}
+
+.hidden {
+    display: none;
+    opacity: 0;
+}
+
+.rotate {
+    transform: rotateX(180deg);
+}
+
+.showing-on{
+    display: block;
+    animation: Showing 800ms ease 200ms;
+} 
+
+.toggleable {
+    transition: all 800ms ease;
+}
+
+
+@keyframes Showing {
+    0%{
+        opacity: 0;
+    }100%{
+        opacity: 1;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    .next {
+        display: none;
+    }
 }

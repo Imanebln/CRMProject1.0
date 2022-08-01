@@ -21,12 +21,12 @@
       Sign Up
     </div>
   </div>
-  <div class="welcome w-50">
+  <div class="welcome">
     <h4>Welcome to SQLI Customer Portal</h4>
     <p>The offical portal for SQLI customers</p>
   </div>
-  <div class="wrapper">
-    <div class="form w-50 d-flex flex-column">
+  <div class="wrapper row gutter-0">
+    <div class="form d-flex flex-column col-lg-6 px-0 order-1">
       <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
         <h4 *ngIf="isLogin == true" class="mb-3">Login</h4>
         <input
@@ -115,8 +115,8 @@
         </button>
       </form>
     </div>
-    <div class="w-50 d-flex align-items-center justify-content-end">
-      <img src="/assets/crm.png" width="80%" alt="" />
+    <div class="crmsvg d-flex align-items-center col-lg-6 order-0">
+      <img src="/assets/CRM.svg" width="100%" alt="" />
     </div>
   </div>
 </div>

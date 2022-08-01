@@ -73,7 +73,7 @@ namespace CRMClient.Impl {
 		}
 
 		protected string GetJson(T entity) {
-			StringBuilder sb = new StringBuilder("{");
+			StringBuilder sb = new("{");
 			PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 			foreach(PropertyInfo prop in properties) {
 				Object? value = prop.GetValue(entity, null);
@@ -87,7 +87,7 @@ namespace CRMClient.Impl {
 		}
 
 		private async Task<HttpResponseMessage> ResolveResponse(T CrmEntity, HttpMethod method , string query){
-			HttpRequestMessage request = new HttpRequestMessage(method, query);
+			HttpRequestMessage request = new(method, query);
 
 			if (request.Method != HttpMethod.Delete){
 				request.Content = new StringContent(GetJson(CrmEntity), Encoding.UTF8, "application/json");

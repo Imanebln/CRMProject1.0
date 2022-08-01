@@ -17,8 +17,13 @@
         },
         {
             "icon": "/assets/icons/company.png",
-            "label": "Accounts",
+            "label": "My Account",
             "link": "accounts"
+        },
+        {
+            "icon": "/assets/icons/job.png",
+            "label": "Opportunities",
+            "link": "opportunities"
         }
     ]
 }

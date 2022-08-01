@@ -19,6 +19,16 @@
   border-color: var(--primary);
 }
 
+.btn-primary:focus {
+  background-color: var(--secondary);
+  border: 1px solid var(--secondary);
+  box-shadow: 2px 2px 5px var(--secondary);
+}
+.btn-primary:disabled {
+  background-color: #c26686;
+  border: 1px solid #bf5077;
+}
+
 .red {
   background-color: red;
 }

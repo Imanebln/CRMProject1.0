@@ -34,6 +34,7 @@
 }
 
 .logo > img {
+  min-width: 100px;
   max-width: 200px;
   width: 10vw;
   color: white;
@@ -58,16 +59,17 @@
 }
 
 .menu {
-  /* position: absolute;
-      top: 50px; */
   width: 50%;
-  min-width: 350px;
+  min-width: 250px;
   color: var(--disabled);
   background-color: rgba(0, 0, 0, 0.3);
   padding: 10px 20px;
   border-radius: 10px;
   margin-top: 30px;
   font-size: 16px;
+}
+.menu > * {
+  cursor: pointer;
 }
 
 .menu img {
@@ -93,12 +95,13 @@
   justify-self: flex-end;
   justify-content: space-between;
   background-color: white;
-  padding: 40px 20px;
-  width: 50%;
+  padding: 40px 20px 10px 20px;
+  width: 70%;
   border-radius: 10px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
   margin-bottom: 5%;
-  height: 300px;
+  height: fit-content;
+  min-height: 300px;
 }
 
 .wrapper a {
@@ -110,6 +113,14 @@
 @media only screen and (max-width: 800px) {
   .main {
     width: 90%;
+  }
+  .wrapper{
+    width: 90%;
+  }
+
+  .crmsvg{
+    margin: 0 auto;
+    max-width: 300px;
   }
 }
 
