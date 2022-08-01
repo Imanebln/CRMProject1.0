@@ -1,0 +1,36 @@
+table {
+  width: 1226px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  min-width: 500px;
+}
+
+th.mat-header-cell {
+  text-align: left;
+  max-width: 300px;
+}
+button {
+  border: none;
+  background-color: #fff;
+}
+.details {
+  color: blue;
+}
+.update {
+  color: #ff4081;
+}
+.delete {
+  color: #f44336;
+}
+input {
+  width: 116%;
+  border-radius: 26px;
+  border: 1px solid #ada9a9;
+  padding: 1% 17%;
+  margin: 1% 1%;
+  background-image: url(https://www.pngarea.com/pngm/109/1164446_searchicon-png-search-icon-png-download.png);
+  background-repeat: no-repeat;
+  outline: 0;
+  background-position: 12px;
+  background-size: 16px;
+}

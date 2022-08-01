@@ -1,1 +1,76 @@
-<p>dashboard works!</p>
+<div class="row">
+  <div class="col-6">
+    <div class="card">
+      <h5 class="card-header">
+        <div class="d-flex">
+          <div class="p-2 flex-grow-1">Bar Chart</div>
+          <div class="p-2"><i class="fas fa-external-link-alt"></i></div>
+        </div>
+      </h5>
+      <div class="card-body">
+        <div class="container">
+          <app-bar-chart
+            [datasetsdataBar]="datasetsdataBar"
+            [labelsBar]="labelsBar"
+            [datasetsLabelsBar]="datasetsLabelsBar"
+            [datasetsbackgroundColorBar]="datasetsbackgroundColorBar"
+          ></app-bar-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card">
+      <h5 class="card-header">
+        <div class="d-flex">
+          <div class="p-2 flex-grow-1">Line Chart</div>
+          <div class="p-2"><i class="fas fa-external-link-alt"></i></div>
+        </div>
+      </h5>
+      <div class="card-body">
+        <div class="container">
+          <app-line-chart
+            [labelsLine]="labelsLine"
+            [datasetsLabelsLine]="datasetsLabelsLine"
+            [datasetsBorderColorLine]="datasetsBorderColorLine"
+            [datasetsdataLine]="datasetsdataLine"
+            [titleText]="titleText"
+          ></app-line-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card col-6">
+    <h5 class="card-header">
+      <div class="d-flex">
+        <div class="p-2 flex-grow-1">Doughnut Chart</div>
+        <div class="p-2"><i class="fas fa-external-link-alt"></i></div>
+      </div>
+    </h5>
+    <div class="card-body">
+      <div class="container">
+        <app-doughnut-chart></app-doughnut-chart>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card">
+      <h5 class="card-header">
+        <div class="d-flex">
+          <div class="p-2 flex-grow-1">Contact</div>
+          <div class="p-2">
+            <i class="fas fa-external-link-alt" (click)="toContacts()"></i>
+          </div>
+        </div>
+      </h5>
+      <div class="card-body">
+        <div class="container">
+          <h5 class="card-title">Benziza Mohamed</h5>
+        </div>
+        <div class="container">
+          <h5 class="card-title">El Messoual Mehdi</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -12,6 +12,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './Guards/auth.guard';
 import { DashbordComponent } from './dashbord/dashbord.component';
 import { AlertComponent } from './alert/alert.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 export function tokenGetter() {
@@ -39,6 +40,7 @@ export function tokenGetter() {
         disallowedRoutes: [],
       },
     }),
+    BrowserAnimationsModule,
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],

@@ -1,15 +1,21 @@
 <div id="main">
-    <div id="sidebar" #sidebar>
-        <app-side-bar [(LeftSpace)]="SpaceLeft"></app-side-bar>
-    </div>
-    
-    <div class="navbar-toggle" (click)="showSidebar($event, sidebar)">
-        <img src="/assets/icons/bars.png" alt="">
-    </div>
-    <div id="navbar" [ngStyle]="{left: this.SpaceLeft, width: 'calc(100% - ' + this.SpaceLeft + ')'}">
-        <app-nav-bar></app-nav-bar>
-    </div>
-    <div id="content" [ngStyle]="{left: this.SpaceLeft}">
-        <router-outlet></router-outlet>
-    </div>
+  <div id="sidebar" #sidebar>
+    <app-side-bar [(LeftSpace)]="SpaceLeft"></app-side-bar>
+  </div>
+
+  <div class="navbar-toggle" (click)="showSidebar($event, sidebar)">
+    <img src="/assets/icons/bars.png" alt="" />
+  </div>
+  <div
+    id="navbar"
+    [ngStyle]="{
+      left: this.SpaceLeft,
+      width: 'calc(100% - ' + this.SpaceLeft + ')'
+    }"
+  >
+    <app-nav-bar></app-nav-bar>
+  </div>
+  <div id="content" [ngStyle]="{ left: this.SpaceLeft }">
+    <router-outlet></router-outlet>
+  </div>
 </div>

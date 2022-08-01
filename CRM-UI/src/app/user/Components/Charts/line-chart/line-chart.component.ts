@@ -32,11 +32,17 @@ export class LineChartComponent implements OnInit {
       labels: this.labelsLine,
       datasets: [
         {
-          data: this.datasetsdataLine,
-          label: this.datasetsLabelsLine,
-          borderColor: this.datasetsBorderColorLine,
+          data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478],
+          label: 'Africa',
+          borderColor: '#3e95cd',
           fill: false,
         },
+        // {
+        //   data: this.datasetsdataLine,
+        //   label: this.datasetsLabelsLine,
+        //   borderColor: this.datasetsBorderColorLine,
+        //   fill: false,
+        // },
         // {
         //   data: [282, 350, 411, 502, 635, 809, 947, 1402, 3700, 5267],
         //   label: 'Asia',

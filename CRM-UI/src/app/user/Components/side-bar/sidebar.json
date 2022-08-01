@@ -1,29 +1,29 @@
 {
-    "items":[
-        {
-            "icon": "/assets/icons/dashboard.png",
-            "label": "Dashboard",
-            "link": "dashboard"
-        },
-        {
-            "icon": "/assets/icons/profile.png",
-            "label": "Profile",
-            "link": "profile"
-        },
-        {
-            "icon": "/assets/icons/contact.png",
-            "label": "Contacts",
-            "link": "contacts"
-        },
-        {
-            "icon": "/assets/icons/company.png",
-            "label": "My Account",
-            "link": "accounts"
-        },
-        {
-            "icon": "/assets/icons/job.png",
-            "label": "Opportunities",
-            "link": "opportunities"
-        }
-    ]
+  "items": [
+    {
+      "icon": "/assets/icons/dashboard.png",
+      "label": "Dashboard",
+      "link": "dashboard"
+    },
+    {
+      "icon": "/assets/icons/profile.png",
+      "label": "Profile",
+      "link": "profile"
+    },
+    {
+      "icon": "/assets/icons/contact.png",
+      "label": "Contacts",
+      "link": "contacts"
+    },
+    {
+      "icon": "/assets/icons/company.png",
+      "label": "My Account",
+      "link": "accounts"
+    },
+    {
+      "icon": "/assets/icons/job.png",
+      "label": "Opportunities",
+      "link": "opportunities"
+    }
+  ]
 }

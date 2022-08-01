@@ -21,13 +21,13 @@ export class DoughnutChartComponent implements OnInit {
   @Input() datasetsbackgroundColorDoughnut: any;
   @Input() datasetsdataDoughnut: any;
   @Input() titleText: any;
-  // listPays: string[] = [
-  //   'Africa',
-  //   'Asia',
-  //   'Europe',
-  //   'Latin America',
-  //   'North America',
-  // ];
+  listPays: string[] = [
+    'Africa',
+    'Asia',
+    'Europe',
+    'Latin America',
+    'North America',
+  ];
 
   ngOnInit(): void {
     this.createChart();
@@ -38,19 +38,20 @@ export class DoughnutChartComponent implements OnInit {
     Chart.register(...registerables);
     //step2
     const data = {
-      labels: this.labelsDoughnut,
+      labels: this.listPays,
       datasets: [
         {
-          label: this.datasetsLabelsDoughnut,
+          label: 'Population (millions)',
           backgroundColor: [
-            this.datasetsbackgroundColorDoughnut,
+            '#1ab9c5',
+            '#5b38c6',
             // '#3e95cd',
             // '#8e5ea2',
             // '#3cba9f',
             // '#e8c3b9',
             // '#c45850',
           ],
-          data: this.datasetsdataDoughnut,
+          data: [2478, 5267, 734, 784, 433],
         },
       ],
     };

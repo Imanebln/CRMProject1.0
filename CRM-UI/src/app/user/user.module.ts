@@ -12,7 +12,16 @@ import { FormsModule } from '@angular/forms';
 import { BarChartComponent } from './Components/Charts/bar-chart/bar-chart.component';
 import { LineChartComponent } from './Components/Charts/line-chart/line-chart.component';
 import { DoughnutChartComponent } from './Components/Charts/doughnut-chart/doughnut-chart.component';
-
+import { ContactsComponent } from './Pages/contacts/contacts.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatNativeDateModule } from '@angular/material/core';
+import { TableDataComponent } from './Components/table-data/table-data.component';
+import { AccountsComponent } from './Pages/accounts/accounts.component';
 
 @NgModule({
   declarations: [
@@ -23,12 +32,22 @@ import { DoughnutChartComponent } from './Components/Charts/doughnut-chart/dough
     NavBarComponent,
     BarChartComponent,
     LineChartComponent,
-    DoughnutChartComponent
+    DoughnutChartComponent,
+    ContactsComponent,
+    TableDataComponent,
+    AccountsComponent,
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
-    FormsModule
-  ]
+    FormsModule,
+    MatTableModule,
+    MatIconModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatNativeDateModule,
+  ],
 })
-export class UserModule { }
+export class UserModule {}
