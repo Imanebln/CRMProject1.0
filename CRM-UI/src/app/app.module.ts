@@ -13,6 +13,9 @@ import { AuthGuard } from './Guards/auth.guard';
 import { DashbordComponent } from './dashbord/dashbord.component';
 import { AlertComponent } from './alert/alert.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastComponent } from './toast/toast.component';
+import { ToasterComponent } from './toaster/toaster.component';
+import { CommonModule } from '@angular/common';
 
 
 export function tokenGetter() {
@@ -27,8 +30,12 @@ export function tokenGetter() {
     ResetPasswordComponent,
     DashbordComponent,
     AlertComponent,
+    ToastComponent,
+    ToasterComponent,
+  
   ],
   imports: [
+    
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
@@ -41,6 +48,7 @@ export function tokenGetter() {
       },
     }),
     BrowserAnimationsModule,
+
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent],
