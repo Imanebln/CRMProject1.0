@@ -1,5 +1,6 @@
 ﻿using CRMServer.Data;
 using CRMServer.Models;
+using CRMServer.Models.CRM;
 using CRMServer.Models.Email;
 using EmailService;
 using Microsoft.AspNetCore.Identity;
@@ -99,12 +100,25 @@ namespace CRMServer.Services
             if (await _userManager.FindByEmailAsync(email) is not null)
                 return new AuthModel { Message = "Email is already registered!" };
 
+           
+            Contact contact = new()
+            {
+                EmailAddress1 = email,
+                
+            };
+            Account account = new()
+            {
+                Name = "company",
+            };
             var user = new AppUser
             {
                 UserName = email,
                 Email = email,
-                FullName = "heheheh"
+                FullName = contact.Firstname+" "+contact.Lastname,
             };
+            contact.UserId = user.Id;
+
+
             var Pass = "CRMContact@2022";
 
             var result = await _userManager.CreateAsync(user, Pass);
@@ -127,6 +141,12 @@ namespace CRMServer.Services
 
             var jwtSecurityToken = await CreateJwtToken(user);
             await ValidationEmail(user);
+
+            _context.Contacts.Add(contact);
+            account.Contacts.Add(contact);
+
+            _context.Accounts.Add(account);
+            await _context.SaveChangesAsync();
             
             return new AuthModel
             {

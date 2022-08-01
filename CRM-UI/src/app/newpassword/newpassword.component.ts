@@ -40,8 +40,8 @@ export class NewpasswordComponent implements OnInit {
   onSubmit() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    this.passwordModel.token = 'Y3QPBYMXTMPT6F2WLENYB2BBQO36KGRJ';
-    this.passwordModel.email = 'heriberto@northwindtraders.com';
+    this.passwordModel.token = urlParams.get('token') + '';
+    this.passwordModel.email = urlParams.get('email') + '';
     this.passwordModel.password = this.passwordForm.value.password;
 
     this.authService.signUp(this.passwordModel).subscribe({

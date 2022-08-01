@@ -120,12 +120,19 @@ export class LoginComponent implements OnInit {
           });
         },
         error: (err: HttpErrorResponse) => {
-          //Alert Err
-          this.alert.ShowAlert({
-            type: 'warning',
-            icon: 'circle-exclamation',
-            content: err.error,
-          });
+          if (err.status == 500) {
+            this.alert.ShowAlert({
+              type: 'warning',
+              icon: 'circle-exclamation',
+              content: 'You Can not reach email in server!',
+            });
+          } else {
+            this.alert.ShowAlert({
+              type: 'warning',
+              icon: 'circle-exclamation',
+              content: err.error,
+            });
+          }
         },
       });
     }

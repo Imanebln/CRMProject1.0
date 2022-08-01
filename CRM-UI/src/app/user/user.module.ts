@@ -9,6 +9,9 @@ import { ProfileComponent } from './Pages/profile/profile.component';
 import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
 import { FormsModule } from '@angular/forms';
 
+import { BarChartComponent } from './Components/Charts/bar-chart/bar-chart.component';
+import { LineChartComponent } from './Components/Charts/line-chart/line-chart.component';
+import { DoughnutChartComponent } from './Components/Charts/doughnut-chart/doughnut-chart.component';
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import { FormsModule } from '@angular/forms';
     DashboardComponent,
     SideBarComponent,
     ProfileComponent,
-    NavBarComponent
+    NavBarComponent,
+    BarChartComponent,
+    LineChartComponent,
+    DoughnutChartComponent
   ],
   imports: [
     CommonModule,
