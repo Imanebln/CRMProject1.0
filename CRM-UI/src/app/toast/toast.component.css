@@ -1,0 +1,66 @@
+.toast{
+    position : relative;
+    min-width: 300px;
+    max-width: 500px;
+    word-break: break-all;
+    z-index: 100;
+    transform: translate(-100%,-100%);
+    overflow: auto; 
+    border-radius: 15px;
+  }
+  
+  .wrapper{
+    padding : 16px 20px;
+    background-color:rgb(232, 224, 224);
+    border-radius: 10px;
+    width: 450px;
+    display: grid;
+    grid-template-columns: 80px auto 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
+  
+  .fa-xmark {
+    position: relative;
+    top: 0px;
+    right:0px;
+    cursor: pointer;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    justify-content: right;
+  }
+  .icon{
+  
+    grid-column-start: 1;
+    grid-column-end: 2;
+    font-size: 35px;
+    opacity: 1;
+  }
+  .content{
+    font-size : 15px; 
+    grid-column-start:2;
+    grid-column-end: 3; 
+    margin-top: 8px;
+  }
+  @keyframes CollapseAnimation {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes ShowUpAnimation {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+    

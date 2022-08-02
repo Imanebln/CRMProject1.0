@@ -1,0 +1,16 @@
+<div [ngClass]="toast" 
+[ngStyle]="style">
+    <div class="wrapper">
+        
+        <i class = "fa-solid fa-xmark" 
+        (click) ="closeToast()"></i>
+
+        <i [ngClass]="['icon fa-solid fa-' + toast.icon, 'text-' + this.toast.type]"></i>
+       
+        <div [ngClass]="['content', 'text-' + this.toast.type]">
+            <p>{{toast.content}}</p>
+        </div>
+
+    </div>
+
+</div>
