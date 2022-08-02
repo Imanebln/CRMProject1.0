@@ -70,6 +70,13 @@ builder.Services.AddSingleton<CRMService, CRMService>();
 // AutoMapper config
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+//Add authorisation
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdministratorRole",
+         policy => policy.RequireRole("User"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -80,6 +87,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

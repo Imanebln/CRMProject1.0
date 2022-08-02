@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using CRMServer.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using CRMServer.Models;
 using Microsoft.AspNetCore.Identity;
 using CRMServer.Services;
-using System.Web;
 using CRMClient;
 using CRMServer.Models.CRM;
+using System.Security.Claims;
+using CRMServer.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CRMServer.Controllers
 {
@@ -19,46 +15,41 @@ namespace CRMServer.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly CRMContext _context;
         private readonly UserManager<AppUser> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
-        private readonly IConfiguration _configuration;
         private readonly IAuthService _authService;
         private readonly CRMService _crm;
+        private readonly CRMContext _context;
 
-        public AuthController(CRMContext context, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IAuthService authService, CRMService crmService)
+        public AuthController(UserManager<AppUser> userManager, IAuthService authService, CRMService crmService, CRMContext context)
         {
-            _context = context;
             this.userManager = userManager;
-            this.roleManager = roleManager;
-            _configuration = configuration;
             _authService = authService;
             _crm = crmService;
+            _context = context;
         }
 
         //GET: CRMVerification
         [HttpGet("CRMVerification")]
         public async Task<IActionResult> CRMVerification(string email)
         {
-            //Inject CRMService and check if contact exists
-            Contact contact = _crm.contacts.GetContactByEmail(email);
-
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            //Inject CRMService and check if contact exists
+            Contact? contact = _crm.contacts.GetContactByEmail(email);
 
             if (contact == null)
             {
                 return BadRequest("Contact not found");
             }
             else
-            {
+            { 
                 var result = await _authService.RegisterAsync(email);
                 if (result.Token is null) { 
                     return BadRequest(result.Message);
                 }
                 return Ok(result);
             }
-            return Ok();
         }
 
         //GET: Login
@@ -110,9 +101,6 @@ namespace CRMServer.Controllers
             {
                 return Ok(new { str = "Email not confirmed" });
             }
-
-           
-
         }
 
         // API Validation Email
@@ -164,6 +152,20 @@ namespace CRMServer.Controllers
 
             }
             return BadRequest(new { str = "user not found" });
+        }
+
+        //GET: api/Current User
+        [HttpGet("GetCurrentUser")]
+        public ActionResult<Contact?> GetCurrentUser()
+        {
+            var userEmail = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return _crm.contacts.GetContactByEmail(userEmail);
+        }
+        //GET: api/Get contact's account
+        [HttpGet("GetContactsAccount")]
+        public ActionResult<Account?> GetContactsAccount(Guid id)
+        {
+            return _crm.contacts?.GetContactById(id)?.Account;
         }
     }
 }

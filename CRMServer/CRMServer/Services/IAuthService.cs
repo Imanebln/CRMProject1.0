@@ -12,6 +12,5 @@ namespace CRMServer.Services
         public Task<string> ForgotPasswordAsync(string email);
         public Task<string> ResetPasswordAsync(string email, string password);
 
-
         }
 }

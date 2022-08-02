@@ -11,9 +11,8 @@ namespace CRMServer.Models.CRM{
 		public string? Fax { get; set; }
 		public string? JobTitle { get; set; }
 		public Account? Account { get; set; }
+
 		[JsonIgnore]
-		public AppUser? User { get; set; }
-		public string UserId { get; set; }
 		public DateTime BirthdateObj {
 			get {
 			    if (Birthdate == null) return DateTime.Now;

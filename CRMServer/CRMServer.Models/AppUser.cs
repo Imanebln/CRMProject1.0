@@ -7,7 +7,5 @@ namespace CRMServer.Models
     public class AppUser: IdentityUser
     {
         public string FullName { get; set; }
-        [JsonIgnore]
-        public Contact? Contact { get; set; }
     }
 }

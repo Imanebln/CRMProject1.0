@@ -2,9 +2,9 @@
 using CRMServer.Models.CRM;
 namespace CRMServer.DTO
 {
-    public class ContactProfile : Profile
+    public class AutoMapperProfile : Profile
     {
-        public ContactProfile()
+        public AutoMapperProfile()
         {
             CreateMap<ContactDTO, Contact>();
             CreateMap<AccountDTO, Account>();

@@ -1,7 +1,7 @@
-﻿using CRMServer.Data;
+﻿using CRMClient;
+using CRMServer.Data;
 using CRMServer.Models;
 using CRMServer.Models.CRM;
-using CRMServer.Models.Email;
 using EmailService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -19,14 +19,16 @@ namespace CRMServer.Services
         private readonly CRMContext _context;
         private readonly IConfiguration _configuration;
         private readonly IPrettyEmail _emailSender;
+        private readonly CRMService _crmService;
 
-        public AuthService(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, CRMContext context, IConfiguration configuration, IPrettyEmail emailSender)
+        public AuthService(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, CRMContext context, IConfiguration configuration, IPrettyEmail emailSender,CRMService crmService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _context = context;
             _configuration = configuration;
             _emailSender = emailSender;
+            _crmService = crmService;
         }
 
         //Get Token
@@ -35,7 +37,6 @@ namespace CRMServer.Services
             var authModel = new AuthModel();
 
             var user = await _userManager.FindByEmailAsync(model.Email);
-
             
             if (user is null || !await _userManager.CheckPasswordAsync(user, model.Password))
             {
@@ -100,24 +101,14 @@ namespace CRMServer.Services
             if (await _userManager.FindByEmailAsync(email) is not null)
                 return new AuthModel { Message = "Email is already registered!" };
 
-           
-            Contact contact = new()
-            {
-                EmailAddress1 = email,
-                
-            };
-            Account account = new()
-            {
-                Name = "company",
-            };
+            Contact? c = _crmService.contacts.GetContactByEmail(email);
+            
             var user = new AppUser
             {
                 UserName = email,
                 Email = email,
-                FullName = contact.Firstname+" "+contact.Lastname,
+                FullName = c.Firstname+" "+c.Lastname,
             };
-            contact.UserId = user.Id;
-
 
             var Pass = "CRMContact@2022";
 
@@ -142,10 +133,6 @@ namespace CRMServer.Services
             var jwtSecurityToken = await CreateJwtToken(user);
             await ValidationEmail(user);
 
-            _context.Contacts.Add(contact);
-            account.Contacts.Add(contact);
-
-            _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
             
             return new AuthModel
@@ -161,27 +148,26 @@ namespace CRMServer.Services
         // Send email to confirm CRM
         public async Task<string> ValidationEmail(AppUser user)
         {
-           /* var ctoken = HttpUtility.UrlEncode(await _userManager.GenerateEmailConfirmationTokenAsync(user));*/
-
+            // Verify user token
             var token = HttpUtility.UrlEncode(await _userManager.GetSecurityStampAsync(user));
+
             // API Emailvalidation
-/*            var confirmationlink = "https://localhost:7270/api/Auth/ValidationEmail?token=" + ctoken + "&email=" + user.Email;
- *            
-*/            var confirmationlink2 = "http://localhost:4200/newpassword?token=" + token + "&email=" + user.Email;
-            _emailSender.SendRegister(user.Email, confirmationlink2);
+            var confirmationlink = "http://localhost:4200/newpassword?token=" + token + "&email=" + user.Email;
+            _emailSender.SendRegister(user.Email, confirmationlink);
             
-
-
             return "Success";
         }
+
         // API Validation Email
         public async Task<string> ValidationEmail(string email, string token)
         {
+            //Verify user exists!
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
                 return "User not found";
             }
+            
             var result = await _userManager.ConfirmEmailAsync(user, token);
             if (!result.Succeeded)
             {
@@ -193,17 +179,17 @@ namespace CRMServer.Services
         //Forgot password
         public async Task<string> ForgotPasswordAsync(string email)
         {
+            //Verify user exists!
             var user = await _userManager.FindByEmailAsync(email);
             if (user is not null)
             {
+                // Verify user token
                 var token = HttpUtility.UrlEncode(await _userManager.GetSecurityStampAsync(user));
 
                 var confirmationlink = "http://localhost:4200/newpassword?token=" + token + "&email=" + user.Email;
-
                 _emailSender.SendPasswordReset(user.Email, confirmationlink);
                 return "Succeeded";
             }
-
             return "Failed";
         }
 
@@ -216,10 +202,10 @@ namespace CRMServer.Services
             {
                 return "User not found";
             }
+            //Reset password to new password
             var result = await _userManager.ResetPasswordAsync(user, ptoken, password);
             if (result.Succeeded)
             {
-               
                 return "Succeeded";
             }
             return "Failed";

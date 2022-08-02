@@ -91,86 +91,6 @@ namespace CRMServer.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("CRMServer.Models.CRM.Account", b =>
-                {
-                    b.Property<Guid>("AccountId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Fax")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("PrimaryContactContactId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("WebsiteUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("_primarycontactid_value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AccountId");
-
-                    b.HasIndex("PrimaryContactContactId");
-
-                    b.ToTable("Accounts");
-                });
-
-            modelBuilder.Entity("CRMServer.Models.CRM.Contact", b =>
-                {
-                    b.Property<Guid>("ContactId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("AccountId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Birthdate")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("BirthdateObj")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EmailAddress1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Fax")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Firstname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JobTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lastname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MobilePhone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ContactId");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Contacts");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -304,32 +224,6 @@ namespace CRMServer.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CRMServer.Models.CRM.Account", b =>
-                {
-                    b.HasOne("CRMServer.Models.CRM.Contact", "PrimaryContact")
-                        .WithMany()
-                        .HasForeignKey("PrimaryContactContactId");
-
-                    b.Navigation("PrimaryContact");
-                });
-
-            modelBuilder.Entity("CRMServer.Models.CRM.Contact", b =>
-                {
-                    b.HasOne("CRMServer.Models.CRM.Account", "Account")
-                        .WithMany("Contacts")
-                        .HasForeignKey("AccountId");
-
-                    b.HasOne("CRMServer.Models.AppUser", "User")
-                        .WithOne("Contact")
-                        .HasForeignKey("CRMServer.Models.CRM.Contact", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -379,16 +273,6 @@ namespace CRMServer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("CRMServer.Models.AppUser", b =>
-                {
-                    b.Navigation("Contact");
-                });
-
-            modelBuilder.Entity("CRMServer.Models.CRM.Account", b =>
-                {
-                    b.Navigation("Contacts");
                 });
 #pragma warning restore 612, 618
         }
