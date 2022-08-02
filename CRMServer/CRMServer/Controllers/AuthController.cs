@@ -163,9 +163,10 @@ namespace CRMServer.Controllers
         }
         //GET: api/Get contact's account
         [HttpGet("GetContactsAccount")]
-        public ActionResult<Account?> GetContactsAccount(Guid id)
+        public ActionResult<Account?> GetContactsAccount()
         {
-            return _crm.contacts?.GetContactById(id)?.Account;
+            var userEmail = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return _crm.contacts.GetContactByEmail(userEmail)?.Account;
         }
     }
 }
