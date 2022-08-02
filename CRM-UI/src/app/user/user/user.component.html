@@ -15,7 +15,7 @@
   >
     <app-nav-bar></app-nav-bar>
   </div>
-  <div id="content" [ngStyle]="{ left: this.SpaceLeft }">
+  <div id="content" [ngStyle]="{ left: this.SpaceLeft }" [style.width]="'calc(100% - ' + this.SpaceLeft + ')'">
     <router-outlet></router-outlet>
   </div>
 </div>

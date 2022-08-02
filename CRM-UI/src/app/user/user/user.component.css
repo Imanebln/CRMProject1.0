@@ -20,7 +20,8 @@
     position: absolute;
     top: 80px;
     padding: 30px;
-    transition: all 800ms ease-out  ;
+    transition: all 800ms ease-out;
+    overflow-x: auto;
 }
 
 .navbar-toggle {
@@ -51,5 +52,8 @@
     .sidebar-show {
         transform: translateX(0) !important;
         
+    }
+    #content{
+        width: 100% !important;
     }
 }

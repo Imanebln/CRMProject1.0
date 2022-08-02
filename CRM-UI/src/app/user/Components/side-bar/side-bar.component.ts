@@ -27,11 +27,17 @@ export class SideBarComponent implements OnInit, AfterViewInit {
     this.active = window.location.pathname.split('/')[2];
     this.width = this.LeftSpace
     document.addEventListener('click', (event :any)=>{
-        let sidebar = document.querySelector('#sidebar')
-        let items = document.querySelectorAll('.items > *');
-        if(event.target.contains(sidebar)){
+        let sidebar = document.querySelector('#sidebar')  
+        let toggle = document.querySelector('.navbar-toggle')
+        let items = document.querySelectorAll('.items > *')
+        if(!toggle?.contains(event.target) && !sidebar?.contains(event.target)){
           sidebar?.classList.remove('sidebar-show');
         }
+        items.forEach((e) => {
+          if(e.contains(event.target)){
+            sidebar?.classList.remove('sidebar-show');
+          }
+        })
     })
   }
   
