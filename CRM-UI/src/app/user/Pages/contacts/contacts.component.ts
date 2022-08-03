@@ -16,8 +16,9 @@ export class ContactsComponent {
   constructor(private contactService: ContactService) {}
 
   ngOnInit(): void {
-    this.contactService.getContacts().subscribe((value) => {
-      this.ourData = this.contactService.mapToContacts(value);
+    this.contactService.getContactsAccount().subscribe((value) => {
+      this.ourData = value.contacts;
+      // console.log(value.contacts);
     });
   }
 }

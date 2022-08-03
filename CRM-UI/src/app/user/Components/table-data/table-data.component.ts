@@ -35,12 +35,11 @@ export class TableDataComponent implements OnInit {
       // this.dataSource = new MatTableDataSource<Contact>();
       // this.dataSource.data = this.ourData;
       this.displayedColumns = [
-        'contactId',
         'firstname',
         'lastname',
         'birthdate',
-        'emailAddress1',
-        'fax',
+        'email',
+        'mobilePhone',
         'jobTitle',
         'details',
         'update',
@@ -48,7 +47,6 @@ export class TableDataComponent implements OnInit {
       ];
     } else if (this.typeOfData == 'Account') {
       this.displayedColumns = [
-        'accountId',
         'name',
         'websiteUrl',
         'description',
@@ -69,7 +67,6 @@ export class TableDataComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     } else if (this.typeOfData == 'Account') {
-      console.log(this.ourData);
       this.dataSource = new MatTableDataSource<Account>();
       this.dataSource.data = this.ourData;
       this.dataSource.sort = this.sort;
@@ -124,11 +121,13 @@ export class TableDataComponent implements OnInit {
 
     //For our date
     // this.dataSource.data = this.dataSource.data.map((e: any) => {
-    //   return { ...e, 'Date Of Birth': e.dateOfBirth.toDateString() };
+    //   return { ...e, 'Date Of Birth': e.birthdate.toDateString() };
     // });
   };
 
-  public redirectToDetails = (id: any) => {};
+  public redirectToDetails = (id: any) => {
+    console.log(id);
+  };
   public redirectToUpdate = (id: any) => {};
   public redirectToDelete = (id: any) => {};
   public doFilter = (event: any) => {

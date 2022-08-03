@@ -164,7 +164,10 @@ namespace CRMServer.Controllers
         public ActionResult<Account?> GetContactsAccount()
         {
             var userEmail = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return _crm.contacts.GetContactByEmail(userEmail)?.Account;
+            Guid? AccountId = _crm.contacts.GetContactByEmail(userEmail)?.Account?.AccountId;
+            if (AccountId == null) return NotFound();
+            else
+                return _crm.accounts.GetAccountById((Guid) AccountId);
         }
     }
 }

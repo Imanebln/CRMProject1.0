@@ -7,7 +7,7 @@ import { DashboardComponent } from './Pages/dashboard/dashboard.component';
 import { SideBarComponent } from './Components/side-bar/side-bar.component';
 import { ProfileComponent } from './Pages/profile/profile.component';
 import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BarChartComponent } from './Components/Charts/bar-chart/bar-chart.component';
 import { LineChartComponent } from './Components/Charts/line-chart/line-chart.component';
@@ -22,6 +22,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatNativeDateModule } from '@angular/material/core';
 import { TableDataComponent } from './Components/table-data/table-data.component';
 import { AccountsComponent } from './Pages/accounts/accounts.component';
+import { HeaderTablePipe } from './Components/table-data/header-table.pipe';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { AccountsComponent } from './Pages/accounts/accounts.component';
     ContactsComponent,
     TableDataComponent,
     AccountsComponent,
+    HeaderTablePipe,
   ],
   imports: [
     CommonModule,
@@ -48,6 +51,8 @@ import { AccountsComponent } from './Pages/accounts/accounts.component';
     MatInputModule,
     MatPaginatorModule,
     MatNativeDateModule,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
   ],
 })
 export class UserModule {}

@@ -1,5 +1,135 @@
-<app-table-data
+<!-- our spinner -->
+<mat-spinner
+  *ngIf="ourData == null"
+  class="spinner"
+  [diameter]="70"
+  color="accent"
+>
+</mat-spinner>
+<!-- our card profile -->
+<div
   *ngIf="ourData != null"
-  [ourData]="ourData"
-  [typeOfData]="typeOfData"
-></app-table-data>
+  class="d-flex flex-column"
+  style="
+    border: 1px solid #eee;
+    max-width: 800px;
+    border-radius: 10px;
+    margin: 0 auto;
+    box-shadow: rgb(0 0 0 / 10%) 0px 0px 5px 0px,
+      rgb(0 0 0 / 10%) 0px 0px 1px 0px;
+  "
+>
+  <div
+    class="d-flex justify-content-center bd-highlight mb-3"
+    style="position: relative"
+  >
+    <div class="p-2" style="text-align: center">
+      <div class="d-flex flex-shrink-0 flex-column mb-3">
+        <div class="p-2">
+          <img
+            class="avatar"
+            src="../../../../assets/icons/avatar.png"
+            alt="..."
+          />
+        </div>
+        <div class="p-2" style="font-size: 30px; font-weight: bold">
+          {{ ourData.name }}
+        </div>
+      </div>
+    </div>
+    <div class="ml-auto p-2" style="position: absolute; top: 0px; right: 0px">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="edit()"
+        [ngClass]="buttonText == 'Edit' ? 'btnEdit' : 'btnSave'"
+        (click)="submitForm($event)"
+      >
+        {{ buttonText }}
+      </button>
+    </div>
+    <hr />
+  </div>
+
+  <div *ngIf="ourData != null" class="d-flex flex-column mb-3">
+    <form
+      id="account-form"
+      class="p-2"
+      [formGroup]="accountForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="mb-3 row" style="margin: 5px">
+        <hr style="background: #ff0007; height: 2px" />
+      </div>
+      <div class="mb-3 row">
+        <label for="websiteUrl" class="col-sm-2 col-form-label"
+          >website Url</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="text"
+            [readonly]="isReadOnly"
+            class="form-control-plaintext"
+            id="websiteUrl"
+            [class.inputEdit]="buttonText == 'Save'"
+            formControlName="websiteUrl"
+            name="websiteUrl"
+          />
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="description" class="col-sm-2 col-form-label"
+          >Description</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="text"
+            [readonly]="isReadOnly"
+            class="form-control-plaintext"
+            id="description"
+            [class.inputEdit]="buttonText == 'Save'"
+            formControlName="description"
+            name="description"
+          />
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Fax</label>
+        <div class="col-sm-10">
+          <input
+            type="tel"
+            [readonly]="isReadOnly"
+            class="form-control-plaintext"
+            id="fax"
+            [class.inputEdit]="buttonText == 'Save'"
+            formControlName="fax"
+            name="fax"
+          />
+        </div>
+      </div>
+      <div class="mb-3 row" style="margin: 5px">
+        <hr style="background: #ff0007; height: 2px" />
+      </div>
+    </form>
+  </div>
+  <!-- our contacts of ourData -->
+  <div class="d-flex">
+    <div class="row">
+      <div
+        class="col-6"
+        *ngFor="let contact of ourData.contacts; let i = index"
+      >
+        <div class="card" [style.background-color]="i == 0 ? 'gold' : '#eee'">
+          <div class="card-body">
+            <h5 class="card-title">
+              {{ contact.firstname + " " + contact.lastname }}
+            </h5>
+            <p class="card-text">
+              {{ contact.email }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

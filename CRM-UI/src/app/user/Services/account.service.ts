@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 import { Account } from '../Pages/accounts/account.model';
 
@@ -20,6 +21,13 @@ export class AccountService {
 
   getAccounts() {
     return this.http.get<Account[]>(this.apiUrl + 'Accounts');
+  }
+
+  updateAccount(account: Account): Observable<any> {
+    return this.http.put<Account>(
+      this.apiUrl + 'Accounts/UpdateAccount',
+      account
+    );
   }
 
   mapToAccount(obj: any): Account {

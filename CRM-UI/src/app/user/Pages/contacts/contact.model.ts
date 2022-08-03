@@ -3,7 +3,8 @@ export interface Contact {
   firstname: string;
   lastname: string;
   birthdate: Date;
-  emailAddress1: string;
+  email: string;
   fax: string;
   jobTitle: string;
+  isPrimary: boolean;
 }

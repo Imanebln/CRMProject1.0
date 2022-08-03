@@ -1,3 +1,50 @@
+<!-- Modal Info -->
+<!-- <div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Info Contact</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="dataSource != null">
+          <div class="mb-3" *ngFor="let pair of dataSource.data[0] | keyvalue">
+            <div class="input-group flex-nowrap">
+              <span class="input-group-text" id="addon-wrapping">{{
+                pair.key
+              }}</span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Username"
+                aria-label="Username"
+                aria-describedby="addon-wrapping"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
 <div class="d-flex" style="justify-content: space-between">
   <div class="mr-auto p-2">
     <input type="text" (keyup)="doFilter($event)" />
@@ -13,6 +60,7 @@
   </div>
 </div>
 <div></div>
+
 <table
   *ngIf="dataSource != null"
   mat-table
@@ -31,9 +79,11 @@
       mat-sort-header
       style="text-transform: capitalize"
     >
-      {{ pair.key }}
+      {{ pair.key | headerTable }}
     </th>
-    <td mat-cell *matCellDef="let element">{{ element[pair.key] }}</td>
+    <td mat-cell *matCellDef="let element">
+      {{ element[pair.key] }}
+    </td>
   </ng-container>
 
   <!-- <ng-container matColumnDef="name">
@@ -58,9 +108,11 @@
         class="details"
         mat-icon-button
         color="primary"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
         (click)="redirectToDetails(element)"
       >
-        <mat-icon class="mat-18">reorder</mat-icon>
+        <i class="fa-solid fa-eye fa-lg"></i>
       </button>
     </td>
   </ng-container>
@@ -74,7 +126,7 @@
         color="accent"
         (click)="redirectToUpdate(element)"
       >
-        <mat-icon class="mat-18">system_update</mat-icon>
+        <i class="fa-solid fa-pencil fa-lg"></i>
       </button>
     </td>
   </ng-container>
@@ -88,7 +140,7 @@
         color="warn"
         (click)="redirectToDelete(element)"
       >
-        <mat-icon class="mat-18">delete</mat-icon>
+        <i class="fa-solid fa-trash-can fa-lg"></i>
       </button>
     </td>
   </ng-container>

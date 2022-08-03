@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Account } from '../Pages/accounts/account.model';
 import { Contact } from '../Pages/contacts/contact.model';
 
 @Injectable({
@@ -12,8 +13,8 @@ export class ContactService {
     'firstname',
     'lastname',
     'birthdate',
-    'emailAddress1',
-    'fax',
+    'email',
+    'mobilePhone',
     'jobTitle',
   ];
   apiUrl: string = environment.apiUrl;
@@ -22,6 +23,14 @@ export class ContactService {
 
   getContacts() {
     return this.http.get<Contact[]>(this.apiUrl + 'Contacts');
+  }
+
+  getCurrentUser() {
+    return this.http.get<Contact>(this.apiUrl + 'Auth/GetCurrentUser');
+  }
+
+  getContactsAccount() {
+    return this.http.get<Account>(this.apiUrl + 'Auth/GetContactsAccount');
   }
 
   mapToContact(obj: any): Contact {

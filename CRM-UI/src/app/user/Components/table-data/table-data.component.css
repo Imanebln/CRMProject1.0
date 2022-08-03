@@ -9,15 +9,17 @@ th.mat-header-cell {
   text-align: left;
   max-width: 300px;
 }
-button {
+.details,
+.update,
+.delete {
   border: none;
   background-color: #fff;
 }
 .details {
-  color: blue;
+  color: #3a86ff;
 }
 .update {
-  color: #ff4081;
+  color: #8ac926;
 }
 .delete {
   color: #f44336;
@@ -33,4 +35,33 @@ input {
   outline: 0;
   background-position: 12px;
   background-size: 16px;
+}
+/* table,
+th,
+td {
+  border: 1px solid;
+} */
+tr:hover {
+  background-color: #f0f0f0c7;
+}
+tr:hover .delete {
+  background-color: #f0f0f0c7;
+}
+tr:hover .details {
+  background-color: #f0f0f0c7;
+}
+tr:hover .update {
+  background-color: #f0f0f0c7;
+}
+tr.mat-header-row {
+  height: 56px;
+  background: #f0f0f0c7;
+}
+th {
+  text-transform: capitalize;
+  color: black;
+  font-size: 15px;
+}
+table.mat-table {
+  border: 1px solid #eee;
 }

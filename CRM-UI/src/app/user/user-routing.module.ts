@@ -4,6 +4,7 @@ import { AccountsComponent } from './Pages/accounts/accounts.component';
 import { ContactsComponent } from './Pages/contacts/contacts.component';
 import { DashboardComponent } from './Pages/dashboard/dashboard.component';
 import { ProfileComponent } from './Pages/profile/profile.component';
+import { ContactGuard } from './Services/contact.guard';
 import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
@@ -14,7 +15,11 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'profile', component: ProfileComponent },
-      { path: 'contacts', component: ContactsComponent },
+      {
+        path: 'contacts',
+        component: ContactsComponent,
+        canActivate: [ContactGuard],
+      },
       { path: 'accounts', component: AccountsComponent },
     ],
   },
