@@ -55,7 +55,7 @@ namespace CRMServer.Controllers
         {
             Contact? c = _crmService.contacts.GetContactByEmail(contactdto.EmailAddress1);
             Contact? contact = _mapper.Map<Contact>(contactdto);
-            contact.EmailAddress1 = c.EmailAddress1;
+            contact.Email = c.Email;
             contact.ContactId = c.ContactId;
             contact = _crmService.contacts.UpdateContact(contact).Result;
             if (contact == null)

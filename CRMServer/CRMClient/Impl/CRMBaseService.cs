@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace CRMClient.Impl {
 	public abstract class CRMBaseService<T> : ICRMBaseService<T> where T : ICrmEntity{
@@ -78,8 +79,12 @@ namespace CRMClient.Impl {
 			foreach(PropertyInfo prop in properties) {
 				Object? value = prop.GetValue(entity, null);
 				Type? t = value?.GetType();
+				var jsonName = (JsonPropertyNameAttribute?) prop.GetCustomAttribute(typeof(JsonPropertyNameAttribute));
 				if (value != null && t == typeof(string) && !prop.Name.StartsWith("_")) {
-					sb.Append($"\"{prop.Name.ToLower()}\": \"{value}\",");
+					if(jsonName !=null)
+						sb.Append($"\"{jsonName.Name.ToLower()}\": \"{value}\",");
+					else
+						sb.Append($"\"{prop.Name.ToLower()}\": \"{value}\",");
 				}
 			}
 			string objectJson = sb.ToString().TrimEnd(',');
@@ -88,7 +93,7 @@ namespace CRMClient.Impl {
 
 		private async Task<HttpResponseMessage> ResolveResponse(T CrmEntity, HttpMethod method , string query){
 			HttpRequestMessage request = new(method, query);
-
+			string s = GetJson(CrmEntity);
 			if (request.Method != HttpMethod.Delete){
 				request.Content = new StringContent(GetJson(CrmEntity), Encoding.UTF8, "application/json");
 			}

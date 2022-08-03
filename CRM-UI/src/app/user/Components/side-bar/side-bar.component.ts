@@ -78,7 +78,7 @@ export class SideBarComponent implements OnInit, AfterViewInit {
           e.classList.remove('hidden')
           e.classList.remove('showing-on')
         })
-      }, 800)
+      }, 400)
       nextBtn.classList.remove('rotate')
     }
     this.minimized = !this.minimized;

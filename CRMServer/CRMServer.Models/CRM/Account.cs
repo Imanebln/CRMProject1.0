@@ -7,10 +7,9 @@ namespace CRMServer.Models.CRM {
 		public string? WebsiteUrl { get; set; }
 		public string? Description { get; set; }
 		public string? Fax { get; set; }
-		public string? _primarycontactid_value { get; set; }
-		[JsonIgnore]
+		[JsonPropertyName("_primarycontactid_value")]
+		public string? PrimaryContactId { get; set; }
 		public Contact? PrimaryContact { get; set; }
-		[JsonIgnore]
 		public IList<Contact>? Contacts { get; set;} = new List<Contact>();
 
 		public Guid GetId() {

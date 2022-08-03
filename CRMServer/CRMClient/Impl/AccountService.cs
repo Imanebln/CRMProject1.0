@@ -8,11 +8,15 @@ using System.Text;
 
 namespace CRMClient.Impl {
 	public class AccountService : CRMBaseService<Account>, IAccountService {
-		private readonly string BaseQuery = "/api/data/v9.1/accounts?$expand=primarycontactid,contact_customer_accounts";
+			private readonly string BaseQuery = "/api/data/v9.1/accounts?$expand=primarycontactid,contact_customer_accounts";
 		public AccountService(CRMProvider context) : base(context) {}
 
 		public IEnumerable<Account> GetAllAccounts() {
 			return this.GetFromCrm(BaseQuery);
+		}
+		public IEnumerable<Account> GetAccountsWhere(AccountParameters account) {
+			string query = GetFilterQuery(BaseQuery, account);
+			return GetFromCrm(query);
 		}
 
 		public Account? GetAccountByName(string name){
@@ -25,11 +29,6 @@ namespace CRMClient.Impl {
 			AccountParameters parameters = new() { AccountId =  id};
 			string filteredQuery = GetFilterQuery(BaseQuery, parameters);
 			return GetFromCrm(filteredQuery).FirstOrDefault();
-		}
-
-		public IEnumerable<Account> GetAccountsWhere(AccountParameters account) {
-			string query = GetFilterQuery(BaseQuery, account);
-			return GetFromCrm(query);
 		}
 
 		public async Task<Account?> InsertAccount(Account account) {

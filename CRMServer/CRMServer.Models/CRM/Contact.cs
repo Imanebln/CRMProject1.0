@@ -6,7 +6,8 @@ namespace CRMServer.Models.CRM{
 		public string? Firstname { get; set; }
 		public string? Lastname { get; set; }
 		public string? Birthdate { get; set; }
-		public string EmailAddress1 { get; set; } = String.Empty;
+		[JsonPropertyName("emailaddress1")]
+		public string Email { get; set; } = String.Empty;
 		public string? MobilePhone { get; set; }
 		public string? Fax { get; set; }
 		public string? JobTitle { get; set; }
@@ -26,7 +27,7 @@ namespace CRMServer.Models.CRM{
 		public bool IsPrimary {
 			get{
 			    if (Account == null) return false;
-				return ContactId.ToString() == Account._primarycontactid_value;
+				return ContactId.ToString() == Account.PrimaryContactId;
 			}
 		}
 
@@ -35,11 +36,11 @@ namespace CRMServer.Models.CRM{
 		}
 
 		public string GetUnique() {
-			return EmailAddress1;
+			return Email;
 		}
 
 		public override string? ToString() {
-			return $"Contact({ContactId}, {Firstname}, {Lastname}, {Birthdate}, {EmailAddress1}, {MobilePhone}, {Fax}, {IsPrimary})";
+			return $"Contact({ContactId}, {Firstname}, {Lastname}, {Birthdate}, {Email}, {MobilePhone}, {Fax}, {IsPrimary})";
 		}
 	}
 }
