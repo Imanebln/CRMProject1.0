@@ -6,8 +6,6 @@ using CRMClient;
 using CRMServer.Models.CRM;
 using System.Security.Claims;
 using CRMServer.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
 
 namespace CRMServer.Controllers
 {

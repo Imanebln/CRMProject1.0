@@ -34,14 +34,14 @@ namespace CRMServer.Controllers
             return _crmService.accounts.GetAccountById(id);
         }
 
-        // GET: api/Accounts/ByEmail
+        // GET: api/Accounts/ByName
         [HttpGet("GetAccountByName")]
         public ActionResult<Account?> GetAccountByName(string name)
         {
             return _crmService.accounts.GetAccountByName(name);
         }
 
-        // GET: api/Accounts/ByPhone
+        // GET: api/Accounts/Where
         [HttpGet("GetAccountWhere")]
         public IEnumerable<Account> GetAccountWhere(AccountParameters account)
         {

@@ -8,6 +8,8 @@ namespace CRMServer.DTO
         {
             CreateMap<ContactDTO, Contact>();
             CreateMap<AccountDTO, Account>();
+            CreateMap<LeadDTO, Lead>();
+            CreateMap<OpportunityDTO, Opportunity>();
         }
         
     }

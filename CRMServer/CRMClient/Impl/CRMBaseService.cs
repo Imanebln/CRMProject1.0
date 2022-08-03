@@ -97,9 +97,8 @@ namespace CRMClient.Impl {
 			if (request.Method != HttpMethod.Delete){
 				request.Content = new StringContent(GetJson(CrmEntity), Encoding.UTF8, "application/json");
 			}
-				
 			HttpResponseMessage response = await _client.SendAsync(request);
-			if(!response.IsSuccessStatusCode)
+			if (!response.IsSuccessStatusCode)
 				throw new Exception($"CRM ERROR :\n{response.Content.ReadAsByteArrayAsync().Result}");
 			return response;
 		}
