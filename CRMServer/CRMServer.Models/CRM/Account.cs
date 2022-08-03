@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
+
 
 namespace CRMServer.Models.CRM {
 	public class Account : ICrmEntity {
@@ -7,7 +8,7 @@ namespace CRMServer.Models.CRM {
 		public string? WebsiteUrl { get; set; }
 		public string? Description { get; set; }
 		public string? Fax { get; set; }
-		[JsonPropertyName("_primarycontactid_value")]
+		[JsonProperty(PropertyName = "_primarycontactid_value")]
 		public string? PrimaryContactId { get; set; }
 		public Contact? PrimaryContact { get; set; }
 		public IList<Contact>? Contacts { get; set;} = new List<Contact>();

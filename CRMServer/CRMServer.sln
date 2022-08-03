@@ -7,11 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRMServer", "CRMServer\CRMS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRMClient", "CRMClient\CRMClient.csproj", "{47D04745-8A84-4FF4-BEC4-E042A3E0F5D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner", "Runner\Runner.csproj", "{FEFB6A7A-D8D0-4DBD-A2BA-032088056B8B}"
-
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Runner", "Runner\Runner.csproj", "{FEFB6A7A-D8D0-4DBD-A2BA-032088056B8B}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRMServer.Models", "CRMServer.Models\CRMServer.Models.csproj", "{1CD79B6F-B9D5-408C-9858-9AA470A5F062}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService", "EmailService\EmailService.csproj", "{49F374DE-2FBC-43EE-A1C9-55D34BBDE7C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{961B3F49-201B-4FB0-9489-51DAC8855753}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{49F374DE-2FBC-43EE-A1C9-55D34BBDE7C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49F374DE-2FBC-43EE-A1C9-55D34BBDE7C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49F374DE-2FBC-43EE-A1C9-55D34BBDE7C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{961B3F49-201B-4FB0-9489-51DAC8855753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{961B3F49-201B-4FB0-9489-51DAC8855753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{961B3F49-201B-4FB0-9489-51DAC8855753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{961B3F49-201B-4FB0-9489-51DAC8855753}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace CRMServer.Models.CRM {
 	public class Opportunity : ICrmEntity {
@@ -13,14 +14,14 @@ namespace CRMServer.Models.CRM {
 		public string? EstimatedClosedate { get; set; }
 		public int? CloseProbability { get; set; }
 		public string? CustomerNeed { get; set; }
-		[JsonPropertyName("estimatedvalue_base")]
+		[JsonProperty(PropertyName ="estimatedvalue_base")]
 		public decimal? EstimatedValue { get; set; }
 		public string? Description { get; set; }
-		[JsonPropertyName("emailaddress")]
+		[JsonProperty(PropertyName = "emailaddress")]
 		public string? Email { get; set; }
 		public string? ProposedSolution { get; set; }
 		public string? CurrentSituation	{ get; set; }	
-		[JsonPropertyName("totallineitemamount_base")]
+		[JsonProperty(PropertyName = "totallineitemamount_base")]
 		public decimal TotalAmount { get; set; }
 		public string? CreatedOn { get; set; }
 		public Contact? Contact { get; set; }

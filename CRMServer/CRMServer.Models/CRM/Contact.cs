@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace CRMServer.Models.CRM{
 	public class Contact : ICrmEntity {
@@ -6,7 +6,7 @@ namespace CRMServer.Models.CRM{
 		public string? Firstname { get; set; }
 		public string? Lastname { get; set; }
 		public string? Birthdate { get; set; }
-		[JsonPropertyName("emailaddress1")]
+		[JsonProperty(PropertyName = "emailaddress1")]
 		public string Email { get; set; } = String.Empty;
 		public string? MobilePhone { get; set; }
 		public string? Fax { get; set; }
@@ -41,6 +41,15 @@ namespace CRMServer.Models.CRM{
 
 		public override string? ToString() {
 			return $"Contact({ContactId}, {Firstname}, {Lastname}, {Birthdate}, {Email}, {MobilePhone}, {Fax}, {IsPrimary})";
+		}
+		public override bool Equals(object? obj) {
+			if (obj == null) return false;
+			if (obj.GetType()==typeof(Contact)){
+				Contact contact = (Contact)obj;
+				return contact.ContactId == ContactId;
+			}else{
+				return false;
+			}
 		}
 	}
 }

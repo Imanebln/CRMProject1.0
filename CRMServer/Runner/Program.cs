@@ -8,10 +8,14 @@ IConfiguration config = new ConfigurationBuilder().AddJsonFile(@"C:\Users\Elmes\
 
 CRMService service = new CRMService(config);
 
-Opportunity? opp = service.opportunities.GetOpportunityById(Guid.Parse("e90a0493-e8f0-ea11-a815-000d3a1b14a2"));
+Contact contact = new() {
+	Email = "test@gmail.com",
+	Firstname = "test",
+	Lastname = "test",
+	Birthdate = "2001-03-20",
+	Fax = "02952962",
+	JobTitle = "Engineer",
+	MobilePhone = "06269250265"
+};
 
-opp.Name = "10 Airpot XL Coffee Makers for Alpine Ski House";
-
-opp = service.opportunities.UpdateOpportunity(opp).Result;
-
-Console.WriteLine(opp);
+Console.WriteLine(service.contacts.GetContactByEmail(contact.Email));

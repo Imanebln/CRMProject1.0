@@ -2,6 +2,7 @@
 using CRMServer.Models.CRM;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -79,10 +80,10 @@ namespace CRMClient.Impl {
 			foreach(PropertyInfo prop in properties) {
 				Object? value = prop.GetValue(entity, null);
 				Type? t = value?.GetType();
-				var jsonName = (JsonPropertyNameAttribute?) prop.GetCustomAttribute(typeof(JsonPropertyNameAttribute));
+				var jsonName = (JsonPropertyAttribute?) prop.GetCustomAttribute(typeof(JsonPropertyAttribute));
 				if (value != null && t == typeof(string) && !prop.Name.StartsWith("_")) {
-					if(jsonName !=null)
-						sb.Append($"\"{jsonName.Name.ToLower()}\": \"{value}\",");
+					if(jsonName?.PropertyName !=null)
+						sb.Append($"\"{jsonName.PropertyName.ToLower()}\": \"{value}\",");
 					else
 						sb.Append($"\"{prop.Name.ToLower()}\": \"{value}\",");
 				}
@@ -93,7 +94,6 @@ namespace CRMClient.Impl {
 
 		private async Task<HttpResponseMessage> ResolveResponse(T CrmEntity, HttpMethod method , string query){
 			HttpRequestMessage request = new(method, query);
-			string s = GetJson(CrmEntity);
 			if (request.Method != HttpMethod.Delete){
 				request.Content = new StringContent(GetJson(CrmEntity), Encoding.UTF8, "application/json");
 			}
