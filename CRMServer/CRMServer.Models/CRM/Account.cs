@@ -25,5 +25,16 @@ namespace CRMServer.Models.CRM {
 			return $"Account({AccountId}, {Name}, {WebsiteUrl}, {Description?[..10] + "..."}, {Fax})";
 		}
 
+		public override bool Equals(object? obj) {
+			if (obj == null) return false;
+			if (obj.GetType()==typeof(Account)) {
+				Account account = (Account)obj;
+				return account.AccountId == AccountId;
+			}
+			else {
+				return false;
+			}
+		}
+
 	}
 }

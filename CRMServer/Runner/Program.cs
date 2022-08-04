@@ -8,14 +8,4 @@ IConfiguration config = new ConfigurationBuilder().AddJsonFile(@"C:\Users\Elmes\
 
 CRMService service = new CRMService(config);
 
-Contact contact = new() {
-	Email = "test@gmail.com",
-	Firstname = "test",
-	Lastname = "test",
-	Birthdate = "2001-03-20",
-	Fax = "02952962",
-	JobTitle = "Engineer",
-	MobilePhone = "06269250265"
-};
-
-Console.WriteLine(service.contacts.GetContactByEmail(contact.Email));
+Console.WriteLine(service.leads.GetLeadByEmail("test@gmail.com"));

@@ -41,5 +41,16 @@ namespace CRMServer.Models.CRM {
 		public override string? ToString() {
 			return $"Opportunity({OpportunityId},{Name},{CustomerNeed},{CurrentSituation},\n\tContact({Contact}),\n\tAccount({Account}),\n\tCurrency({Currency})\n)";
 		}
+
+		public override bool Equals(object? obj) {
+			if (obj == null) return false;
+			if (obj.GetType()==typeof(Opportunity)) {
+				Opportunity opportunity = (Opportunity)obj;
+				return opportunity.OpportunityId == OpportunityId;
+			}
+			else {
+				return false;
+			}
+		}
 	}
 }

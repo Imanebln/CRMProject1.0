@@ -11,7 +11,7 @@ namespace CRMServer.Models.CRM {
 		[JsonProperty(PropertyName = "emailaddress1")]
 		public string Email { get; set; } = String.Empty;
 		[JsonProperty(PropertyName = "address1_composite")]
-		public string? Address { get; set; }
+		public string? Address { get; private set; }
 		public string? JobTitle	{ get; set; }
 		public Account? Account { get; set; }
 
@@ -25,6 +25,17 @@ namespace CRMServer.Models.CRM {
 
 		public override string? ToString() {
 			return $"Lead({LeadId}, {Subject}, {Fullname}, {Email}, {JobTitle}, {Account})";
+		}
+
+		public override bool Equals(object? obj) {
+			if (obj == null) return false;
+			if (obj.GetType()==typeof(Lead)) {
+				Lead lead = (Lead)obj;
+				return lead.LeadId == LeadId;
+			}
+			else {
+				return false;
+			}
 		}
 	}
 }
