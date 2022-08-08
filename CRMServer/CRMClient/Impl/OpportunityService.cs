@@ -3,6 +3,7 @@ using CRMServer.Models.CRM;
 using CRMServer.Models.Parameters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NJsonSchema.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,18 +53,16 @@ namespace CRMClient.Impl {
 			return Update(opportunity, GetOpportunityById, BaseQuery);
 		}
 
-		protected override void Populate(ref List<Opportunity> entities, JObject doc) {
-			for(int i=0; i<entities.Count; i++){
-				string? contactJson = doc.SelectToken($"value[{i}].parentcontactid")?.ToString();
-				string? accountJson = doc.SelectToken($"value[{i}].parentaccountid")?.ToString();
-				string? currencyJson = doc.SelectToken($"value[{i}].transactioncurrencyid")?.ToString();
-				if(contactJson != null)
-					entities[i].Contact = JsonConvert.DeserializeObject<Contact>(contactJson);
-				if (accountJson != null)
-					entities[i].Account = JsonConvert.DeserializeObject<Account>(accountJson);
-				if (currencyJson != null)
-					entities[i].Currency = JsonConvert.DeserializeObject<Currency>(currencyJson);
-			}
+		protected override PropertyRenameAndIgnoreSerializerContractResolver GetJsonResolver() {
+			PropertyRenameAndIgnoreSerializerContractResolver jsonResolver = new();
+			jsonResolver.NamingStrategy = new LowercaseNamingStrategy();
+			Type type = typeof(Opportunity);
+			jsonResolver.IgnoreProperty(type, "opportunityid");
+			jsonResolver.IgnoreProperty(type, "parentcontactid");
+			jsonResolver.IgnoreProperty(type, "parentaccountid");
+			jsonResolver.IgnoreProperty(type, "transactioncurrencyid");
+
+			return jsonResolver;
 		}
 	}
 }

@@ -23,7 +23,7 @@ p {
 .user > img {
     border: 2px solid var(--secondary);
     border-radius: 50%;
-    width: 60px;
+    width: 50px;
 }
 .user .dropdown i {
     color: var(--secondary);
@@ -61,6 +61,9 @@ p {
 }
 
 @media only screen and (max-width: 768px){
+    :host {
+        padding: 0 15px;
+    }
 	.welcome {
         display: none;
     }

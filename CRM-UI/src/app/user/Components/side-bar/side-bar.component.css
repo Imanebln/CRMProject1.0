@@ -54,7 +54,7 @@ a {
     top: 65px;
     transform: rotateY(180deg);
     cursor: pointer;
-    transition: all 800ms ease-in-out;
+    transition: all 400ms ease-in-out;
 }
 
 .avatar > div {

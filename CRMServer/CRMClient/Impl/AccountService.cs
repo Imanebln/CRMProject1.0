@@ -3,13 +3,15 @@ using CRMServer.Models.CRM;
 using CRMServer.Models.Parameters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NJsonSchema.Infrastructure;
 using System.Reflection;
 using System.Text;
 
 namespace CRMClient.Impl {
 	public class AccountService : CRMBaseService<Account>, IAccountService {
-			private readonly string BaseQuery = "/api/data/v9.1/accounts?$expand=primarycontactid,contact_customer_accounts";
-		public AccountService(CRMProvider context) : base(context) {}
+		public readonly string BaseQuery = "/api/data/v9.1/accounts?$expand=primarycontactid,contact_customer_accounts";
+		public AccountService(CRMProvider context) : base(context) {
+		}
 
 		public IEnumerable<Account> GetAllAccounts() {
 			return this.GetFromCrm(BaseQuery);
@@ -43,16 +45,20 @@ namespace CRMClient.Impl {
 			return await Delete(account, GetAccountById, BaseQuery);
 		}
 
+		protected override PropertyRenameAndIgnoreSerializerContractResolver GetJsonResolver() {
+			PropertyRenameAndIgnoreSerializerContractResolver jsonResolver = new();
+			Type type = typeof(Account);
 
-		protected override void Populate(ref List<Account> entities, JObject doc) {
-		    for(int i=0; i<entities.Count; i++){
-				string? JsonPrimaryContact = doc.SelectToken($"value[{i}].primarycontactid")?.ToString();
-				string? JsonContacts = doc.SelectToken($"value[{i}].contact_customer_accounts")?.ToString();
-				if (JsonPrimaryContact != null)
-					entities[i].PrimaryContact = JsonConvert.DeserializeObject<Contact>(JsonPrimaryContact);
-				if (JsonContacts != null)
-					entities[i].Contacts = JsonConvert.DeserializeObject<List<Contact>>(JsonContacts);
-			}
+			jsonResolver.NamingStrategy = new LowercaseNamingStrategy();
+			jsonResolver.IgnoreProperty(type, "accountid");
+			jsonResolver.IgnoreProperty(type, "_primarycontactid_value");
+			jsonResolver.IgnoreProperty(type, "primarycontactid");
+			jsonResolver.IgnoreProperty(type, "contact_customer_accounts");
+			jsonResolver.IgnoreProperty(typeof(Contact), "contactid");
+			jsonResolver.IgnoreProperty(typeof(Contact), "parentcustomerid_account");
+			jsonResolver.IgnoreProperty(typeof(Contact), "isprimary");
+
+			return jsonResolver;
 		}
 	}
 }

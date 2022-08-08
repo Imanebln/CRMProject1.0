@@ -10,7 +10,9 @@ namespace CRMServer.Models.CRM {
 		public string? Fax { get; set; }
 		[JsonProperty(PropertyName = "_primarycontactid_value")]
 		public string? PrimaryContactId { get; set; }
+		[JsonProperty(PropertyName = "primarycontactid")]
 		public Contact? PrimaryContact { get; set; }
+		[JsonProperty(PropertyName = "contact_customer_accounts")]
 		public IList<Contact>? Contacts { get; set;} = new List<Contact>();
 
 		public Guid GetId() {
@@ -22,7 +24,7 @@ namespace CRMServer.Models.CRM {
 		}
 
 		public override string ToString() {
-			return $"Account({AccountId}, {Name}, {WebsiteUrl}, {Description?[..10] + "..."}, {Fax})";
+			return $"Account({AccountId}, {Name}, {WebsiteUrl}, {Description?[..10] + "..."}, {Fax}, {Contacts?.Count})"; 
 		}
 
 		public override bool Equals(object? obj) {
@@ -36,5 +38,8 @@ namespace CRMServer.Models.CRM {
 			}
 		}
 
+		public override int GetHashCode() {
+			return base.GetHashCode();
+		}
 	}
 }

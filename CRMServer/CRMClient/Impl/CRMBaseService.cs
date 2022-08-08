@@ -3,6 +3,7 @@ using CRMServer.Models.CRM;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
+using NJsonSchema.Infrastructure;
 using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -22,7 +23,7 @@ namespace CRMClient.Impl {
 			if (entitiesJson == null) 
 				throw new Exception("API Error : No Value Found !");
 			List<T> CrmEntities = JsonConvert.DeserializeObject<List<T>>(entitiesJson)??new List<T>();
-			Populate(ref CrmEntities, doc);
+			//Populate(ref CrmEntities, doc);
 			return CrmEntities;
 		}
 
@@ -74,36 +75,31 @@ namespace CRMClient.Impl {
 			return FilteredQuery;
 		}
 
-		protected string GetJson(T entity) {
-			StringBuilder sb = new("{");
-			PropertyInfo[] properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-			foreach(PropertyInfo prop in properties) {
-				Object? value = prop.GetValue(entity, null);
-				Type? t = value?.GetType();
-				var jsonName = (JsonPropertyAttribute?) prop.GetCustomAttribute(typeof(JsonPropertyAttribute));
-				if (value != null && t == typeof(string) && !prop.Name.StartsWith("_")) {
-					if(jsonName?.PropertyName !=null)
-						sb.Append($"\"{jsonName.PropertyName.ToLower()}\": \"{value}\",");
-					else
-						sb.Append($"\"{prop.Name.ToLower()}\": \"{value}\",");
-				}
-			}
-			string objectJson = sb.ToString().TrimEnd(',');
-			return objectJson + "}";
+		protected string GetJsonAuto(T entity) {
+			return JsonConvert.SerializeObject(entity, new JsonSerializerSettings() {
+				NullValueHandling = NullValueHandling.Ignore,
+				ContractResolver  = GetJsonResolver()
+			}); ;
 		}
 
 		private async Task<HttpResponseMessage> ResolveResponse(T CrmEntity, HttpMethod method , string query){
 			HttpRequestMessage request = new(method, query);
 			if (request.Method != HttpMethod.Delete){
-				request.Content = new StringContent(GetJson(CrmEntity), Encoding.UTF8, "application/json");
+				request.Content = new StringContent(GetJsonAuto(CrmEntity), Encoding.UTF8, "application/json");
 			}
 			HttpResponseMessage response = await _client.SendAsync(request);
+			Console.WriteLine(response.Content.ReadAsStringAsync().Result);
 			if (!response.IsSuccessStatusCode)
-				throw new Exception($"CRM ERROR :\n{response.Content.ReadAsByteArrayAsync().Result}");
+				throw new Exception($"CRM ERROR :\n{response.Content.ReadAsStringAsync().Result}");
 			return response;
 		}
 
-		protected abstract void Populate(ref List<T> entity, JObject doc);
+		protected abstract PropertyRenameAndIgnoreSerializerContractResolver GetJsonResolver();
+	}
 
+	public class LowercaseNamingStrategy : NamingStrategy {
+		protected override string ResolvePropertyName(string name) {
+			return name.ToLower();
+		}
 	}
 }

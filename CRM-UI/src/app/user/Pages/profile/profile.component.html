@@ -1,1 +1,163 @@
-<p>profile works!</p>
+<div *ngIf="this.contact != null" class="container">
+    <div class="row justify-content-center">
+        <div class="card col-lg-12 col-xl-8">
+            <div class="header">
+                <div class="edit-profile" (click)="editContact()" *ngIf="contact.isPrimary">
+                    <i class="fa-solid fa-pen"></i>
+                </div>
+                <div class="basic-info">
+                    <h1>{{contact.lastname}} {{contact.firstname}}</h1>
+                    <p>{{contact.jobTitle}}</p>
+                </div>
+                <div class="profile-image text-center">
+                    <img [src]="'https://org62296229.crm4.dynamics.com/' + contact.imageUrl" alt="">
+                    <span class="badge rounded-pill">{{contact.isPrimary?'Primary':'Not Primary'}}</span>
+                </div>
+            </div>
+            <div class="row justify-content-between mt-2 px-5">
+                <div class="offset-md-1 col-md-4 mb-3">
+                    <div class="d-flex">
+                        <div class="icon">
+                            <i class="fa-solid fa-at" style="color: #fb5607;"></i>
+                        </div>
+                        <div class="data">
+                            <p class="p-0">Email</p>
+                            <p class="m-0 p-0">{{contact.email}}</p>
+                        </div>
+                    </div>                 
+                </div>
+                <div class="offset-md-1 col-md-4 mb-3">
+                    <div class="d-flex">
+                        <div class="icon">
+                            <i class="fa-solid fa-cake-candles" style="color: #ffbe0b;"></i>
+                        </div>
+                        <div class="data">
+                            <p class="p-0">Birthday</p>
+                            <p class="m-0 p-0">{{contact.birthdate}}</p>
+                        </div>
+                    </div>   
+                </div>
+                <div class="offset-md-1 col-md-4 mb-3">
+                    <div class="d-flex">
+                        <div class="icon">
+                            <i class="fa-solid fa-mobile-screen-button" style="color: #ff006e;"></i>
+                        </div>
+                        <div class="data">
+                            <p class="p-0">Mobile Phone</p>
+                            <p class="m-0 p-0">{{contact.mobilePhone}}</p>
+                        </div>
+                    </div>   
+                </div>
+                <div class="offset-md-1 col-md-4 mb-3">
+                    <div class="d-flex">
+                        <div class="icon">
+                            <i class="fa-solid fa-fax" style="color: #8338ec;"></i>
+                        </div>
+                        <div class="data">
+                            <p class="p-0">Fax</p>
+                            <p class="m-0 p-0">{{contact.fax}}</p>
+                        </div>
+                    </div>   
+                </div>
+                <div class="offset-md-1 offset-md-5 col-md-4 mb-3">
+                    <div class="d-flex">
+                        <div class="icon">
+                            <i class="fa-solid fa-briefcase" style="color: #3a86ff;"></i>
+                        </div>
+                        <div class="data">
+                            <p class="p-0">Job Title</p>
+                            <p class="m-0 p-0">{{contact.jobTitle}}</p>
+                        </div>
+                    </div>   
+                </div>
+            </div>
+            <div class="toggle-address align-self-end" (click)="showAddress()">
+                <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="row col-12 col-lg-8 px-0">
+            <div *ngFor="let address of contact.addresses; let i = index;" class="col-12 col-lg-4 px-1 mt-5">
+                <div class="card address p-1" [style.backgroundColor]="colors[i]">
+                    <div *ngIf="address.country == null" class="holder">
+                        <div class="add" data-bs-toggle="modal" data-bs-target="#EditAddressModal" (click)="selectedAddress = address">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </div>
+                    <img class="address-icon" src="/assets/icons/address.png" width="72px" alt="">
+                    <div class="d-flex justify-content-between">
+                        <img class="number" [src]="'/assets/icons/number-'+ (i+1) + '.png'" width="25px" height="25px" alt="">
+                        <div class="edit" [style.color]="colors[i]" (click)="selectedAddress = address" data-bs-toggle="modal" data-bs-target="#EditAddressModal">
+                            <i class="fa-solid fa-pen"></i>
+                        </div>
+                        <img src="/assets/icons/Corner.svg" alt="">
+                    </div>
+                    <div class="address-lines text-center mb-3">
+                        <p class="my-0">{{address.line1 | addressField }}</p>
+                        <p class="my-0">{{address.line2 | addressField }}</p>
+                    </div>
+                    <div class="d-flex justify-content-around">
+                        <div class="d-flex flex-column align-items-center">
+                            <img src="/assets/icons/Country.svg" width="45px" alt="">
+                            <p class="elements">{{address.country | addressField }}</p>
+                        </div>
+                        <div class="d-flex flex-column align-items-center">
+                            <img src="/assets/icons/State.svg" width="45px" alt="">
+                            <p class="elements">{{address.stateOrProvince | addressField }}</p>
+                        </div>
+                        <div class="d-flex flex-column align-items-center">
+                            <img src="/assets/icons/City.svg" width="45px" alt="">
+                            <p class="elements">{{address.city | addressField}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="EditAddressModal" tabindex="-1" aria-labelledby="EditAddressModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+            <img class="address-icon" src="/assets/icons/address.png" width="72px" alt="">
+            <h4 class="text-center mt-5">
+                <i class="fa-solid fa-pen-to-square me-2"></i>Edit Address 
+            </h4>
+            <div class="address-form p-3">
+                <div class="mb-3">
+                    <label for="line1">Line 1</label>
+                    <input id="line1" type="text" class="form-control" [(ngModel)]="selectedAddress.line1">
+                </div>
+                <div class="mb-3">
+                    <label for="line2">Line 2</label>
+                    <input id="line2" type="text" class="form-control" [(ngModel)]="selectedAddress.line2">
+                </div>
+                <div class="mb-3">
+                    <label for="country">Country</label>
+                    <select class="form-select form-select-md" id="country" [(ngModel)]="selectedAddress.country">
+                        <option class="country-option" *ngFor="let country of countries" [value]="country.name">
+                            {{country.name}}
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="state">State Or Province</label>
+                    <input type="text" class="form-control" id="state" [(ngModel)]="selectedAddress.stateOrProvince">
+                </div>
+                <div class="">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" id="city" [(ngModel)]="selectedAddress.city">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark me-2"></i>Discard</button>
+          <button type="button" class="btn btn-primary" (click)="UpdateAddress(selectedAddress)" data-bs-dismiss="modal"><i class="fa-solid fa-floppy-disk me-2"></i>Save</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>

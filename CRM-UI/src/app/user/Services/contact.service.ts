@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Address } from '../Models/Address.models';
 import { Account } from '../Pages/accounts/account.model';
 import { Contact } from '../Pages/contacts/contact.model';
 
@@ -31,6 +32,14 @@ export class ContactService {
 
   getContactsAccount() {
     return this.http.get<Account>(this.apiUrl + 'Auth/GetContactsAccount');
+  }
+
+  getCountries(){
+    return this.http.get<any[]>("https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/index.json");
+  }
+
+  updateAddress(address : Address){
+    return this.http.put<Address>(this.apiUrl + 'Contacts/UpdateAddress', address)
   }
 
   mapToContact(obj: any): Contact {

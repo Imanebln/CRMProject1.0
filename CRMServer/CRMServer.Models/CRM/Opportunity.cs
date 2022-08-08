@@ -24,8 +24,11 @@ namespace CRMServer.Models.CRM {
 		[JsonProperty(PropertyName = "totallineitemamount_base")]
 		public decimal TotalAmount { get; set; }
 		public string? CreatedOn { get; set; }
+		[JsonProperty(PropertyName = "parentcontactid")]
 		public Contact? Contact { get; set; }
+		[JsonProperty(PropertyName = "parentaccountid")]
 		public Account? Account { get; set; }
+		[JsonProperty(PropertyName = "transactioncurrencyid")]
 		public Currency? Currency { get; set; }
 
 
@@ -51,6 +54,10 @@ namespace CRMServer.Models.CRM {
 			else {
 				return false;
 			}
+		}
+
+		public override int GetHashCode() {
+			return base.GetHashCode();
 		}
 	}
 }
