@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Type, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,8 +23,13 @@ export class TableDataComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  //info selected
+  infoSelected: any;
+  isReadonly: boolean = true;
+  ourForm: FormGroup;
+  action: string = '';
 
-  // constructor(private contactService: ContactService) {}
+  constructor(private contactService: ContactService) {}
   ngAfterViewInit(): void {
     // console.log('=======> ', this.ourData);
 
@@ -125,12 +131,56 @@ export class TableDataComponent implements OnInit {
     // });
   };
 
-  public redirectToDetails = (id: any) => {
-    console.log(id);
+  public redirectToDetails = (infoSelected: any) => {
+    this.infoSelected = infoSelected;
+    this.isReadonly = true;
+    if (this.typeOfData == 'Contact') {
+      this.ourForm = new FormGroup({
+        firstname: new FormControl(this.infoSelected.firstname),
+        lastname: new FormControl(this.infoSelected.lastname),
+        birthdate: new FormControl(this.infoSelected.birthdate),
+        email: new FormControl(this.infoSelected.email),
+        mobilePhone: new FormControl(this.infoSelected.mobilePhone),
+        fax: new FormControl(this.infoSelected.fax),
+        jobTitle: new FormControl(this.infoSelected.jobTitle),
+        isPrimary: new FormControl(this.infoSelected.isPrimary),
+      });
+    } else if (this.typeOfData == 'Account') {
+    }
+    this.action = 'information';
   };
-  public redirectToUpdate = (id: any) => {};
-  public redirectToDelete = (id: any) => {};
+  public redirectToUpdate = (infoSelected: any) => {
+    this.infoSelected = infoSelected;
+    this.isReadonly = false;
+    if (this.typeOfData == 'Contact') {
+      this.ourForm = new FormGroup({
+        firstname: new FormControl(this.infoSelected.firstname),
+        lastname: new FormControl(this.infoSelected.lastname),
+        birthdate: new FormControl(this.infoSelected.birthdate),
+        email: new FormControl(this.infoSelected.email),
+        mobilePhone: new FormControl(this.infoSelected.mobilePhone),
+        fax: new FormControl(this.infoSelected.fax),
+        jobTitle: new FormControl(this.infoSelected.jobTitle),
+        isPrimary: new FormControl(this.infoSelected.isPrimary),
+      });
+    } else if (this.typeOfData == 'Account') {
+    }
+    this.action = 'update';
+  };
+  public redirectToDelete = (infoSelected: any) => {
+    this.infoSelected = infoSelected;
+    this.action = 'delete';
+  };
   public doFilter = (event: any) => {
     this.dataSource.filter = event.target.value.trim().toLocaleLowerCase();
   };
+  onSubmit() {
+    this.contactService.updateContact(this.ourForm.value).subscribe();
+  }
+  updateContact() {
+    this.onSubmit();
+  }
+  deleteContact() {
+    this.contactService.deleteContact(this.infoSelected.contactId).subscribe();
+  }
 }

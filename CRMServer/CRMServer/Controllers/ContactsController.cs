@@ -53,7 +53,7 @@ namespace CRMServer.Controllers
         [HttpPut("UpdateContact")]
         public IActionResult UpdateContact(ContactDTO contactdto)
         {
-            Contact? c = _crmService.contacts.GetContactByEmail(contactdto.EmailAddress1);
+            Contact? c = _crmService.contacts.GetContactByEmail(contactdto.Email);
             Contact? contact = _mapper.Map<Contact>(contactdto);
             contact.Email = c.Email;
             contact.ContactId = c.ContactId;

@@ -1,7 +1,7 @@
-<!-- Modal Info -->
-<!-- <div
+<!-- Info/Edit Modal Start -->
+<div
   class="modal fade"
-  id="exampleModal"
+  id="exampleModal1"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
@@ -9,7 +9,14 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Info Contact</h5>
+        <h5 class="modal-title" id="exampleModalLabel" style="color: #ad2d5a">
+          <i class="fa-solid fa-pencil" *ngIf="action == 'update'"></i>
+          <i
+            class="fa-solid fa-circle-info"
+            *ngIf="action == 'information'"
+          ></i>
+          {{ action | titlecase }}
+        </h5>
         <button
           type="button"
           class="btn-close"
@@ -17,37 +24,131 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">
-        <form *ngIf="dataSource != null">
-          <div class="mb-3" *ngFor="let pair of dataSource.data[0] | keyvalue">
-            <div class="input-group flex-nowrap">
-              <span class="input-group-text" id="addon-wrapping">{{
-                pair.key
-              }}</span>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Username"
-                aria-label="Username"
-                aria-describedby="addon-wrapping"
-              />
-            </div>
+      <div class="modal-body" *ngIf="ourForm != null">
+        <form [formGroup]="ourForm" (ngSubmit)="onSubmit()">
+          <div
+            class="row modal-input mb-3"
+            *ngFor="let entry of infoSelected | keys"
+          >
+            <label for=" {{ entry.key }}" class="col-form-label col-4">
+              {{ entry.key | headerTable | titlecase }}
+            </label>
+            <input
+              type="{{ entry.key == 'birthdate' ? 'date' : 'text' }}"
+              [readonly]="isReadonly"
+              class="form-control w-50 col-8"
+              formControlName="{{ entry.key }}"
+              name="{{ entry.key }}"
+              id="{{ entry.key }}"
+              value="{{ entry.value }}"
+              [ngClass]="{ inputUpdate: action === 'update' }"
+            />
           </div>
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
+      <div
+        class="modal-footer justify-content-center"
+        style="border: none"
+        *ngIf="action == 'update'"
+      >
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          style="
+            padding: 8px;
+            background-color: #fff;
+            color: black;
+            border: 1px solid black;
+            width: 40%;
+          "
+        >
+          Cancel
         </button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="updateContact()"
+          style="
+            padding: 8px;
+            background-color: #ad2d5a;
+            border: none;
+            width: 40%;
+          "
+        >
+          Update
+        </button>
       </div>
     </div>
   </div>
-</div> -->
+</div>
+<!-- Info/Edit Modal End -->
+<!-- Delete Modal Start -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="color: #ad2d5a">
+          <i class="fa-solid fa-triangle-exclamation"></i> Delete Contact?
+        </h5>
+        <button
+          style="border: none; background-color: #fff; font-size: 25px"
+          type="button"
+          class="close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="infoSelected != null">
+        Are you sure you want to delete
+        <span style="font-weight: bold">{{ infoSelected.firstname }}</span> ?
+      </div>
+      <div class="modal-footer justify-content-center" style="border: none">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          style="
+            padding: 8px;
+            background-color: #fff;
+            color: black;
+            border: 1px solid black;
+            width: 40%;
+          "
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="deleteContact()"
+          style="
+            padding: 8px;
+            background-color: #ad2d5a;
+            border: none;
+            width: 40%;
+          "
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Modal End -->
 
 <div class="d-flex" style="justify-content: space-between">
   <div class="mr-auto p-2">
-    <input type="text" (keyup)="doFilter($event)" />
+    <input class="filter" type="text" (keyup)="doFilter($event)" />
   </div>
   <div class="p-2">
     <button
@@ -105,11 +206,12 @@
     <th mat-header-cell *matHeaderCellDef style="width: 50px">Details</th>
     <td mat-cell *matCellDef="let element">
       <button
+        type="button"
         class="details"
         mat-icon-button
         color="primary"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#exampleModal1"
         (click)="redirectToDetails(element)"
       >
         <i class="fa-solid fa-eye fa-lg"></i>
@@ -124,6 +226,8 @@
         class="update"
         mat-icon-button
         color="accent"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal1"
         (click)="redirectToUpdate(element)"
       >
         <i class="fa-solid fa-pencil fa-lg"></i>
@@ -138,6 +242,8 @@
         class="delete"
         mat-icon-button
         color="warn"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
         (click)="redirectToDelete(element)"
       >
         <i class="fa-solid fa-trash-can fa-lg"></i>

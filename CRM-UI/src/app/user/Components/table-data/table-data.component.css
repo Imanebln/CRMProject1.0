@@ -24,7 +24,7 @@ th.mat-header-cell {
 .delete {
   color: #f44336;
 }
-input {
+.filter {
   width: 116%;
   border-radius: 26px;
   border: 1px solid #ada9a9;
@@ -64,4 +64,29 @@ th {
 }
 table.mat-table {
   border: 1px solid #eee;
+}
+.modal-input {
+  display: flex;
+}
+.form-control {
+  display: inline-block;
+  background-color: #fff;
+  border: none;
+}
+.form-control:focus {
+  overflow: hidden;
+}
+.col-form-label {
+  color: #00000080;
+}
+
+input:focus {
+  box-shadow: none !important;
+}
+.inputUpdate {
+  border: 1px solid #d8d3d3;
+  border-radius: 9px;
+}
+.inputUpdate:focus {
+  border: 1px solid black;
 }

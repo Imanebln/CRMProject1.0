@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Account } from '../Pages/accounts/account.model';
 import { Contact } from '../Pages/contacts/contact.model';
@@ -31,6 +32,19 @@ export class ContactService {
 
   getContactsAccount() {
     return this.http.get<Account>(this.apiUrl + 'Auth/GetContactsAccount');
+  }
+
+  updateContact(contact: Contact): Observable<any> {
+    return this.http.put<Contact>(
+      this.apiUrl + 'Contacts/UpdateContact',
+      contact
+    );
+  }
+
+  deleteContact(contactId: string): Observable<any> {
+    return this.http.delete(
+      this.apiUrl + 'Contacts/DeleteContact?id=' + contactId
+    );
   }
 
   mapToContact(obj: any): Contact {

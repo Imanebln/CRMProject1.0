@@ -47,9 +47,7 @@ export class AccountsComponent implements OnInit {
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
-    this.accountService
-      .updateAccount(this.accountForm.value)
-      .subscribe((value) => console.log('Done'));
+    this.accountService.updateAccount(this.accountForm.value).subscribe();
     // console.log(this.accountForm.value);
   }
 }
