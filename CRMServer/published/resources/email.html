@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+        body{
+        }
+        .main {
+            width: 100vw;
+            max-width: 800px;
+            border: 2px solid #000;
+        }
+        .header img {
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.40);
+        }
+        .footer-info, .footer-info > div {
+            display: inline;
+            margin: 0px 20px;
+            color: #535353;
+        }
+        .footer-info p {
+            display: inline;
+            margin-right: 5em;
+        }
+        .footer-info div a {
+            display: inline;
+             text-decoration: none; 
+            color: #535353;
+            margin: 0 1em;
+        }
+        .footer-info a:hover + span {
+            width: 100%;
+            transition: all ease-out 300ms;
+        }
+        .content {
+            position:relative;
+            min-height: 400px;
+        }
+        .content .title {
+            text-align: center;
+            font-size: 46px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: #672F79;
+        }
+        .body {
+            width: 80%;
+            min-width: 300px;
+            margin: 0 auto;
+            box-shadow: 10px 10px 50px rgba(0, 0, 0, 0.20);
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #edf2f4;
+            min-height: 150px;
+            color: #000;
+            font-weight: 600;
+            font-size: 20px;
+            border: 0.5px solid rgba(0, 0, 0, 0.1);
+        }
+        .body p{
+            text-align: center;
+        }
+        .btn {
+            display: block; 
+            text-decoration: none;
+            text-transform: uppercase;
+            margin: 20px auto;
+            width: 250px;
+            height: 60px;
+            line-height: 60px;
+            font-size: 18px;
+            border: none;
+            background-color: #32ba7c;
+            color: #ffffff !important;
+            cursor: pointer;
+            text-align: center;
+        }
+        .btn:hover {
+            transition: all 100ms ease-in-out;
+            transform: scale(1.05);
+            box-shadow: 3px 3px 10px rgba(194, 54, 108, 0.8);
+        }
+
+        .icon {
+            display: block;
+            margin: 0 auto 10px auto;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="header">
+            <img width="100%" src="https://i.ibb.co/jW70qSW/header.png" alt="">
+        </div>
+
+        <div class="content">
+            <h1 class="title">{{EMAIL_TITLE}}</h1>
+            <div class="body">
+                <img class="icon" src="{{EMAIL_ICON}}" alt="">
+                <p>{{EMAIL_MESSAGE}}</p>
+                {{EMAIL_BUTTONS}}
+            </div>
+        </div>
+
+
+        <footer>
+            <img width="100%" src="https://i.ibb.co/cg7kvpd/Banner.png alt=">
+            <div class="footer-info">
+                <p>© 2022 SQLI - All rights reserved.</p>
+                <div>
+                    <a href="https://www.sqli.com/int-en/legal-information" target="_blank">Legal Information</a>
+                    <a href="https://www.sqli.com/int-en/personal-data-protection-policy" target="_blank">Personal Data Policy</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
