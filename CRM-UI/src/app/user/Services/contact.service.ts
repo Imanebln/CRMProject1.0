@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Address } from '../Models/Address.models';
 import { Account } from '../Pages/accounts/account.model';
 import { Contact } from '../Pages/contacts/contact.model';
 
@@ -44,6 +45,18 @@ export class ContactService {
   deleteContact(contactId: string): Observable<any> {
     return this.http.delete(
       this.apiUrl + 'Contacts/DeleteContact?id=' + contactId
+    );
+  }
+  getCountries() {
+    return this.http.get<any[]>(
+      'https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/index.json'
+    );
+  }
+
+  updateAddress(address: Address) {
+    return this.http.put<Address>(
+      this.apiUrl + 'Contacts/UpdateAddress',
+      address
     );
   }
 

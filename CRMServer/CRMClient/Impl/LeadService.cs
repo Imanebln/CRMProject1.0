@@ -3,6 +3,7 @@ using CRMServer.Models.CRM;
 using CRMServer.Models.Parameters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NJsonSchema.Infrastructure;
 
 namespace CRMClient.Impl {
 	public class LeadService : CRMBaseService<Lead>, ILeadService {
@@ -42,12 +43,12 @@ namespace CRMClient.Impl {
 			return Update(lead, GetLeadById, BaseQuery);
 		}
 
-		protected override void Populate(ref List<Lead> entities, JObject doc) {
-			for(int i=0; i<entities.Count; i++){
-				string? accountJson = doc.SelectToken($"value[{i}].parentaccountid")?.ToString();
-				if(accountJson != null)
-					entities[i].Account = JsonConvert.DeserializeObject<Account>(accountJson);
-			}
+		protected override PropertyRenameAndIgnoreSerializerContractResolver GetJsonResolver() {
+			PropertyRenameAndIgnoreSerializerContractResolver jsonResolver = new();
+			jsonResolver.NamingStrategy = new LowercaseNamingStrategy();
+			Type type = typeof(Lead);
+			jsonResolver.IgnoreProperty(type, "leadid");
+			return jsonResolver;
 		}
 	}
 }

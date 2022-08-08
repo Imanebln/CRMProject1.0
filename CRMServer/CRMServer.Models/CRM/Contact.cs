@@ -11,7 +11,12 @@ namespace CRMServer.Models.CRM{
 		public string? MobilePhone { get; set; }
 		public string? Fax { get; set; }
 		public string? JobTitle { get; set; }
+		[JsonProperty(PropertyName = "entityimage_url")]
+		public string? ImageUrl { get; set; }
+		[JsonProperty(PropertyName = "parentcustomerid_account")]
 		public Account? Account { get; set; }
+		[JsonProperty(PropertyName = "Contact_CustomerAddress")]
+		public List<Address>? Addresses { get; set; } = new List<Address>();
 
 		[JsonIgnore]
 		public DateTime BirthdateObj {
@@ -40,7 +45,7 @@ namespace CRMServer.Models.CRM{
 		}
 
 		public override string? ToString() {
-			return $"Contact({ContactId}, {Firstname}, {Lastname}, {Birthdate}, {Email}, {MobilePhone}, {Fax}, {IsPrimary})";
+			return $"Contact({ContactId}, {Firstname}, {Lastname}, {Birthdate}, {Email}, {MobilePhone}, {Fax}, {IsPrimary}, \n\tAccount({Account})\n)";
 		}
 		public override bool Equals(object? obj) {
 			if (obj == null) return false;
@@ -50,6 +55,10 @@ namespace CRMServer.Models.CRM{
 			}else{
 				return false;
 			}
+		}
+
+		public override int GetHashCode() {
+			return base.GetHashCode();
 		}
 	}
 }

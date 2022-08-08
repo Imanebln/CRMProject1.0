@@ -25,6 +25,7 @@ import { AccountsComponent } from './Pages/accounts/accounts.component';
 import { HeaderTablePipe } from './Components/table-data/header-table.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { KeysPipe } from './Components/table-data/keys.pipe';
+import { AddressFieldPipe } from './Shared/address-field.pipe';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { KeysPipe } from './Components/table-data/keys.pipe';
     AccountsComponent,
     HeaderTablePipe,
     KeysPipe,
+    AddressFieldPipe,
   ],
   imports: [
     CommonModule,

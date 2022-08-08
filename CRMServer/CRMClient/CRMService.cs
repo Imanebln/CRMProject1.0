@@ -10,6 +10,7 @@ namespace CRMClient {
 		public IAccountService accounts;
 		public ILeadService leads;
 		public IOpportunityService opportunities;
+		public IAddressService address;
 
 		public CRMService(IConfiguration configuration) {
 			_context= new CRMProvider(configuration);
@@ -17,6 +18,7 @@ namespace CRMClient {
 			accounts = new AccountService(_context);
 			leads = new LeadService(_context);
 			opportunities = new OpportunityService(_context);
+			address = new AddressService(_context);
 		}
 	}
 }

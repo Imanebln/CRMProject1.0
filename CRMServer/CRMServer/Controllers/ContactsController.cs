@@ -91,5 +91,10 @@ namespace CRMServer.Controllers
             return Ok("Contact deleted successfully!");
         }
 
+        [HttpPut("UpdateAddress")]
+        public async Task<Address?> UpdateAddress(Address address){
+            return await _crmService.address.UpdateAddress(address); 
+		}
+
     }
 }

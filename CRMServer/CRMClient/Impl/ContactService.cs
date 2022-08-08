@@ -4,10 +4,11 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using CRMServer.Models.Parameters;
 using System.Text;
+using NJsonSchema.Infrastructure;
 
 namespace CRMClient.Impl {
 	public class ContactService : CRMBaseService<Contact>, IContactService {
-		private readonly string BaseQuery = "/api/data/v9.1/contacts?$expand=parentcustomerid_account";
+		private readonly string BaseQuery = "/api/data/v9.1/contacts?$expand=parentcustomerid_account,Contact_CustomerAddress";
 		public ContactService(CRMProvider context) : base(context){}
 
 		public IEnumerable<Contact> GetAllContacts() {
@@ -34,17 +35,6 @@ namespace CRMClient.Impl {
 			string query = GetFilterQuery(BaseQuery, parameters);
 			return GetFromCrm(query).FirstOrDefault();
 		}
-
-
-
-		protected override void Populate(ref List<Contact> entities, JObject doc) {
-			for (int i = 0; i < entities?.Count; i++) {
-				string? account = doc.SelectToken($"value[{i}].parentcustomerid_account")?.ToString();
-				if (account != null)
-					entities[i].Account = JsonConvert.DeserializeObject<Account>(account);
-			}
-		}
-
 		public async Task<Contact?> InsertContact(Contact contact) {
 			return await Insert(contact, GetContactByEmail, BaseQuery);
 		}
@@ -55,6 +45,20 @@ namespace CRMClient.Impl {
 
 		public async Task<Contact?> DeleteContact(Contact contact) {
 			return await Delete(contact, GetContactById, BaseQuery);
+		}
+
+		protected override PropertyRenameAndIgnoreSerializerContractResolver GetJsonResolver() {
+			PropertyRenameAndIgnoreSerializerContractResolver jsonResolver = new();
+			Type type = typeof(Contact);
+			jsonResolver.NamingStrategy = new LowercaseNamingStrategy();
+			jsonResolver.IgnoreProperty(type, "contactid");
+			jsonResolver.IgnoreProperty(type, "isprimary");
+			jsonResolver.IgnoreProperty(type, "entityimage_url");
+			jsonResolver.IgnoreProperty(type, "parentcustomerid_account");
+			jsonResolver.IgnoreProperty(type, "Contact_CustomerAddress");
+
+			return jsonResolver;
+			
 		}
 	}
 }

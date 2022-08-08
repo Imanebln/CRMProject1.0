@@ -11,14 +11,14 @@
       "link": "profile"
     },
     {
-      "icon": "/assets/icons/contact.png",
-      "label": "Contacts",
-      "link": "contacts"
-    },
-    {
       "icon": "/assets/icons/company.png",
       "label": "My Account",
       "link": "accounts"
+    },
+    {
+      "icon": "/assets/icons/contact.png",
+      "label": "Contacts",
+      "link": "contacts"
     },
     {
       "icon": "/assets/icons/job.png",

@@ -1,0 +1,254 @@
+:host {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: calc(100vh - 140px);
+    align-items: center;
+}
+
+.card {
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.20);
+    padding: 0;
+    z-index: 5;
+
+}
+
+.header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    background: url('/assets/card-bg.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 20vw;
+    min-height: 100px;
+    max-height: 300px;
+    padding-left: 50px;
+}
+
+.edit-profile {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 10px;
+    top: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.30);
+    border-radius: 50%;
+    color: #FFF;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.basic-info {
+    color: white;
+}
+.basic-info h1 {
+    font-size: 2vw;
+}
+
+.profile-image {
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    right: 10%;
+    width: 15%;
+    
+}
+.profile-image > img {
+    width: 100%;
+    border-radius: 50%;
+}
+.profile-image > span {
+    width: fit-content;
+    max-width: 100%;
+    margin: 10px auto;
+    background-color: var(--secondary);
+}
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dee2e6;
+    box-shadow: 0px 0px 1px 1px #dee2e6;
+    border-radius: 50%;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    margin-right: 1rem;
+}
+.data p:first-child {
+    font-weight: 400;
+    color: #adb5bd;
+    font-size: 12px;
+    margin-bottom: -3px;
+}
+.data p:last-child {
+    font-weight: 500;
+
+}
+.address {
+    display: none;
+    position: relative;
+    color: #FFF;
+    max-width: 400px;
+    margin: 0 auto;
+    z-index: 4;
+    transition: all 300ms ease-in-out;
+}
+
+.holder:hover {
+    opacity: 1;
+}
+
+.holder {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 101%;
+    height: 101%;
+    background-color: #4a4e69;
+    font-size: 50px;
+    color: #4a4e69;
+    opacity: 0.9;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.holder :hover {
+    
+}   
+.holder + img {
+    filter: saturate(0.1);
+}
+
+.holder > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+}
+
+.address-icon {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -40px;
+}
+.address-lines {
+    font-weight: 500;
+}
+.address-lines > p {
+    margin-bottom: -5px !important;
+}
+.elements {
+    font-weight: 500;
+}
+.toggle-address{
+    margin: 10px;
+    background-color: var(--secondary);
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 22px;
+    color: #FFF;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.country-option {
+    display: block;
+    height: 40px;
+}
+.modal-body {
+    padding: 10px 50px !important;
+}
+.modal-body h4 {
+    color: var(--secondary);
+}
+.address-form label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.modal-footer {
+    border: none;
+}
+.btn-primary {
+    background-color: var(--secondary);
+    border: 1px solid var(--secondary);
+}
+.address .edit {
+    display: none;
+    background-color: #FFF;
+    width: 25px;
+    height: 25px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 12px;
+}
+.address:hover .number {
+    display: none;
+}
+.address:hover .edit {
+    display: flex;
+}
+@keyframes ShowAddress {
+    0%{
+        display: none;
+        opacity: 0;
+        transform: translateY(-300px);
+    }60%{
+        transform: translateY(20px);
+    }
+    100%{
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes HideAddress {
+    0%{
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }60%{
+        transform: translateY(20px);
+    }
+    100%{
+        display: none;
+        opacity: 0;
+        transform: translateY(-300px);
+    }
+}
+
+@media only screen and (max-width: 1200px){
+    .header {
+        height: 25vw;
+    }
+}
+
+@media only screen and (max-width: 800px){
+    .basic-info h1 {
+        font-size: 20px;
+    }
+    .profile-image > span {
+        font-size: 8px;
+    }
+}

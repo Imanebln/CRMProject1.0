@@ -41,13 +41,13 @@
     }
     .navbar-toggle {
         display: block;
-        position: absolute;
+        position: fixed;
         top: 22px;
         left: 25px;
         z-index: 11;
     }
     .navbar-toggle > img {
-        width: 35px;
+        width: 30px;
     }
     .sidebar-show {
         transform: translateX(0) !important;
