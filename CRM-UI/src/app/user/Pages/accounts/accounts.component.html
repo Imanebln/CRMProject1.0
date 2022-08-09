@@ -39,6 +39,7 @@
     </div>
     <div class="ml-auto p-2" style="position: absolute; top: 0px; right: 0px">
       <button
+        *ngIf="isPrimary == true"
         type="button"
         class="btn btn-primary"
         (click)="edit()"
@@ -119,7 +120,7 @@
         class="col-6"
         *ngFor="let contact of ourData.contacts; let i = index"
       >
-        <div class="card" [style.background-color]="i == 0 ? 'gold' : '#eee'">
+        <div class="card" [style.background-color]="contact.isPrimary == true ? 'gold' : '#eee'">
           <div class="card-body">
             <h5 class="card-title">
               {{ contact.firstname + " " + contact.lastname }}

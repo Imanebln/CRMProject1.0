@@ -14,5 +14,7 @@
 		public string? ProposedSolution { get; set; }
 		public string? CurrentSituation { get; set; }
 		public decimal? TotalAmount { get; set; }
+		public string? CreatedOn { get; set; }
+
 	}
 }

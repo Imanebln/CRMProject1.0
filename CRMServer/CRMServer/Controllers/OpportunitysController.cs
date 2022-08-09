@@ -23,7 +23,7 @@ namespace CRMServer.Controllers
 
         // GET: api/Opportunities
         [HttpGet]
-        public IEnumerable<Opportunity?> GetAllOpportunitiesGetAllOpportunities()
+        public IEnumerable<Opportunity?> GetAllOpportunities()
         {
             return _crmService.opportunities.GetAllOpportunities();
         }
@@ -54,11 +54,11 @@ namespace CRMServer.Controllers
         public IActionResult UpdateOpportunity(OpportunityDTO opportunitydto)
         {
             Opportunity? opportunity = _mapper.Map<Opportunity>(opportunitydto);
-            opportunity = _crmService.opportunities.UpdateOpportunity(opportunity).Result;
             if (opportunity == null)
             {
                 return NotFound("This opportunity does not exist!");
             }
+            _ = _crmService.opportunities.UpdateOpportunity(opportunity).Result;
             return Ok(opportunity);
         }
 

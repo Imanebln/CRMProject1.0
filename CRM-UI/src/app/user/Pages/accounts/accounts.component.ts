@@ -20,6 +20,8 @@ export class AccountsComponent implements OnInit {
   buttonText: string = 'Edit';
   //Form
   accountForm;
+  //isPrimary
+  isPrimary : boolean = false;
 
   constructor(
     private contactService: ContactService,
@@ -36,6 +38,10 @@ export class AccountsComponent implements OnInit {
         fax: new FormControl(this.ourData.fax),
       });
     });
+    this.contactService.getCurrentUser().subscribe(res =>{
+      this.isPrimary = res.isPrimary;
+      
+    })
   }
   submitForm(event: any) {
     this.onSubmit();

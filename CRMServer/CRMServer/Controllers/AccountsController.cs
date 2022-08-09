@@ -3,7 +3,9 @@ using CRMClient;
 using CRMServer.DTO;
 using CRMServer.Models.CRM;
 using CRMServer.Models.Parameters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CRMServer.Controllers
 {
@@ -14,7 +16,7 @@ namespace CRMServer.Controllers
         private readonly CRMService _crmService;
         private readonly IMapper _mapper;
 
-        public AccountsController(CRMService crmService,IMapper mapper)
+        public AccountsController(CRMService crmService, IMapper mapper)
         {
             _crmService = crmService;
             _mapper = mapper;
@@ -22,6 +24,7 @@ namespace CRMServer.Controllers
 
         // GET: api/Accounts
         [HttpGet]
+        /*[Authorize(Roles = "Admin")]*/
         public IEnumerable<Account> GetAccounts()
         {
             return _crmService.accounts.GetAllAccounts();
@@ -29,6 +32,7 @@ namespace CRMServer.Controllers
 
         // GET: api/Accounts/ById
         [HttpGet("{id}")]
+        [Authorize(Roles = "Primary , User, Admin")]
         public ActionResult<Account?> GetAccountById(Guid id)
         {
             return _crmService.accounts.GetAccountById(id);
@@ -36,6 +40,7 @@ namespace CRMServer.Controllers
 
         // GET: api/Accounts/ByName
         [HttpGet("GetAccountByName")]
+        [Authorize(Roles = "Primary , User, Admin")]
         public ActionResult<Account?> GetAccountByName(string name)
         {
             return _crmService.accounts.GetAccountByName(name);
@@ -43,6 +48,7 @@ namespace CRMServer.Controllers
 
         // GET: api/Accounts/Where
         [HttpGet("GetAccountWhere")]
+        [Authorize(Roles = "Primary , User, Admin")]
         public IEnumerable<Account> GetAccountWhere(AccountParameters account)
         {
             return _crmService.accounts.GetAccountsWhere(account);
@@ -50,22 +56,21 @@ namespace CRMServer.Controllers
 
         // PUT: api/Accounts
         [HttpPut("UpdateAccount")]
+        [Authorize(Roles = "Primary")]
         public IActionResult UpdateAccount(AccountDTO accountdto)
         {
-            Account? a = _crmService.accounts.GetAccountByName(accountdto.Name);
             Account? account = _mapper.Map<Account>(accountdto);
-            account.Name = a.Name;
-            account.AccountId = a.AccountId;
-            _ = _crmService.accounts.UpdateAccount(account).Result;
-            if (a == null)
+            if (account == null)
             {
                 return BadRequest("This Account does not exist!");
             }
+            _ = _crmService.accounts.UpdateAccount(account).Result;
             return Ok("Account updated successfully!");   
         }
 
         // POST: api/Accounts
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult<Account> InsertAccount(AccountDTO accountdto)
         {
             Account? account = _mapper.Map<Account>(accountdto);
@@ -79,16 +84,18 @@ namespace CRMServer.Controllers
 
         // DELETE: api/Accounts
         [HttpDelete("DeleteAccount")]
+        [Authorize(Roles = "Primary, Admin")]
         public IActionResult DeleteAccount(Guid id)
         {
             Account? account = _crmService.accounts.GetAccountById(id);
             if(account == null)
             {
-               return BadRequest("This Account does not exist!");
+               return NotFound("This Account does not exist!");
             }
             _ = _crmService.accounts.DeleteAccount(account).Result;
 
             return Ok("Account deleted successfully!");
         }
+
     }
 }

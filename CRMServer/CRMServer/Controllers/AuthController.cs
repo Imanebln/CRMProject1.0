@@ -6,6 +6,7 @@ using CRMClient;
 using CRMServer.Models.CRM;
 using System.Security.Claims;
 using CRMServer.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CRMServer.Controllers
 {
@@ -161,6 +162,7 @@ namespace CRMServer.Controllers
         }
         //GET: api/Get contact's account
         [HttpGet("GetContactsAccount")]
+        [Authorize(Roles = "Primary, Admin, User")]
         public ActionResult<Account?> GetContactsAccount()
         {
             var userEmail = User.FindFirstValue(ClaimTypes.NameIdentifier);

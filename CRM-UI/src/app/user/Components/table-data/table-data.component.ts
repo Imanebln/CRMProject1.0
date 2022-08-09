@@ -1,3 +1,4 @@
+import { CdkColumnDef } from '@angular/cdk/table';
 import { Component, Input, OnInit, Type, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -37,9 +38,20 @@ export class TableDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    const adminCrud = [ 'update',
+    'delete'];
+
+    const token = localStorage.getItem('jwt');
+    const tokenInfo = this.contactService.getDecodedAccessToken(localStorage.getItem('jwt')); // decode token
+    const userRole = tokenInfo.roles; // get token expiration dateTime
+    console.log(userRole); // show decoded token object in console
+
     if (this.typeOfData == 'Contact') {
       // this.dataSource = new MatTableDataSource<Contact>();
       // this.dataSource.data = this.ourData;
+      if(userRole == 'Admin'){
+        this.displayedColumns.push(adminCrud);
+      }
       this.displayedColumns = [
         'firstname',
         'lastname',
@@ -47,9 +59,7 @@ export class TableDataComponent implements OnInit {
         'email',
         'mobilePhone',
         'jobTitle',
-        'details',
-        'update',
-        'delete',
+        'details'
       ];
     } else if (this.typeOfData == 'Account') {
       this.displayedColumns = [

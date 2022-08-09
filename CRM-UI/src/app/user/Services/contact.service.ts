@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Address } from '../Models/Address.models';
 import { Account } from '../Pages/accounts/account.model';
 import { Contact } from '../Pages/contacts/contact.model';
-
+import jwt_decode from 'jwt-decode';
 @Injectable({
   providedIn: 'root',
 })
@@ -68,4 +68,14 @@ export class ContactService {
   mapToContacts(objs: any[]): Contact[] {
     return objs.map((e) => this.mapToContact(e)) as Contact[];
   }
+
+  getDecodedAccessToken(token: any): any {
+    try {
+      return jwt_decode(token);
+    } catch(Error) {
+      return null;
+    }
+  }
+  
 }
+

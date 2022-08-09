@@ -8,7 +8,7 @@ namespace CRMServer.Models.Parameters {
 	public class OpportunityParameters {
 		public Guid? OpportunityId { get; set; }
 		public string? Name { get; set; }
-		public string? Email { get; set; }
+		public string? EmailAddress { get; set; }
 		public string? EstimatedClosedate { get; set; }
 		public int? CloseProbability { get; set; }
 	}

@@ -42,7 +42,7 @@ namespace CRMServer.Models.CRM {
 		}
 
 		public override string? ToString() {
-			return $"Opportunity({OpportunityId},{Name},{CustomerNeed},{CurrentSituation},\n\tContact({Contact}),\n\tAccount({Account}),\n\tCurrency({Currency})\n)";
+			return $"Opportunity({Email},{Name},{CustomerNeed},{CurrentSituation},\n\tContact({Contact}),\n\tAccount({Account}),\n\tCurrency({Currency})\n)";
 		}
 
 		public override bool Equals(object? obj) {

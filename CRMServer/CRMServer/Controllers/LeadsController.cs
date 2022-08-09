@@ -53,12 +53,12 @@ namespace CRMServer.Controllers
         public IActionResult UpdateLead(LeadDTO leaddto)
         {
             Lead? lead = _mapper.Map<Lead>(leaddto);
-            lead = _crmService.leads.UpdateLead(lead).Result;
             if (lead == null)
             {
                 return NotFound("This lead does not exist!");
             }
-            return Ok(lead);
+            _ = _crmService.leads.UpdateLead(lead).Result;
+            return Ok("Lead updated successfully!");
         }
 
         // POST: api/Leads

@@ -1,14 +1,8 @@
 ﻿using CRMClient.contracts;
 using CRMServer.Models.CRM;
 using CRMServer.Models.Parameters;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NJsonSchema.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CRMClient.Impl {
 	public class OpportunityService : CRMBaseService<Opportunity>, IOpportunityService {
@@ -25,7 +19,7 @@ namespace CRMClient.Impl {
 		}
 
 		public Opportunity? GetOpportunityByEmail(string email) {
-			OpportunityParameters parameters = new(){ Email = email};
+			OpportunityParameters parameters = new(){ EmailAddress = email};
 			string query = GetFilterQuery(BaseQuery, parameters);
 			return GetFromCrm(query).FirstOrDefault();
 		}

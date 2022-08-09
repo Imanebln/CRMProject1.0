@@ -122,12 +122,25 @@ namespace CRMServer.Services
 
                 return new AuthModel { Message = errors };
             }
-
-            if (!await _roleManager.RoleExistsAsync(UserRoles.User))
-                await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
-            if (await _roleManager.RoleExistsAsync(UserRoles.User))
+            var role = "User";
+            if (c.IsPrimary)
             {
-                await _userManager.AddToRoleAsync(user, UserRoles.User);
+                role = "Primary";
+                if (!await _roleManager.RoleExistsAsync(UserRoles.PrimaryUser))
+                    await _roleManager.CreateAsync(new IdentityRole(UserRoles.PrimaryUser));
+                if (await _roleManager.RoleExistsAsync(UserRoles.PrimaryUser))
+                {
+                    await _userManager.AddToRoleAsync(user, UserRoles.PrimaryUser);
+                }
+            }
+            else
+            {
+                if (!await _roleManager.RoleExistsAsync(UserRoles.User))
+                    await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+                if (await _roleManager.RoleExistsAsync(UserRoles.User))
+                {
+                    await _userManager.AddToRoleAsync(user, UserRoles.User);
+                }
             }
 
             var jwtSecurityToken = await CreateJwtToken(user);
@@ -140,7 +153,7 @@ namespace CRMServer.Services
                 Email = user.Email,
                 ExpiresOn = jwtSecurityToken.ValidTo,
                 IsAuthenticated = false,
-                Roles = new List<string> { "User" },
+                Roles = new List<string> { role },
                 Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken)
             };
         }

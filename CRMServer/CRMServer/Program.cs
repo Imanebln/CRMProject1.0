@@ -74,7 +74,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireAdministratorRole",
-         policy => policy.RequireRole("User"));
+         policy => policy.RequireRole("User","Primary","Admin"));
 });
 
 var app = builder.Build();
