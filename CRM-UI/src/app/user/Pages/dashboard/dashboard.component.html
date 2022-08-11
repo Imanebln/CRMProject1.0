@@ -1,4 +1,11 @@
-<div class="row">
+<mat-spinner
+  *ngIf="ourData == null"
+  class="spinner"
+  [diameter]="70"
+  color="accent"
+>
+</mat-spinner>
+<div class="row" *ngIf="ourData != null">
   <div class="col-6">
     <div class="card">
       <h5 class="card-header">
@@ -63,12 +70,11 @@
           </div>
         </div>
       </h5>
-      <div class="card-body">
+      <div class="card-body" *ngFor="let contact of ourData">
         <div class="container">
-          <h5 class="card-title">Benziza Mohamed</h5>
-        </div>
-        <div class="container">
-          <h5 class="card-title">El Messoual Mehdi</h5>
+          <h5 class="card-title">
+            {{ contact.firstname + " " + contact.lastname }}
+          </h5>
         </div>
       </div>
     </div>

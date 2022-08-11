@@ -31,6 +31,7 @@ export class TableDataComponent implements OnInit {
   action: string = '';
 
   constructor(private contactService: ContactService) {}
+
   ngAfterViewInit(): void {
     // console.log('=======> ', this.ourData);
 
@@ -38,20 +39,21 @@ export class TableDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    const adminCrud = [ 'update',
-    'delete'];
+    const adminCrud = ['update', 'delete'];
 
     const token = localStorage.getItem('jwt');
-    const tokenInfo = this.contactService.getDecodedAccessToken(localStorage.getItem('jwt')); // decode token
+    const tokenInfo = this.contactService.getDecodedAccessToken(
+      localStorage.getItem('jwt')
+    ); // decode token
     const userRole = tokenInfo.roles; // get token expiration dateTime
     console.log(userRole); // show decoded token object in console
 
     if (this.typeOfData == 'Contact') {
       // this.dataSource = new MatTableDataSource<Contact>();
       // this.dataSource.data = this.ourData;
-      if(userRole == 'Admin'){
-        this.displayedColumns.push(adminCrud);
-      }
+      // if (userRole == 'User') {
+      //   this.displayedColumns.push(adminCrud);
+      // }
       this.displayedColumns = [
         'firstname',
         'lastname',
@@ -59,7 +61,9 @@ export class TableDataComponent implements OnInit {
         'email',
         'mobilePhone',
         'jobTitle',
-        'details'
+        'details',
+        'update',
+        'delete',
       ];
     } else if (this.typeOfData == 'Account') {
       this.displayedColumns = [
@@ -73,6 +77,7 @@ export class TableDataComponent implements OnInit {
       ];
     }
   }
+
   public getAllOwners = () => {
     // this.repoService.getData('api/owner').subscribe((res) => {
     //   this.dataSource.data = res as Owner[];
@@ -146,6 +151,7 @@ export class TableDataComponent implements OnInit {
     this.isReadonly = true;
     if (this.typeOfData == 'Contact') {
       this.ourForm = new FormGroup({
+        contactId: new FormControl(this.infoSelected.contactId),
         firstname: new FormControl(this.infoSelected.firstname),
         lastname: new FormControl(this.infoSelected.lastname),
         birthdate: new FormControl(this.infoSelected.birthdate),
@@ -153,17 +159,19 @@ export class TableDataComponent implements OnInit {
         mobilePhone: new FormControl(this.infoSelected.mobilePhone),
         fax: new FormControl(this.infoSelected.fax),
         jobTitle: new FormControl(this.infoSelected.jobTitle),
-        isPrimary: new FormControl(this.infoSelected.isPrimary),
       });
     } else if (this.typeOfData == 'Account') {
     }
     this.action = 'information';
+    console.log(this.ourForm.value);
   };
+
   public redirectToUpdate = (infoSelected: any) => {
     this.infoSelected = infoSelected;
     this.isReadonly = false;
     if (this.typeOfData == 'Contact') {
       this.ourForm = new FormGroup({
+        contactId: new FormControl(this.infoSelected.contactId),
         firstname: new FormControl(this.infoSelected.firstname),
         lastname: new FormControl(this.infoSelected.lastname),
         birthdate: new FormControl(this.infoSelected.birthdate),
@@ -171,25 +179,29 @@ export class TableDataComponent implements OnInit {
         mobilePhone: new FormControl(this.infoSelected.mobilePhone),
         fax: new FormControl(this.infoSelected.fax),
         jobTitle: new FormControl(this.infoSelected.jobTitle),
-        isPrimary: new FormControl(this.infoSelected.isPrimary),
       });
     } else if (this.typeOfData == 'Account') {
     }
     this.action = 'update';
   };
+
   public redirectToDelete = (infoSelected: any) => {
     this.infoSelected = infoSelected;
     this.action = 'delete';
   };
+
   public doFilter = (event: any) => {
     this.dataSource.filter = event.target.value.trim().toLocaleLowerCase();
   };
+
   onSubmit() {
     this.contactService.updateContact(this.ourForm.value).subscribe();
   }
+
   updateContact() {
     this.onSubmit();
   }
+
   deleteContact() {
     this.contactService.deleteContact(this.infoSelected.contactId).subscribe();
   }

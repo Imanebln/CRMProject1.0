@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -36,10 +36,7 @@ export class ContactService {
   }
 
   updateContact(contact: Contact): Observable<any> {
-    return this.http.put<Contact>(
-      this.apiUrl + 'Contacts/UpdateContact',
-      contact
-    );
+    return this.http.put<any>(this.apiUrl + 'Contacts/UpdateContact', contact);
   }
 
   deleteContact(contactId: string): Observable<any> {
@@ -47,6 +44,7 @@ export class ContactService {
       this.apiUrl + 'Contacts/DeleteContact?id=' + contactId
     );
   }
+
   getCountries() {
     return this.http.get<any[]>(
       'https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/index.json'
@@ -72,10 +70,8 @@ export class ContactService {
   getDecodedAccessToken(token: any): any {
     try {
       return jwt_decode(token);
-    } catch(Error) {
+    } catch (Error) {
       return null;
     }
   }
-  
 }
-

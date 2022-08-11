@@ -2,3 +2,8 @@
   background-color: #ad2d5a;
   color: white;
 }
+.spinner {
+  margin: 0 auto;
+  margin-top: 50vh;
+  transform: translateY(calc(-50% - 80px));
+}

@@ -5,9 +5,17 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class KeysPipe implements PipeTransform {
   transform(value, ...args: unknown[]): any {
+    let banned: string[] = [
+      'contactId',
+      'account',
+      'isPrimary',
+      'imageUrl',
+      'birthdateObj',
+      'addresses',
+    ];
     let keys: any = [];
     for (let key in value) {
-      if (key == 'account' || key == 'contactId' || key == 'birthdateObj') {
+      if (banned.includes(key)) {
         continue;
       }
       keys.push({ key: key, value: value[key] });

@@ -89,7 +89,7 @@ namespace CRMServer.Controllers
             if (IsCurrentUser()?.ContactId == contact.ContactId)
             {
                 _ = _crmService.contacts.UpdateContact(contact).Result;
-                return Ok("Contact updated sucessfully!");
+                return Ok(new {message = "Contact updated sucessfully!" });
             }
             return Unauthorized();
 

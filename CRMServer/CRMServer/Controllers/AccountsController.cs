@@ -56,7 +56,7 @@ namespace CRMServer.Controllers
 
         // PUT: api/Accounts
         [HttpPut("UpdateAccount")]
-        [Authorize(Roles = "Primary")]
+        /*[Authorize(Roles = "Primary")]*/
         public IActionResult UpdateAccount(AccountDTO accountdto)
         {
             Account? account = _mapper.Map<Account>(accountdto);
@@ -65,7 +65,7 @@ namespace CRMServer.Controllers
                 return BadRequest("This Account does not exist!");
             }
             _ = _crmService.accounts.UpdateAccount(account).Result;
-            return Ok("Account updated successfully!");   
+            return Ok(new { message = "Account updated sucessfully!" });
         }
 
         // POST: api/Accounts

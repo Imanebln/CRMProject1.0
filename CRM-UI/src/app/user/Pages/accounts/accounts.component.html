@@ -116,11 +116,11 @@
   <!-- our contacts of ourData -->
   <div class="d-flex">
     <div class="row">
-      <div
-        class="col-6"
-        *ngFor="let contact of ourData.contacts; let i = index"
-      >
-        <div class="card" [style.background-color]="contact.isPrimary == true ? 'gold' : '#eee'">
+      <div class="col-6" *ngFor="let contact of ourData.contacts">
+        <div
+          class="card"
+          [style.background-color]="contact.isPrimary == true ? 'gold' : '#eee'"
+        >
           <div class="card-body">
             <h5 class="card-title">
               {{ contact.firstname + " " + contact.lastname }}

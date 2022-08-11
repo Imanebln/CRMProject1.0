@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ContactService } from '../../Services/contact.service';
+import { Contact } from '../contacts/contact.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,11 +30,20 @@ export class DashboardComponent implements OnInit {
   titleText = 'World population per region (in millions)';
   //Line Chart Start
   //Line Chart End
-  constructor(private router: Router) {}
+  //data of our Owner
+  ourData: Contact[];
+  //type of data
+  typeOfData = 'Contact';
 
-  ngOnInit(): void {}
+  constructor(private router: Router, private contactService: ContactService) {}
 
   toContacts() {
     this.router.navigate(['contacts']);
+  }
+
+  ngOnInit(): void {
+    this.contactService.getContactsAccount().subscribe((value) => {
+      this.ourData = value.contacts;
+    });
   }
 }

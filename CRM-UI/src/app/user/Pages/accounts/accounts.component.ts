@@ -21,7 +21,7 @@ export class AccountsComponent implements OnInit {
   //Form
   accountForm;
   //isPrimary
-  isPrimary : boolean = false;
+  isPrimary: boolean = false;
 
   constructor(
     private contactService: ContactService,
@@ -32,16 +32,16 @@ export class AccountsComponent implements OnInit {
     this.contactService.getContactsAccount().subscribe((value) => {
       this.ourData = value;
       this.accountForm = new FormGroup({
+        accountId: new FormControl(this.ourData.accountId),
         name: new FormControl(this.ourData.name),
         websiteUrl: new FormControl(this.ourData.websiteUrl),
         description: new FormControl(this.ourData.description),
         fax: new FormControl(this.ourData.fax),
       });
     });
-    this.contactService.getCurrentUser().subscribe(res =>{
+    this.contactService.getCurrentUser().subscribe((res) => {
       this.isPrimary = res.isPrimary;
-      
-    })
+    });
   }
   submitForm(event: any) {
     this.onSubmit();
