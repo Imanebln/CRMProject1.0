@@ -1,4 +1,5 @@
 ﻿using CRMClient.contracts;
+using CRMClient.Exceptions;
 using CRMServer.Models.CRM;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -11,19 +12,31 @@ using System.Text.Json.Serialization;
 namespace CRMClient.Impl {
 	public abstract class CRMBaseService<T> : ICRMBaseService<T> where T : ICrmEntity{
 		protected readonly HttpClient _client;
+		protected readonly CRMProvider context;
 		public CRMBaseService(CRMProvider context) {
 			_client = context.httpClient;
+			this.context = context;
 		}
 
 		
 		protected IEnumerable<T> GetFromCrm(string query){
-			string response = _client.GetAsync(query).Result.Content.ReadAsStringAsync().Result;
+			HttpResponseMessage httpRequestMessage = _client.GetAsync(query).Result;
+
+			if (!httpRequestMessage.IsSuccessStatusCode){
+				if (httpRequestMessage.StatusCode.HasFlag(System.Net.HttpStatusCode.Unauthorized)) {
+					context.RefreshToken();
+					Console.WriteLine("Retrying : Renewing API.");
+					return GetFromCrm(query);
+				}else
+					throw new CRMException(httpRequestMessage);
+			}	
+				
+			string response = httpRequestMessage.Content.ReadAsStringAsync().Result;
 			JObject doc = JObject.Parse(response);
 			string? entitiesJson = doc.SelectToken("value")?.ToString();
 			if (entitiesJson == null) 
-				throw new Exception("API Error : No Value Found !");
+				throw new CRMException(httpRequestMessage);
 			List<T> CrmEntities = JsonConvert.DeserializeObject<List<T>>(entitiesJson)??new List<T>();
-			//Populate(ref CrmEntities, doc);
 			return CrmEntities;
 		}
 
@@ -88,9 +101,9 @@ namespace CRMClient.Impl {
 				request.Content = new StringContent(GetJsonAuto(CrmEntity), Encoding.UTF8, "application/json");
 			}
 			HttpResponseMessage response = await _client.SendAsync(request);
-			Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+			
 			if (!response.IsSuccessStatusCode)
-				throw new Exception($"CRM ERROR :\n{response.Content.ReadAsStringAsync().Result}");
+				throw new CRMException(response);
 			return response;
 		}
 

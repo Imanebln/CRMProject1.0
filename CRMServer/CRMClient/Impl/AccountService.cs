@@ -14,23 +14,23 @@ namespace CRMClient.Impl {
 		}
 
 		public IEnumerable<Account> GetAllAccounts() {
-			return this.GetFromCrm(BaseQuery);
+			return IsPrimaryPopulator(GetFromCrm(BaseQuery));
 		}
 		public IEnumerable<Account> GetAccountsWhere(AccountParameters account) {
 			string query = GetFilterQuery(BaseQuery, account);
-			return GetFromCrm(query);
+			return IsPrimaryPopulator(GetFromCrm(query));
 		}
 
 		public Account? GetAccountByName(string name){
 			AccountParameters parameters = new() { Name = name};
 			string filteredQuery = GetFilterQuery(BaseQuery, parameters);
-			return GetFromCrm(filteredQuery).FirstOrDefault();
+			return IsPrimaryPopulator(GetFromCrm(filteredQuery)).FirstOrDefault();
 		}
 
 		public Account? GetAccountById(Guid id) {
 			AccountParameters parameters = new() { AccountId =  id};
 			string filteredQuery = GetFilterQuery(BaseQuery, parameters);
-			return GetFromCrm(filteredQuery).FirstOrDefault();
+			return IsPrimaryPopulator(GetFromCrm(filteredQuery)).FirstOrDefault();
 		}
 
 		public async Task<Account?> InsertAccount(Account account) {
@@ -59,6 +59,16 @@ namespace CRMClient.Impl {
 			jsonResolver.IgnoreProperty(typeof(Contact), "isprimary");
 
 			return jsonResolver;
+		}
+
+		private IEnumerable<Account> IsPrimaryPopulator(IEnumerable<Account> accounts) {
+			accounts.ToList().ForEach(account => {
+				Guid? guid = account?.PrimaryContact?.ContactId;
+				account?.Contacts?.ToList().ForEach(contact => {
+					contact.IsPrimary = guid == contact.ContactId;
+				});
+			});
+			return accounts;
 		}
 	}
 }

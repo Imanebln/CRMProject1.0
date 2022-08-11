@@ -37,8 +37,7 @@ namespace CRMClient {
                 result = await app.AcquireTokenForClient(scorpes).ExecuteAsync();
             }
             catch (Exception ex) {
-                Console.Write(ex.Message);
-                throw new Exception("Fatal Error : An Error Occured when trying to retreive the API Token !");
+                throw new Exception("Fatal Error : An Error Occured when trying to retreive the API Token !\n" + ex.Message);
             }
 
             if (result != null) 
@@ -46,6 +45,11 @@ namespace CRMClient {
             else
                 throw new Exception("Fatal Error : Couldn't Get API TOKEN !");
             return token;
+        }
+
+        public void RefreshToken(){
+            ApiKey = GetApiKey().Result;
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ApiKey);
         }
 
         private void PrepareHttpClient(ref HttpClient client){

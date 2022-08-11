@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertComponent } from '../alert/alert.component';
 import { Password } from '../Models/Password';
-import { AuthServiceService } from '../Services/auth-service.service';
+import { AuthService } from '../Services/auth.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -14,7 +14,7 @@ export class ResetPasswordComponent implements OnInit {
   resetpasswordForm!: FormGroup;
   @ViewChild(AlertComponent) alert: AlertComponent;
 
-  constructor(private authService: AuthServiceService) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     //resetpasswordForm

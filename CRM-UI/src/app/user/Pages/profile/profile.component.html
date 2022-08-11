@@ -1,16 +1,35 @@
+<mat-spinner
+  *ngIf="this.contact == null"
+  class="spinner mx-auto"
+  [diameter]="70"
+  color="accent"
+>
+</mat-spinner>
+
 <div *ngIf="this.contact != null" class="container">
     <div class="row justify-content-center">
         <div class="card col-lg-12 col-xl-8">
             <div class="header">
-                <div class="edit-profile" (click)="editContact()" *ngIf="contact.isPrimary">
+                <div class="edit-profile" data-bs-toggle="modal" data-bs-target="#EditContactModal">
                     <i class="fa-solid fa-pen"></i>
                 </div>
                 <div class="basic-info">
-                    <h1>{{contact.lastname}} {{contact.firstname}}</h1>
+                    <h1 class="mb-0">{{contact.lastname}} {{contact.firstname}}</h1>
                     <p>{{contact.jobTitle}}</p>
                 </div>
                 <div class="profile-image text-center">
-                    <img [src]="'https://org62296229.crm4.dynamics.com/' + contact.imageUrl" alt="">
+                    <div>
+                        <div #saveAvatar class="d-none save-btn btn-success py-0 mb-1" (click)="onImageSave()">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <img #avatar [src]="this.ImageUrl" alt="">
+                        <div class="edit-avatar">
+                            <label>
+                                <input type="file" accept="image/x-png,image/gif,image/jpeg" (change)="onFileSelected($event)">
+                                <i class="fa-solid fa-pen"></i>
+                            </label>
+                        </div>
+                    </div>
                     <span class="badge rounded-pill">{{contact.isPrimary?'Primary':'Not Primary'}}</span>
                 </div>
             </div>
@@ -154,8 +173,32 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark me-2"></i>Discard</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="refreshUser()"><i class="fa-solid fa-xmark me-2"></i>Discard</button>
           <button type="button" class="btn btn-primary" (click)="UpdateAddress(selectedAddress)" data-bs-dismiss="modal"><i class="fa-solid fa-floppy-disk me-2"></i>Save</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="EditContactModal" tabindex="-1" aria-labelledby="EditContactModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+            <img class="address-icon" [src]="this.ImageUrl" width="72px" alt="" style="border-radius: 50%;">
+            <h4 class="text-center mt-5">
+                <i class="fa-solid fa-pen-to-square me-2"></i>Edit Contact 
+            </h4>
+            <div class="address-form p-3">
+                <div *ngFor="let item of contact | keys" class="mb-3">
+                    <label [for]="item" class="text-capitalize">{{item.key}}</label>
+                    <input [id]="'field-'+item" type="text" class="form-control" [(ngModel)]="contact[item.key]">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="refreshUser()"><i class="fa-solid fa-xmark me-2"></i>Discard</button>
+          <button type="button" class="btn btn-primary" (click)="UpdateContact(contact)" data-bs-dismiss="modal"><i class="fa-solid fa-floppy-disk me-2"></i>Save</button>
         </div>
         
       </div>

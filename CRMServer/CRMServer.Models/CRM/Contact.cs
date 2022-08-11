@@ -11,7 +11,7 @@ namespace CRMServer.Models.CRM{
 		public string? MobilePhone { get; set; }
 		public string? Fax { get; set; }
 		public string? JobTitle { get; set; }
-		[JsonProperty(PropertyName = "entityimage_url")]
+		[JsonProperty(PropertyName = "entityimage")]
 		public string? ImageUrl { get; set; }
 		[JsonProperty(PropertyName = "parentcustomerid_account")]
 		public Account? Account { get; set; }
@@ -29,10 +29,13 @@ namespace CRMServer.Models.CRM{
                 Birthdate = value.ToShortDateString();
 			}
 		}
+		private bool primary = false;
 		public bool IsPrimary {
-			get{
-			    if (Account == null) return false;
+			get {
+			    if (Account == null) return primary;
 				return ContactId.ToString() == Account.PrimaryContactId;
+			} set {
+				primary = value;
 			}
 		}
 

@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using CRMServer.Models.Parameters;
 using System.Text;
 using NJsonSchema.Infrastructure;
+using System.Net;
 
 namespace CRMClient.Impl {
 	public class ContactService : CRMBaseService<Contact>, IContactService {
@@ -47,13 +48,23 @@ namespace CRMClient.Impl {
 			return await Delete(contact, GetContactById, BaseQuery);
 		}
 
+		public async Task<byte[]?> ResolveImage(string link){
+			HttpResponseMessage response = await _client.GetAsync(link);
+			if (response.IsSuccessStatusCode) {
+				byte[] bytes = await response.Content.ReadAsByteArrayAsync();
+				return bytes;
+			}else{
+				return null;
+			}
+
+		}
+
 		protected override PropertyRenameAndIgnoreSerializerContractResolver GetJsonResolver() {
 			PropertyRenameAndIgnoreSerializerContractResolver jsonResolver = new();
 			Type type = typeof(Contact);
 			jsonResolver.NamingStrategy = new LowercaseNamingStrategy();
 			jsonResolver.IgnoreProperty(type, "contactid");
 			jsonResolver.IgnoreProperty(type, "isprimary");
-			jsonResolver.IgnoreProperty(type, "entityimage_url");
 			jsonResolver.IgnoreProperty(type, "parentcustomerid_account");
 			jsonResolver.IgnoreProperty(type, "Contact_CustomerAddress");
 

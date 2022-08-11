@@ -12,7 +12,7 @@ import {
 import { Router } from '@angular/router';
 import { AlertComponent } from '../alert/alert.component';
 import { Password } from '../Models/Password';
-import { AuthServiceService } from '../Services/auth-service.service';
+import { AuthService } from '../Services/auth.service';
 
 @Component({
   selector: 'app-newpassword',
@@ -25,7 +25,7 @@ export class NewpasswordComponent implements OnInit {
   @ViewChild(AlertComponent) alert: AlertComponent;
 
   constructor(
-    private authService: AuthServiceService,
+    private authService: AuthService,
     private router: Router
   ) {}
 

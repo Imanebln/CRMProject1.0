@@ -1,5 +1,6 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { lastValueFrom } from "rxjs";
 import { Address } from '../../Models/Address.models';
 import { ContactDetails } from '../../Models/ContactDetails.models';
 import { ContactService } from '../../Services/contact.service';
@@ -10,28 +11,53 @@ import { ContactService } from '../../Services/contact.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  contact : ContactDetails;
+  contact : ContactDetails | any;
   colors : string[] = ['#3A86FF', '#8B45ED', '#FFBE0B'];
   AddressShowed : boolean = false;
   selectedAddress : Address = <Address>{};
   countries : any[];
+  public ImageUrl : string; 
  
   constructor(private contactService : ContactService, private router : Router) {
-    this.contactService.getCurrentUser().subscribe(user => {
-      this.contact = user as ContactDetails;
-      this.contact.addresses = this.contact.addresses.reverse()
-    })
+   }
+
+  @ViewChild('avatar')
+  avatar : ElementRef
+
+  @ViewChild('saveAvatar')
+  saveAvatar : ElementRef
+
+  ngOnInit() {
+    this.initUser()
     this.contactService.getCountries().subscribe(countries => {
       this.countries = countries.sort((a,b) => a.name > b.name?1:-1)
     })
-   }
-  
-  ngOnInit(): void {
   }
 
+
+  
   editContact = () => {
     this.router.navigate(['/user/contacts'])
   }
+
+  onFileSelected = (event:any) => {
+    let imageReader : FileReader = new FileReader();
+    imageReader.readAsDataURL(event.target.files[0]);
+    imageReader.onload = () => {
+      let url : string = imageReader.result as string;
+      this.avatar.nativeElement.src = imageReader.result;
+      this.contact.imageUrl = url.split(",")[1];
+      this.saveAvatar.nativeElement.classList.toggle('d-none')
+    }
+  }
+
+  onImageSave = () => {
+    this.saveAvatar.nativeElement.classList.toggle('d-none')
+    this.contactService.updateContact(this.contact).subscribe((res)=>{
+      console.log(res)
+    })
+  }
+
   showAddress = () => {
     let i = 0;
     if (!this.AddressShowed){
@@ -63,4 +89,21 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  UpdateContact(contact : ContactDetails){
+    this.contactService.updateContact(contact).subscribe({
+      next: (response) => console.log(response),
+      error: (response) => console.log(response)
+    })
+  }
+
+  refreshUser(){
+    this.initUser().then(res => console.log(res))
+  }
+
+  initUser = async ()=>{
+    let response : ContactDetails = await lastValueFrom(this.contactService.getCurrentUser()) as ContactDetails;
+    this.contact = response;
+    this.ImageUrl = 'data:image/png;base64,' + this.contact.imageUrl;
+    this.contact.addresses = this.contact.addresses.reverse()
+  }
 }

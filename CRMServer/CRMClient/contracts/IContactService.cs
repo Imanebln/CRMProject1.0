@@ -12,5 +12,6 @@ namespace CRMClient.contracts {
 		Task<Contact?> InsertContact(Contact contact);
 		Task<Contact?> UpdateContact(Contact contact);
 		Task<Contact?> DeleteContact(Contact contact);
+		Task<byte[]?> ResolveImage(string link);
 	}
 }

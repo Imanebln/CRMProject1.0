@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AlertComponent } from '../alert/alert.component';
 import { User } from '../Models/User';
-import { AuthServiceService } from '../Services/auth-service.service';
+import { AuthService } from '../Services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   user: User = <User>{};
 
   constructor(
-    private authService: AuthServiceService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     const token = localStorage.getItem('jwt');
     if (token) {
-      this.router.navigate(['dashbord']);
+      this.router.navigate(['login']);
     }
 
     //signUpForm
@@ -96,9 +96,7 @@ export class LoginComponent implements OnInit {
             icon: 'circle-exclamation',
             content: 'Welcome',
           });
-          setTimeout(() => {
-            this.router.navigate(['dashbord']);
-          }, 2000);
+          this.router.navigate(['user']);
         },
         error: (err: HttpErrorResponse) => {
           //Alert Err
