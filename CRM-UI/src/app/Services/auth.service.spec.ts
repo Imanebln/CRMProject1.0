@@ -2,14 +2,15 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 import { JwtModule } from '@auth0/angular-jwt';
-import { AuthServiceService } from 'src/app/Services/auth-service.service';
+import { AuthService } from './auth.service';
+import { environment } from 'src/environments/environment';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
 }
 
-describe('AuthServiceService', async () => {
-  let authService: AuthServiceService;
+describe('AuthService', async () => {
+  let authService: AuthService;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
@@ -25,15 +26,12 @@ describe('AuthServiceService', async () => {
       ],
     });
     TestBed.inject(HttpClient);
-    authService = TestBed.inject(AuthServiceService);
+    authService = TestBed.inject(AuthService);
   });
 
   it('#signIn() call', async () => {
     let response: any = await lastValueFrom(
-      authService.signIn({
-        email: 'boulouane.imane@gmail.com',
-        password: 'Crm123@',
-      })
+      authService.signIn(environment.testUser)
     );
     expect(response.isAuthenticated).toBe(true);
     // localStorage.setItem('jwt', response.token);

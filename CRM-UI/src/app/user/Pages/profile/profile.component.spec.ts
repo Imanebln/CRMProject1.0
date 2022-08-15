@@ -1,9 +1,8 @@
 import { TestBed } from "@angular/core/testing";
 import { ProfileComponent } from "./profile.component";
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { RouterTestingModule } from "@angular/router/testing"
 import { AuthService } from "src/app/Services/auth.service";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
 import { lastValueFrom } from "rxjs";
 import { JwtModule } from "@auth0/angular-jwt";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
@@ -12,6 +11,8 @@ import { ContactDetails } from "../../Models/ContactDetails.models";
 import { By } from "@angular/platform-browser";
 import { AddressFieldPipe } from "../../Shared/address-field.pipe";
 import { Address } from "../../Models/Address.models";
+import { KeysPipe } from "../../Components/table-data/keys.pipe";
+import { environment } from "src/environments/environment";
 
 export function tokenGetter() {
 return localStorage.getItem('jwt');
@@ -19,11 +20,13 @@ return localStorage.getItem('jwt');
 
 describe('ProfileComponent', async()=> {
     let authService : AuthService;
+    jasmine.clock().install();
     beforeEach(async()=> {
         TestBed.configureTestingModule({
             declarations:[
                 ProfileComponent,
-                AddressFieldPipe
+                AddressFieldPipe,
+                KeysPipe
             ],
             imports:[
                 HttpClientModule,
@@ -44,7 +47,7 @@ describe('ProfileComponent', async()=> {
         }).compileComponents();
 
         authService = TestBed.get(AuthService);
-        let response : any = await lastValueFrom(authService.signIn({email:'elmessmehdi@gmail.com', password: 'Crm@123'}));
+        let response : any = await lastValueFrom(authService.signIn(environment.testUser));
         localStorage.setItem('jwt', response.token)
         
         
@@ -101,10 +104,6 @@ describe('ProfileComponent', async()=> {
         }
         
     })
-
-    // it('should edit address', async () => {
-        
-    // })
 
 })
 

@@ -3,14 +3,15 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ContactService } from './contact.service';
-import { AuthServiceService } from 'src/app/Services/auth-service.service';
+import { AuthService } from 'src/app/Services/auth.service';
+import { environment } from 'src/environments/environment';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
 }
 
-describe('ProfileComponent', async () => {
-  let authService: AuthServiceService;
+describe('Contact Service', async () => {
+  let authService: AuthService;
   let contactService: ContactService;
 
   beforeEach(async () => {
@@ -27,12 +28,9 @@ describe('ProfileComponent', async () => {
       ],
     });
     TestBed.inject(HttpClient);
-    authService = TestBed.inject(AuthServiceService);
+    authService = TestBed.inject(AuthService);
     let response: any = await lastValueFrom(
-      authService.signIn({
-        email: 'boulouane.imane@gmail.com',
-        password: 'Crm123@',
-      })
+      authService.signIn(environment.testUser)
     );
     localStorage.setItem('jwt', response.token);
     contactService = TestBed.inject(ContactService);

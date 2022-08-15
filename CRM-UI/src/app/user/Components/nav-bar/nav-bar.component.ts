@@ -15,7 +15,7 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contactService.getCurrentUser().subscribe(res =>{
+    this.contactService.getCurrentUser().subscribe((res:any) =>{
       this.currentUserImage = 'data:image/png;base64,' + res.imageUrl;
     });
   }

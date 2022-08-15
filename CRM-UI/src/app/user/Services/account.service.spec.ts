@@ -3,18 +3,20 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ContactService } from './contact.service';
-import { AuthServiceService } from 'src/app/Services/auth-service.service';
+import { AuthService } from 'src/app/Services/auth.service';
 import { AccountService } from './account.service';
+import { environment } from 'src/environments/environment';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
 }
 
-fdescribe('AccountService', async () => {
-  let authService: AuthServiceService;
+describe('AccountService', async () => {
+  let authService: AuthService;
   let accountService: AccountService;
 
   beforeEach(async () => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
@@ -28,12 +30,9 @@ fdescribe('AccountService', async () => {
       ],
     });
     TestBed.inject(HttpClient);
-    authService = TestBed.inject(AuthServiceService);
+    authService = TestBed.inject(AuthService);
     let response: any = await lastValueFrom(
-      authService.signIn({
-        email: 'boulouane.imane@gmail.com',
-        password: 'Crm123@',
-      })
+      authService.signIn(environment.testUser)
     );
     localStorage.setItem('jwt', response.token);
     accountService = TestBed.inject(AccountService);

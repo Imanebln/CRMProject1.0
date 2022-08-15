@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'https://localhost:7270/api/',
+  testUser : {email:'boulouane.imane@gmail.com', password:'Crm@123'}
 };
 
 /*
