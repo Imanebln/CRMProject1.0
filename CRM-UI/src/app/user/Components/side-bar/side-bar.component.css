@@ -89,7 +89,9 @@ a {
 .toggleable {
     transition: all 400ms ease;
 }
-
+.image-profile{
+    border-radius: 50%;
+}
 
 @keyframes Showing {
     0%{

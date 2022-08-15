@@ -1,3 +1,4 @@
+import { ContactService } from './../../Services/contact.service';
 import { Component, EventEmitter, Host, HostBinding, Input, OnInit, Output, AfterViewInit, HostListener } from '@angular/core';
 import Items from './sidebar.json';
 import { Popover } from "bootstrap";
@@ -16,11 +17,14 @@ export class SideBarComponent implements OnInit, AfterViewInit {
   navItems : any[] = Items.items;
   active : string;
   minimized : boolean = false;
-
-
-  constructor() { }
+  currentUserName: string;
+  currentUserAccount: string;
+  currentUserImage: any;
+  
+  constructor(public contactService : ContactService) { }
   ngAfterViewInit(): void {
-    this.initPopovers()
+    this.initPopovers();
+    
   }
 
   ngOnInit(): void {
@@ -38,6 +42,13 @@ export class SideBarComponent implements OnInit, AfterViewInit {
             sidebar?.classList.remove('sidebar-show');
           }
         })
+    });
+    this.contactService.getCurrentUser().subscribe(res =>{
+      this.currentUserName = res.firstname + " " + res.lastname; 
+      this.currentUserImage = 'data:image/png;base64,' + res.imageUrl;
+    });
+    this.contactService.getContactsAccount().subscribe(res =>{
+      this.currentUserAccount = res.name;
     })
   }
   

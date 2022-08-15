@@ -16,10 +16,11 @@
     <div class="align-self-center mt-auto w-100 avatar">
         <hr width="100%" color="#FFF" size="3">
         <div class="d-flex align-items-center justify-content-center">
-            <img src="/assets/icons/avatar.png" alt="" width="50px">
+            <!-- <img src="/assets/icons/avatar.png" alt="" width="50px"> -->
+            <img #avatar class="image-profile" [src]="this.currentUserImage" alt="curentUserImage" width="50px">
             <div class="ms-3 toggleable" style="white-space: nowrap;">
-                <p class="my-0">El Mehdi El Messoual</p>
-                <p class="my-0">Soft IT .Inc</p>
+                <p class="my-0">{{currentUserName}}</p>
+                <p class="my-0">{{currentUserAccount}}</p>
             </div>
         </div>
         

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UnitTest.AuthTests
 {
-    internal class AuthServiceTest
+    public class AuthServiceTest
     {
 
     }

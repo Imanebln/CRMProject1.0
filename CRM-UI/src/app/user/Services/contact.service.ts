@@ -1,3 +1,4 @@
+import { ContactDetails } from './../Models/ContactDetails.models';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -28,7 +29,7 @@ export class ContactService {
   }
 
   getCurrentUser() {
-    return this.http.get<Contact>(this.apiUrl + 'Auth/GetCurrentUser');
+    return this.http.get<ContactDetails>(this.apiUrl + 'Auth/GetCurrentUser');
   }
 
   getContactsAccount() {

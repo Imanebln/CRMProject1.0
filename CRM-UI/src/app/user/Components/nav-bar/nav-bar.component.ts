@@ -9,11 +9,15 @@ import { ContactService } from '../../Services/contact.service';
 })
 export class NavBarComponent implements OnInit {
   public User : Contact;
+  currentUserImage : any;
   constructor(private contactService : ContactService) { 
     this.contactService.getCurrentUser().subscribe(user => this.User = user)
   }
 
   ngOnInit(): void {
+    this.contactService.getCurrentUser().subscribe(res =>{
+      this.currentUserImage = 'data:image/png;base64,' + res.imageUrl;
+    });
   }
 
 }

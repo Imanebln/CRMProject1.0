@@ -14,7 +14,7 @@
     
     
     <div class="user d-flex align-items-center">
-        <img src="/assets/icons/avatar.png" width="50px" alt="">
+        <img #avatar class="image-profile" [src]="this.currentUserImage" alt="" width="50px">
         <div class="dropdown">
             <i class="fa-solid fa-circle-chevron-down" type="button"data-bs-toggle="dropdown" aria-expanded="false"></i>
             <ul class="dropdown-menu">

@@ -19,6 +19,9 @@ p {
     font-size: max(18px, 2vw);
     font-weight: 600;
 }
+.image-profile{
+    border-radius: 50%;
+}
 
 .user > img {
     border: 2px solid var(--secondary);
