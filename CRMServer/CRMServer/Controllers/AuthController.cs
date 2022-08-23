@@ -18,13 +18,15 @@ namespace CRMServer.Controllers
         private readonly IAuthService _authService;
         private readonly CRMService _crm;
         private readonly CRMContext _context;
+        private readonly IConfiguration _configuration;
 
-        public AuthController(UserManager<AppUser> userManager, IAuthService authService, CRMService crmService, CRMContext context)
+        public AuthController(UserManager<AppUser> userManager, IAuthService authService, CRMService crmService, CRMContext context, IConfiguration configuration)
         {
             this.userManager = userManager;
             _authService = authService;
             _crm = crmService;
             _context = context;
+            _configuration = configuration;
         }
 
         //GET: CRMVerification
@@ -158,7 +160,10 @@ namespace CRMServer.Controllers
         public ActionResult<Contact?> GetCurrentUser()
         {
             var userEmail = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return _crm.contacts.GetContactByEmail(userEmail);
+            Contact? contact = _crm.contacts.GetContactByEmail(userEmail);
+            if (contact.ImageUrl == null)
+                contact.ImageUrl = _configuration["DefaultAvatar"];
+            return Ok(contact);
         }
         //GET: api/Get contact's account
         [HttpGet("GetContactsAccount")]
@@ -168,8 +173,14 @@ namespace CRMServer.Controllers
             var userEmail = User.FindFirstValue(ClaimTypes.NameIdentifier);
             Guid? AccountId = _crm.contacts.GetContactByEmail(userEmail)?.Account?.AccountId;
             if (AccountId == null) return NotFound();
-            else
-                return _crm.accounts.GetAccountById((Guid) AccountId);
+            else{
+                Account? account = _crm.accounts.GetAccountById((Guid)AccountId);
+                if (account != null && account.ImageUrl == null)
+                    account.ImageUrl = _configuration["DefaultCompany"];
+                return Ok(account);
+            }
+                
+                
         }
     }
 }

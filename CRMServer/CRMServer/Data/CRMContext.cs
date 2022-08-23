@@ -19,6 +19,5 @@ namespace CRMServer.Data
         }
 
         public DbSet<AppUser> AppUser { get; set; }
-
     }
 }

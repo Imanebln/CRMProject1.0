@@ -2,6 +2,7 @@ import { ContactService } from './../../Services/contact.service';
 import { Component, EventEmitter, Host, HostBinding, Input, OnInit, Output, AfterViewInit, HostListener } from '@angular/core';
 import Items from './sidebar.json';
 import { Popover } from "bootstrap";
+import { ContactDetails } from '../../Models/ContactDetails.models';
 
 @Component({
   selector: 'app-side-bar',
@@ -14,9 +15,10 @@ export class SideBarComponent implements OnInit, AfterViewInit {
   navbarWide : string = 'max(15vw, 300px)'
   @Input() LeftSpace:string;
   @Output() LeftSpaceChange = new EventEmitter();
-  navItems : any[] = Items.items;
+  navItems : any[]  ;
   active : string;
   minimized : boolean = false;
+  user : ContactDetails;
   currentUserName: string;
   currentUserAccount: string;
   currentUserImage: any;
@@ -43,9 +45,15 @@ export class SideBarComponent implements OnInit, AfterViewInit {
           }
         })
     });
-    this.contactService.getCurrentUser().subscribe(res =>{
-      this.currentUserName = res.firstname + " " + res.lastname; 
+    this.contactService.getCurrentUser().subscribe((res:any) =>{
+      this.user = res;
+      this.currentUserName = res.firstname + " " + res.lastname;
       this.currentUserImage = 'data:image/png;base64,' + res.imageUrl;
+      
+      this.navItems = Items.items.filter((item : any)=>{
+        if(item.role == null) return true;
+        else return this.user.isPrimary;
+      })
     });
     this.contactService.getContactsAccount().subscribe(res =>{
       this.currentUserAccount = res.name;

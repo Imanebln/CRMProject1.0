@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     const token = localStorage.getItem('jwt');
     if (token) {
-      this.router.navigate(['login']);
+      this.router.navigate(['user']);
     }
 
     //signUpForm

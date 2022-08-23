@@ -4,6 +4,7 @@ import { lastValueFrom } from "rxjs";
 import { Address } from '../../Models/Address.models';
 import { ContactDetails } from '../../Models/ContactDetails.models';
 import { ContactService } from '../../Services/contact.service';
+import compress from 'compress-base64';
 
 @Component({
   selector: 'app-profile',
@@ -43,11 +44,26 @@ export class ProfileComponent implements OnInit {
   onFileSelected = (event:any) => {
     let imageReader : FileReader = new FileReader();
     imageReader.readAsDataURL(event.target.files[0]);
+    let url : string = imageReader.result as string;
     imageReader.onload = () => {
-      let url : string = imageReader.result as string;
-      this.avatar.nativeElement.src = imageReader.result;
-      this.contact.imageUrl = url.split(",")[1];
-      this.saveAvatar.nativeElement.classList.toggle('d-none')
+      console.log(imageReader.result);
+      
+      compress(imageReader.result as string, {
+        width: 128,
+        quality: 0.8,
+        max:200,
+        min:10
+      }).then((result : any) =>{
+        console.log(result);
+        
+        this.avatar.nativeElement.src = result;
+        url = result as string;
+        this.contact.imageUrl = url.split(",")[1];
+        this.saveAvatar.nativeElement.classList.toggle('d-none')
+      })
+      
+      
+      
     }
   }
 
@@ -103,6 +119,8 @@ export class ProfileComponent implements OnInit {
   initUser = async ()=>{
     let response : ContactDetails = await lastValueFrom(this.contactService.getCurrentUser()) as ContactDetails;
     this.contact = response;
+    console.log(this.contact);
+    
     this.ImageUrl = 'data:image/png;base64,' + this.contact.imageUrl;
     this.contact.addresses = this.contact.addresses.reverse()
   }

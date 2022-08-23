@@ -10,7 +10,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './Guards/auth.guard';
-import { DashbordComponent } from './dashbord/dashbord.component';
 import { AlertComponent } from './alert/alert.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastComponent } from './toast/toast.component';
@@ -28,7 +27,6 @@ export function tokenGetter() {
     LoginComponent,
     NewpasswordComponent,
     ResetPasswordComponent,
-    DashbordComponent,
     AlertComponent,
     ToastComponent,
     ToasterComponent,

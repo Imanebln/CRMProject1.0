@@ -130,5 +130,11 @@ namespace CRMServer.Controllers
             return _crmService.contacts.GetContactByEmail(userEmail);
         }
 
+        [HttpPut("UpdateAddress")]
+        [Authorize]
+        public async Task<Address?> UpdateAddress(Address address) {
+            return await _crmService.address.UpdateAddress(address);
+        }
+
     }
 }

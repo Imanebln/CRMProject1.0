@@ -93,57 +93,6 @@ export class TableDataComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     }
-
-    // console.log('la valeur de datasource', this.dataSource.data);
-    // this.dataSource.data = [
-    //   {
-    //     contactId: '1',
-    //     firstname: 'Mohamed',
-    //     lastname: 'Benziza',
-    //     birthdate: new Date('2000-12-13'),
-    //     emailAddress1: 'Benziza@gmail.com',
-    //     fax: '050505050505',
-    //     jobTitle: 'Eng',
-    //   },
-    // ];
-    // our data
-    // this.dataSource.data = [
-    //   {
-    //     id: '1',
-    //     name: 'Benziza',
-    //     dateOfBirth: new Date('2000-12-13'),
-    //     address: 'Ben',
-    //   },
-    //   {
-    //     id: '2',
-    //     name: 'Amine',
-    //     dateOfBirth: new Date('2019-01-16'),
-    //     address: 'Ben',
-    //   },
-    //   {
-    //     id: '3',
-    //     name: 'Mehdi',
-    //     dateOfBirth: new Date('2019-01-16'),
-    //     address: 'Ben',
-    //   },
-    //   {
-    //     id: '4',
-    //     name: 'Ikram',
-    //     dateOfBirth: new Date('2019-01-16'),
-    //     address: 'Ben',
-    //   },
-    //   {
-    //     id: '5',
-    //     name: 'Bilal',
-    //     dateOfBirth: new Date('2019-01-16'),
-    //     address: 'Ben',
-    //   },
-    // ];
-
-    //For our date
-    // this.dataSource.data = this.dataSource.data.map((e: any) => {
-    //   return { ...e, 'Date Of Birth': e.birthdate.toDateString() };
-    // });
   };
 
   public redirectToDetails = (infoSelected: any) => {

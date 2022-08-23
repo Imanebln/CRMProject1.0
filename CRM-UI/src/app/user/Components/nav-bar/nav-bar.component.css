@@ -21,6 +21,8 @@ p {
 }
 .image-profile{
     border-radius: 50%;
+    min-height: 50px;
+    min-width: 50px;
 }
 
 .user > img {

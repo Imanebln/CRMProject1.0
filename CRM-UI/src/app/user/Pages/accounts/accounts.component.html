@@ -6,8 +6,164 @@
   color="accent"
 >
 </mat-spinner>
+<!-- Card -->
+
+<div *ngIf="ourData != null" class="container">
+  <div class="row justify-content-center">
+      <div class="card col-lg-12 col-xl-8">
+          <div class="header">
+              <div class="edit-profile" data-bs-toggle="modal" data-bs-target="#EditContactModal">
+                  <i class="fa-solid fa-pen"></i>
+              </div>
+              <div class="basic-info">
+                  <h1 class="mb-0">{{ourData.name}}</h1>
+                  <p>{{primaryContact.firstname}} {{primaryContact.lastname}}</p>
+              </div>
+              <div class="profile-image text-center">
+                  <div>
+                      <div #saveAvatar class="d-none save-btn btn-success py-0 mb-1" > <!-- (click)="onImageSave()" -->
+                          <i class="fa-solid fa-check"></i>
+                      </div>
+                      <img #avatar [src]="this.ImageUrl" alt=""> 
+                      <div class="edit-avatar">
+                          <label>
+                              <input type="file" accept="image/x-png,image/gif,image/jpeg" > <!-- (change)="onFileSelected($event)" -->
+                              <i class="fa-solid fa-pen"></i>
+                          </label>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="row justify-content-between mt-2 px-5">
+              <div class="offset-md-1 col-md-4 mb-3">
+                  <div class="d-flex">
+                      <div class="icon">
+                          <i class="fa-solid fa-at" style="color: #fb5607;"></i>
+                      </div>
+                      <div class="data">
+                          <p class="p-0">Website</p>
+                          <p class="m-0 p-0">{{ourData.websiteUrl}}</p>
+                      </div>
+                  </div>                 
+              </div>
+              <div class="offset-md-1 col-md-4 mb-3">
+                  <div class="d-flex">
+                      <div class="icon">
+                          <i class="fa-solid fa-fax" style="color: #ffbe0b;"></i>
+                      </div>
+                      <div class="data">
+                          <p class="p-0">Fax</p>
+                          <p class="m-0 p-0">{{ourData.fax}}</p>
+                      </div>
+                  </div>   
+              </div>
+              <div class="offset-md-1 col-md-4 mb-3">
+                  <div class="d-flex">
+                      <div class="icon">
+                          <i class="fa-solid fa-users" style="color: #ff006e;"></i>
+                      </div>
+                      <div class="data">
+                          <p class="p-0">Contacts</p>
+                          <p class="m-0 p-0">{{ourData.contacts.length}}</p>
+                      </div>
+                  </div>   
+              </div>
+              <div class="offset-md-1 col-md-4 mb-3">
+                  <div class="d-flex">
+                      <div class="icon">
+                          <i class="fa-solid fa-landmark" style="color: #8338ec;"></i>
+                      </div>
+                      <div class="data">
+                          <p class="p-0">Credit Limit</p>
+                          <p class="m-0 p-0">{{ourData.creditLimit}}</p>
+                      </div>
+                  </div>   
+              </div>
+              <div class="offset-md-1 offset-md-5 col-md-4 mb-3">
+                  <div class="d-flex">
+                      <div class="icon">
+                          <i class="fa-solid fa-money-bills" style="color: #3a86ff;"></i>
+                      </div>
+                      <div class="data">
+                          <p class="p-0">Revenue</p>
+                          <p class="m-0 p-0">{{ourData.revenue}}</p>
+                      </div>
+                  </div>   
+              </div>
+          </div>
+          <div class="toggle-address align-self-end">
+              <i class="fa-solid fa-people-group"></i>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="EditContactModal" tabindex="-1" aria-labelledby="EditContactModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+          <img class="address-icon" [src]="this.ImageUrl" width="72px" alt="" style="border-radius: 50%;">
+          <h4 class="text-center mt-5">
+              <i class="fa-solid fa-pen-to-square me-2"></i>Edit Account 
+          </h4>
+          <form *ngIf="accountForm != null" id="account-form" class="p-2" [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3 row">
+              <label for="websiteUrl" class="col-sm-4 col-form-label"
+                >Website</label
+              >
+              <div class="col-sm-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="websiteUrl"
+                  formControlName="websiteUrl"
+                  name="websiteUrl"
+                />
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label for="description" class="col-sm-4 col-form-label"
+                >Description</label
+              >
+              <div class="col-sm-8">
+                <textarea
+                  class="form-control"
+                  id="description"
+                  formControlName="description"
+                  name="description"
+                  cols="20"
+                ></textarea>
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label for="staticEmail" class="col-sm-4 col-form-label">Fax</label>
+              <div class="col-sm-8">
+                <input
+                  type="tel"
+                  class="form-control"
+                  id="fax"
+                  formControlName="fax"
+                  name="fax"
+                />
+              </div>
+            </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark me-2"></i>Discard</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="submitForm($event)"><i class="fa-solid fa-floppy-disk me-2"></i>Save</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Card end -->
 <!-- our card profile -->
-<div
+<!-- <div
   *ngIf="ourData != null"
   class="d-flex flex-column"
   style="
@@ -28,7 +184,7 @@
         <div class="p-2">
           <img
             class="avatar"
-            src="../../../../assets/icons/avatar.png"
+            src="/assets/icons/avatar.png"
             alt="..."
           />
         </div>
@@ -113,7 +269,6 @@
       </div>
     </form>
   </div>
-  <!-- our contacts of ourData -->
   <div class="d-flex">
     <div class="row">
       <div class="col-6" *ngFor="let contact of ourData.contacts">
@@ -133,4 +288,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

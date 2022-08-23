@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Contact } from '../../Pages/contacts/contact.model';
 import { ContactService } from '../../Services/contact.service';
 
@@ -10,7 +11,7 @@ import { ContactService } from '../../Services/contact.service';
 export class NavBarComponent implements OnInit {
   public User : Contact;
   currentUserImage : any;
-  constructor(private contactService : ContactService) { 
+  constructor(private contactService : ContactService, private router : Router) { 
     this.contactService.getCurrentUser().subscribe(user => this.User = user)
   }
 
@@ -18,6 +19,11 @@ export class NavBarComponent implements OnInit {
     this.contactService.getCurrentUser().subscribe((res:any) =>{
       this.currentUserImage = 'data:image/png;base64,' + res.imageUrl;
     });
+  }
+
+  logout(){
+    localStorage.removeItem('jwt')
+    this.router.navigate(['/login'])
   }
 
 }

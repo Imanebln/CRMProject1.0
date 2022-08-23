@@ -10,7 +10,6 @@ using EmailService;
 using CRMClient;
 using CRMServer.Models.Email;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add DBContext

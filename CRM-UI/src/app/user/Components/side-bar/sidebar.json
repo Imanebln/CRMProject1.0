@@ -18,7 +18,8 @@
     {
       "icon": "/assets/icons/contact.png",
       "label": "Contacts",
-      "link": "contacts"
+      "link": "contacts",
+      "role": "primary"
     },
     {
       "icon": "/assets/icons/job.png",
