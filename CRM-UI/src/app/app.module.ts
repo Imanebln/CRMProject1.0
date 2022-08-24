@@ -12,8 +12,6 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './Guards/auth.guard';
 import { AlertComponent } from './alert/alert.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastComponent } from './toast/toast.component';
-import { ToasterComponent } from './toaster/toaster.component';
 import { CommonModule } from '@angular/common';
 
 
@@ -27,9 +25,7 @@ export function tokenGetter() {
     LoginComponent,
     NewpasswordComponent,
     ResetPasswordComponent,
-    AlertComponent,
-    ToastComponent,
-    ToasterComponent,
+    AlertComponent
   
   ],
   imports: [
