@@ -11,6 +11,14 @@ export class HeaderTablePipe implements PipeTransform {
       return 'Birth Date';
     } else if (value == 'jobTitle') {
       return 'Job Title';
+    } else if (value == 'totalAmount') {
+      return 'Total Amount';
+    } else if (value == 'createdOn') {
+      return 'Created On';
+    } else if (value == 'currentSituation') {
+      return 'current Situation';
+    } else if (value == 'proposedSolution') {
+      return 'proposed Solution';
     }
     return value;
   }

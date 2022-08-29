@@ -1,0 +1,12 @@
+<app-table-data
+  *ngIf="ourData != null"
+  [ourData]="ourData"
+  [typeOfData]="typeOfData"
+></app-table-data>
+<mat-spinner
+  *ngIf="ourData == null"
+  class="spinner"
+  [diameter]="70"
+  color="accent"
+>
+</mat-spinner>

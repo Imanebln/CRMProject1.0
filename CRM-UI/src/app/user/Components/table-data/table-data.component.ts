@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Account } from '../../Pages/accounts/account.model';
 import { Contact } from '../../Pages/contacts/contact.model';
+import { Opportunity } from '../../Pages/opportunities/opportunities.model';
 import { ContactService } from '../../Services/contact.service';
 
 @Component({
@@ -17,13 +18,13 @@ export class TableDataComponent implements OnInit {
   //input fields
   @Input() ourData: any;
   @Input() typeOfData: string;
-  //free style
   displayedColumns: any;
-  //you should specifie the type <XXX>
-  public dataSource: MatTableDataSource<Account>;
+  public dataSource: MatTableDataSource<Opportunity>;
+  public dataSource1: MatTableDataSource<Account>;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
   //info selected
   infoSelected: any;
   isReadonly: boolean = true;
@@ -33,8 +34,6 @@ export class TableDataComponent implements OnInit {
   constructor(private contactService: ContactService) {}
 
   ngAfterViewInit(): void {
-    // console.log('=======> ', this.ourData);
-
     this.getAllOwners();
   }
 
@@ -44,16 +43,10 @@ export class TableDataComponent implements OnInit {
     const token = localStorage.getItem('jwt');
     const tokenInfo = this.contactService.getDecodedAccessToken(
       localStorage.getItem('jwt')
-    ); // decode token
-    const userRole = tokenInfo.roles; // get token expiration dateTime
-    console.log(userRole); // show decoded token object in console
+    );
+    const userRole = tokenInfo.roles;
 
     if (this.typeOfData == 'Contact') {
-      // this.dataSource = new MatTableDataSource<Contact>();
-      // this.dataSource.data = this.ourData;
-      // if (userRole == 'User') {
-      //   this.displayedColumns.push(adminCrud);
-      // }
       this.displayedColumns = [
         'firstname',
         'lastname',
@@ -65,30 +58,27 @@ export class TableDataComponent implements OnInit {
         'update',
         'delete',
       ];
-    } else if (this.typeOfData == 'Account') {
+    } else if (this.typeOfData == 'Opportunity') {
       this.displayedColumns = [
-        'name',
-        'websiteUrl',
+        'email',
+        'totalAmount',
+        'createdOn',
         'description',
-        'fax',
+        'currentSituation',
+        'proposedSolution',
         'details',
-        'update',
-        'delete',
       ];
     }
   }
 
   public getAllOwners = () => {
-    // this.repoService.getData('api/owner').subscribe((res) => {
-    //   this.dataSource.data = res as Owner[];
-    // });
     if (this.typeOfData == 'Contact') {
-      this.dataSource = new MatTableDataSource<Account>();
-      this.dataSource.data = this.ourData;
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    } else if (this.typeOfData == 'Account') {
-      this.dataSource = new MatTableDataSource<Account>();
+      this.dataSource1 = new MatTableDataSource<Account>();
+      this.dataSource1.data = this.ourData;
+      this.dataSource1.sort = this.sort;
+      this.dataSource1.paginator = this.paginator;
+    } else if (this.typeOfData == 'Opportunity') {
+      this.dataSource = new MatTableDataSource<Opportunity>();
       this.dataSource.data = this.ourData;
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
@@ -109,7 +99,19 @@ export class TableDataComponent implements OnInit {
         fax: new FormControl(this.infoSelected.fax),
         jobTitle: new FormControl(this.infoSelected.jobTitle),
       });
-    } else if (this.typeOfData == 'Account') {
+    } else if (this.typeOfData == 'Opportunity') {
+      this.ourForm = new FormGroup({
+        opportunityId: new FormControl(this.infoSelected.opportunityId),
+        name: new FormControl(this.infoSelected.name),
+        stepName: new FormControl(this.infoSelected.stepName),
+        estimatedClosedate: new FormControl(
+          this.infoSelected.estimatedClosedate
+        ),
+        closeProbability: new FormControl(this.infoSelected.closeProbability),
+        estimatedValue: new FormControl(this.infoSelected.estimatedValue),
+        description: new FormControl(this.infoSelected.description),
+        email: new FormControl(this.infoSelected.email),
+      });
     }
     this.action = 'information';
     console.log(this.ourForm.value);
@@ -129,7 +131,6 @@ export class TableDataComponent implements OnInit {
         fax: new FormControl(this.infoSelected.fax),
         jobTitle: new FormControl(this.infoSelected.jobTitle),
       });
-    } else if (this.typeOfData == 'Account') {
     }
     this.action = 'update';
   };

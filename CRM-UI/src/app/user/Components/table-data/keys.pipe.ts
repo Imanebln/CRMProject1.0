@@ -12,6 +12,8 @@ export class KeysPipe implements PipeTransform {
       'imageUrl',
       'birthdateObj',
       'addresses',
+      'currency',
+      'contact',
     ];
     let keys: any = [];
     for (let key in value) {

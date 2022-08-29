@@ -26,6 +26,7 @@ import { HeaderTablePipe } from './Components/table-data/header-table.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { KeysPipe } from './Components/table-data/keys.pipe';
 import { AddressFieldPipe } from './Shared/address-field.pipe';
+import { OpportunitiesComponent } from './Pages/opportunities/opportunities.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { AddressFieldPipe } from './Shared/address-field.pipe';
     HeaderTablePipe,
     KeysPipe,
     AddressFieldPipe,
+    OpportunitiesComponent,
   ],
   imports: [
     CommonModule,
