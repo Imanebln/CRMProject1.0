@@ -5,6 +5,7 @@ import { Address } from '../../Models/Address.models';
 import { ContactDetails } from '../../Models/ContactDetails.models';
 import { ContactService } from '../../Services/contact.service';
 import compress from 'compress-base64';
+import { ToasterComponent } from '../../Components/toaster/toaster.component';
 
 @Component({
   selector: 'app-profile',
@@ -27,6 +28,9 @@ export class ProfileComponent implements OnInit {
 
   @ViewChild('saveAvatar')
   saveAvatar : ElementRef
+
+  @ViewChild(ToasterComponent)
+  toaster : ToasterComponent;
 
   ngOnInit() {
     this.initUser()
@@ -70,7 +74,11 @@ export class ProfileComponent implements OnInit {
   onImageSave = () => {
     this.saveAvatar.nativeElement.classList.toggle('d-none')
     this.contactService.updateContact(this.contact).subscribe((res)=>{
-      console.log(res)
+      this.toaster.addToast({
+        icon: 'check',
+        content: 'Image Updated Successfully !',
+        type: 'success'
+      })
     })
   }
 
@@ -100,14 +108,27 @@ export class ProfileComponent implements OnInit {
 
   UpdateAddress = (address : Address) => {
     this.contactService.updateAddress(address).subscribe({
-      next: (response) => console.log(response),
+      next: (response) => {
+        this.toaster.addToast({
+          icon: 'check',
+          content: 'Address Updated Successfully !',
+          type: 'success'
+        })
+      },
       error: (response) => console.log(response)
     })
   }
 
   UpdateContact(contact : ContactDetails){
     this.contactService.updateContact(contact).subscribe({
-      next: (response) => console.log(response),
+      next: (response) => {
+        console.log(response);
+        this.toaster.addToast({
+          icon: 'check',
+          content: 'Contact Updated Successfully !',
+          type: 'success'
+        })
+      },
       error: (response) => console.log(response)
     })
   }
