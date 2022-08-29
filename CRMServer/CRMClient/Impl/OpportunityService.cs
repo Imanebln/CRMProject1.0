@@ -23,6 +23,12 @@ namespace CRMClient.Impl {
 			string query = GetFilterQuery(BaseQuery, parameters);
 			return GetFromCrm(query).FirstOrDefault();
 		}
+		public IEnumerable<Opportunity>? GetOpportunitysAccountByEmail(string email)
+		{
+			OpportunityParameters parameters = new() { EmailAddress = email };
+			string query = GetFilterQuery(BaseQuery, parameters);
+			return GetFromCrm(query);
+		}
 
 		public Opportunity? GetOpportunityById(Guid guid) {
 			OpportunityParameters parameters = new() { OpportunityId = guid };

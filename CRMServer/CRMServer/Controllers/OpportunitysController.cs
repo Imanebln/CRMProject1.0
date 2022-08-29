@@ -92,14 +92,14 @@ namespace CRMServer.Controllers
         //GET: api/Get account's opportunities
         [HttpGet("GetAccountsOpportunities")]
         /*[Authorize(Roles = "Primary, Admin")]*/
-        public ActionResult<Opportunity?> GetAccountsOpportunities()
+        public ActionResult<IEnumerable<Opportunity?>> GetAccountsOpportunities()
         {
             var userEmail = User.FindFirstValue(ClaimTypes.NameIdentifier);
             Guid? AccountId = _crmService.contacts.GetContactByEmail(userEmail)?.Account?.AccountId;
             if (AccountId == null) return NotFound();
             else
             {
-                Opportunity? opportunity = _crmService.opportunities.GetOpportunityByEmail(userEmail);
+                List<Opportunity?> opportunity = _crmService.opportunities.GetOpportunitysAccountByEmail(userEmail).ToList();
                 if( opportunity == null)
                 {
                     return NotFound("No Opportunities found!");

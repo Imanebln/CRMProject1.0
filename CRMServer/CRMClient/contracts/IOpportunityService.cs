@@ -11,6 +11,7 @@ namespace CRMClient.contracts {
 		IEnumerable<Opportunity> GetAllOpportunities();
 		IEnumerable<Opportunity> GetOpportunitiesWhere(OpportunityParameters opportunityParameters);
 		Opportunity? GetOpportunityByEmail(string email);
+		IEnumerable<Opportunity>? GetOpportunitysAccountByEmail(string email);
 		Opportunity? GetOpportunityById(Guid guid);
 		Opportunity? GetOpportunityByName(string name);
 
