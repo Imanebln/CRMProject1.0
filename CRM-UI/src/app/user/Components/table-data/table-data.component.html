@@ -156,14 +156,15 @@
       style="background-color: #ad2d5a; color: white"
       type="button"
       class="btn"
+      (click)="exportData()"
     >
-      <i class="fa-solid fa-file-export"></i>Export
+      <i  class="fa-solid fa-file-export"></i>Export
     </button>
   </div>
 </div>
 <div></div>
 
-<table
+<table id="sheetTable"
   *ngIf="dataSource != null"
   mat-table
   [dataSource]="dataSource"

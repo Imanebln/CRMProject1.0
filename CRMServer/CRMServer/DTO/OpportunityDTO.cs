@@ -15,6 +15,7 @@
 		public string? CurrentSituation { get; set; }
 		public decimal? TotalAmount { get; set; }
 		public string? CreatedOn { get; set; }
+		public int? Statuscode { get; set; }
 
 	}
 }

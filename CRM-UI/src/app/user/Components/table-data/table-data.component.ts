@@ -8,6 +8,8 @@ import { Account } from '../../Pages/accounts/account.model';
 import { Contact } from '../../Pages/contacts/contact.model';
 import { Opportunity } from '../../Pages/opportunities/opportunities.model';
 import { ContactService } from '../../Services/contact.service';
+import * as XLSX from 'xlsx';
+
 
 @Component({
   selector: 'app-table-data',
@@ -30,6 +32,8 @@ export class TableDataComponent implements OnInit {
   isReadonly: boolean = true;
   ourForm: FormGroup;
   action: string = '';
+
+  fileName = 'file.xlsx';
 
   constructor(private contactService: ContactService) {}
 
@@ -156,5 +160,17 @@ export class TableDataComponent implements OnInit {
 
   deleteContact() {
     this.contactService.deleteContact(this.infoSelected.contactId).subscribe();
+  }
+  
+  exportData = () => {
+    let element = document.getElementById('sheetTable');
+    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+ 
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+ 
+    /* save to file */  
+    XLSX.writeFile(wb, this.fileName);
   }
 }

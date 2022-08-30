@@ -30,6 +30,8 @@ namespace CRMServer.Models.CRM {
 		public Account? Account { get; set; }
 		[JsonProperty(PropertyName = "transactioncurrencyid")]
 		public Currency? Currency { get; set; }
+		[JsonProperty(PropertyName = "statuscode")]
+		public int? Statuscode { get; set; }
 
 
 
