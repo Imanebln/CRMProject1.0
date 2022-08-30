@@ -3,8 +3,9 @@ using CRMClient;
 using CRMServer.DTO;
 using CRMServer.Models.CRM;
 using CRMServer.Models.Parameters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Security.Claims;
 
 namespace CRMServer.Controllers
 {
@@ -86,6 +87,27 @@ namespace CRMServer.Controllers
             }
             _ = _crmService.opportunities.DeleteOpportunity(opportunity).Result;
             return Ok("Opportunity deleted successfully!");
+        }
+
+        //GET: api/Get account's opportunities
+        [HttpGet("GetAccountsOpportunities")]
+        /*[Authorize(Roles = "Primary, Admin")]*/
+        public ActionResult<IEnumerable<Opportunity?>> GetAccountsOpportunities()
+        {
+            var userEmail = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Guid? AccountId = _crmService.contacts.GetContactByEmail(userEmail)?.Account?.AccountId;
+            if (AccountId == null) return NotFound();
+            else
+            {
+                Opportunity? opportunity = _crmService.opportunities.GetOpportunityByEmail(userEmail);
+                if( opportunity == null)
+                {
+                    return NotFound("No Opportunities found!");
+                }
+                return Ok(opportunity);
+            }
+
+
         }
     }
 }

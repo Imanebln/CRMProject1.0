@@ -86,7 +86,9 @@ namespace CRMServer.Controllers
         public IActionResult UpdateContact(ContactDTO contactdto)
         {
             Contact? contact = _mapper.Map<Contact>(contactdto);
-            if (IsCurrentUser()?.ContactId == contact.ContactId)
+            var userEmail = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Contact? CurrentContact = _crmService.contacts.GetContactByEmail(userEmail);
+            if (IsCurrentUser()?.ContactId == contact.ContactId || CurrentContact.IsPrimary)
             {
                 _ = _crmService.contacts.UpdateContact(contact).Result;
                 return Ok(new {message = "Contact updated sucessfully!" });

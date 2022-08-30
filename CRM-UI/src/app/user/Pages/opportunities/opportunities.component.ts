@@ -16,9 +16,9 @@ export class OpportunitiesComponent implements OnInit {
   constructor(private opportunityService: OpportunityService) {}
 
   ngOnInit(): void {
-    this.opportunityService.getOpportunitys().subscribe((value) => {
-      this.ourData = value;
-      console.log(value);
-    });
+    // this.opportunityService.getOpportunitys().subscribe((value) => {
+    //   this.ourData = value;
+    //   console.log(value[0]);
+    // });
   }
 }

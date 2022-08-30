@@ -13,7 +13,9 @@ export class OpportunityService {
   apiUrl: string = environment.apiUrl;
 
   getOpportunitys() {
-    return this.http.get<Opportunity[]>(this.apiUrl + 'Opportunitys');
+    return this.http.get<Opportunity[]>(
+      this.apiUrl + 'Opportunitys/GetAccountsOpportunities'
+    );
   }
 
   getOpportunitysId(opportunityId: string): Observable<any> {

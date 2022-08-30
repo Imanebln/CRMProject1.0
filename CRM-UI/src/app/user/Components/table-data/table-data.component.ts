@@ -145,7 +145,9 @@ export class TableDataComponent implements OnInit {
   };
 
   onSubmit() {
-    this.contactService.updateContact(this.ourForm.value).subscribe();
+    this.contactService.updateContact(this.ourForm.value).subscribe(res =>{
+      window.location.reload()
+    });
   }
 
   updateContact() {

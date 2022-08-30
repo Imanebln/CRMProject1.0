@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ToasterComponent } from '../../Components/toaster/toaster.component';
 import { ContactDetails } from '../../Models/ContactDetails.models';
 import { AccountService } from '../../Services/account.service';
 import { ContactService } from '../../Services/contact.service';
@@ -25,6 +26,9 @@ export class AccountsComponent implements OnInit {
   //isPrimary
   isPrimary: boolean = false;
   ImageUrl : string;
+
+  @ViewChild(ToasterComponent)
+  toaster : ToasterComponent;
 
   constructor(
     private contactService: ContactService,
@@ -59,7 +63,13 @@ export class AccountsComponent implements OnInit {
   }
 
   onSubmit() {
-    this.accountService.updateAccount(this.accountForm.value).subscribe();
+    this.accountService.updateAccount(this.accountForm.value).subscribe(res =>{
+      this.toaster.addToast({
+        icon: 'check',
+        content: 'Account Updated Successfully !',
+        type: 'success'
+      })
+    });
     window.location.reload();
   }
 }

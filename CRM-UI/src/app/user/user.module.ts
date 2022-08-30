@@ -27,6 +27,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { KeysPipe } from './Components/table-data/keys.pipe';
 import { AddressFieldPipe } from './Shared/address-field.pipe';
 import { OpportunitiesComponent } from './Pages/opportunities/opportunities.component';
+import { ToastComponent } from './Components/toast/toast.component';
+import { ToasterComponent } from './Components/toaster/toaster.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,9 @@ import { OpportunitiesComponent } from './Pages/opportunities/opportunities.comp
     KeysPipe,
     AddressFieldPipe,
     OpportunitiesComponent,
+
+    ToastComponent,
+    ToasterComponent,
   ],
   imports: [
     CommonModule,
