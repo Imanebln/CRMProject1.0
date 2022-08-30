@@ -81,6 +81,8 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.isLogin == true) {
+      // this.user.email = this.signInForm.value.email;
+      // this.user.password = this.signInForm.value.password;
       this.authService.signIn(this.signInForm.value).subscribe({
         next: (response: any) => {
           //Alert Suc
@@ -94,12 +96,19 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['user']);
         },
         error: (err: HttpErrorResponse) => {
-          //Alert Err
-          this.alert.ShowAlert({
-            type: 'warning',
-            icon: 'circle-exclamation',
-            content: err.error,
-          });
+          if (err.status == 0) {
+            this.alert.ShowAlert({
+              type: 'warning',
+              icon: 'circle-exclamation',
+              content: 'You Can not reach server!',
+            });
+          } else {
+            this.alert.ShowAlert({
+              type: 'warning',
+              icon: 'circle-exclamation',
+              content: err.error,
+            });
+          }
         },
       });
     } else if (this.isLogin == false) {
