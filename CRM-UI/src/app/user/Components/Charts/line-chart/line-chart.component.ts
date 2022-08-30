@@ -32,8 +32,8 @@ export class LineChartComponent implements OnInit {
       labels: this.labelsLine,
       datasets: [
         {
-          data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478],
-          label: 'Africa',
+          data: [86, 114, 106, 106, 107, 111, 133],
+          label: 'Estimated Value',
           borderColor: '#3e95cd',
           fill: false,
         },
