@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AccountsComponent } from './Pages/accounts/accounts.component';
 import { ContactsComponent } from './Pages/contacts/contacts.component';
 import { DashboardComponent } from './Pages/dashboard/dashboard.component';
+import { OpportunitiesComponent } from './Pages/opportunities/opportunities.component';
 import { ProfileComponent } from './Pages/profile/profile.component';
 import { ContactGuard } from './Services/contact.guard';
 import { UserComponent } from './user/user.component';
@@ -21,6 +22,11 @@ const routes: Routes = [
         canActivate: [ContactGuard],
       },
       { path: 'accounts', component: AccountsComponent },
+      {
+        path: 'opportunities',
+        component: OpportunitiesComponent,
+        canActivate: [ContactGuard],
+      },
     ],
   },
 ];

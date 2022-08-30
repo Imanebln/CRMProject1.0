@@ -32,10 +32,7 @@ export class LoginComponent implements OnInit {
   signInForm!: FormGroup;
   user: User = <User>{};
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   @ViewChild(AlertComponent) alert: AlertComponent;
 
@@ -84,8 +81,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.isLogin == true) {
-      // this.user.email = this.signInForm.value.email;
-      // this.user.password = this.signInForm.value.password;
       this.authService.signIn(this.signInForm.value).subscribe({
         next: (response: any) => {
           //Alert Suc

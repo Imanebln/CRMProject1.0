@@ -26,6 +26,7 @@ import { HeaderTablePipe } from './Components/table-data/header-table.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { KeysPipe } from './Components/table-data/keys.pipe';
 import { AddressFieldPipe } from './Shared/address-field.pipe';
+import { OpportunitiesComponent } from './Pages/opportunities/opportunities.component';
 import { ToastComponent } from './Components/toast/toast.component';
 import { ToasterComponent } from './Components/toaster/toaster.component';
 
@@ -45,8 +46,10 @@ import { ToasterComponent } from './Components/toaster/toaster.component';
     HeaderTablePipe,
     KeysPipe,
     AddressFieldPipe,
+    OpportunitiesComponent,
+
     ToastComponent,
-    ToasterComponent
+    ToasterComponent,
   ],
   imports: [
     CommonModule,
