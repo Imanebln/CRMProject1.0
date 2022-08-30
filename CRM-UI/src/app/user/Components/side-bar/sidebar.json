@@ -24,7 +24,8 @@
     {
       "icon": "/assets/icons/job.png",
       "label": "Opportunities",
-      "link": "opportunities"
+      "link": "opportunities",
+      "role": ["primary", "admin"]
     }
   ]
 }
