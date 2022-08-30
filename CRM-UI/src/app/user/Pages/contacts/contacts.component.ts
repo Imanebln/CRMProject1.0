@@ -18,7 +18,6 @@ export class ContactsComponent {
   ngOnInit(): void {
     this.contactService.getContactsAccount().subscribe((value) => {
       this.ourData = value.contacts;
-      // console.log(value.contacts);
     });
   }
 }

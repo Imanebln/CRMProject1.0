@@ -22,7 +22,11 @@ const routes: Routes = [
         canActivate: [ContactGuard],
       },
       { path: 'accounts', component: AccountsComponent },
-      { path: 'opportunities', component: OpportunitiesComponent },
+      {
+        path: 'opportunities',
+        component: OpportunitiesComponent,
+        canActivate: [ContactGuard],
+      },
     ],
   },
 ];

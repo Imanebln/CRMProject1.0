@@ -76,19 +76,6 @@ export class DoughnutChartComponent implements OnInit {
   }
 
   changeCountry() {
-    // console.log(this.chart.data.datasets[0].data[0]);
-
-    // this.listPays = [
-    //   'Africa',
-    //   'Africa',
-    //   'Africa',
-    //   'Latin America',
-    //   'North America',
-    // ];
-
-    // this.chart.data.labels = this.listPays;
-
-    // this.chart.data.datasets[0].data[0] = 100;
     this.chart?.update();
   }
 }

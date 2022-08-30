@@ -44,7 +44,6 @@ export class DashboardComponent implements OnInit {
       this.ourData = value.contacts;
     });
     this.opportunityService.getOpportunitys().subscribe((value) => {
-      console.log(value);
       value.forEach((v) => this.datasetsdataBar.push(v.closeProbability));
       value.forEach((v) => this.labelsBar.push(v.stepName));
     });
