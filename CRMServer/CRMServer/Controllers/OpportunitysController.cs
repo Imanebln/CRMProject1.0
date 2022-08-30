@@ -95,11 +95,14 @@ namespace CRMServer.Controllers
 */        public ActionResult<IEnumerable<Opportunity?>> GetAccountsOpportunities()
         {
             var userEmail = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Guid? AccountId = _crmService.contacts.GetContactByEmail(userEmail)?.Account?.AccountId;
-            if (AccountId == null) return NotFound();
+            Account? account = _crmService.contacts.GetContactByEmail(userEmail)?.Account;
+            
+            Guid id = new Guid(account.PrimaryContactId);
+            Contact? contact = _crmService.contacts.GetContactById(id);
+            if (account == null) return NotFound();
             else
             {
-                List<Opportunity?> opportunity = _crmService.opportunities.GetOpportunitysAccountByEmail(userEmail).ToList();
+                List<Opportunity?> opportunity = _crmService.opportunities.GetOpportunitysAccountByEmail(contact.Email).ToList();
                 if( opportunity == null)
                 {
                     return NotFound("No Opportunities found!");
