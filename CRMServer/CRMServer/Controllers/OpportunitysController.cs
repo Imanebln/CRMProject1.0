@@ -99,7 +99,7 @@ namespace CRMServer.Controllers
             if (AccountId == null) return NotFound();
             else
             {
-                Opportunity? opportunity = _crmService.opportunities.GetOpportunityByEmail(userEmail);
+                List<Opportunity?> opportunity = _crmService.opportunities.GetOpportunitysAccountByEmail(userEmail).ToList();
                 if( opportunity == null)
                 {
                     return NotFound("No Opportunities found!");
