@@ -17,8 +17,8 @@ export class DashboardComponent implements OnInit {
   datasetsLabelsBar = 'Estimated opportunities (percentage)';
   datasetsbackgroundColorBar = ['#602b70', '#b23660'];
   //Bar Chart end
-  labelsLine = [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2050];
-  datasetsLabelsLine = [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478];
+  labelsLine: string[] = [];
+  datasetsLabelsLine: number[] = [];
   datasetsBorderColorLine = '#3e95cd';
   datasetsdataLine = 'Africa';
   titleText = 'World population per region (in millions)';
@@ -46,6 +46,10 @@ export class DashboardComponent implements OnInit {
     this.opportunityService.getOpportunitys().subscribe((value) => {
       value.forEach((v) => this.datasetsdataBar.push(v.closeProbability));
       value.forEach((v) => this.labelsBar.push(v.stepName));
+      value.forEach((v) => {
+        this.datasetsLabelsLine.push(v.estimatedValue);
+      });
+      value.forEach((v) => this.labelsLine.push(v.name));
     });
   }
 }

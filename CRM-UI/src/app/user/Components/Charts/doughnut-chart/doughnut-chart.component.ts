@@ -5,6 +5,7 @@ import {
   ChartItem,
   registerables,
 } from 'node_modules/chart.js';
+import { OpportunityService } from 'src/app/user/Services/opportunity.service';
 
 @Component({
   selector: 'app-doughnut-chart',
@@ -21,16 +22,26 @@ export class DoughnutChartComponent implements OnInit {
   @Input() datasetsbackgroundColorDoughnut: any;
   @Input() datasetsdataDoughnut: any;
   @Input() titleText: any;
-  listPays: string[] = [
-    'Africa',
-    'Asia',
-    'Europe',
-    'Latin America',
-    'North America',
-  ];
+  listStatus: string[] = ['Open', 'Won', 'Close'];
+  open: number = 0;
+  won: number = 0;
+  close: number = 0;
+
+  constructor(private opportunityService: OpportunityService) {}
 
   ngOnInit(): void {
-    this.createChart();
+    this.opportunityService.getOpportunitys().subscribe((value) => {
+      value.forEach((v) => {
+        if (v.statuscode == 1) {
+          this.open += 1;
+        } else if (v.statuscode == 3) {
+          this.won += 1;
+        } else if (v.statuscode == 4) {
+          this.close += 1;
+        }
+      });
+      this.createChart();
+    });
   }
 
   createChart(): void {
@@ -38,20 +49,12 @@ export class DoughnutChartComponent implements OnInit {
     Chart.register(...registerables);
     //step2
     const data = {
-      labels: this.listPays,
+      labels: this.listStatus,
       datasets: [
         {
-          label: 'Population (millions)',
-          backgroundColor: [
-            '#1ab9c5',
-            '#5b38c6',
-            // '#3e95cd',
-            // '#8e5ea2',
-            // '#3cba9f',
-            // '#e8c3b9',
-            // '#c45850',
-          ],
-          data: [2478, 5267, 734, 784, 433],
+          label: 'Won/Open/Close',
+          backgroundColor: ['#1ab9c5', '#5b38c6', '#3e95cd'],
+          data: [this.open, this.won, this.close],
         },
       ],
     };
