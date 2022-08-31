@@ -91,8 +91,7 @@ namespace CRMServer.Controllers
 
         //GET: api/Get account's opportunities
         [HttpGet("GetAccountsOpportunities")]
-/*        [Authorize(Roles = "Primary, Admin")]
-*/        public ActionResult<IEnumerable<Opportunity?>> GetAccountsOpportunities()
+        public ActionResult<IEnumerable<Opportunity?>> GetAccountsOpportunities()
         {
             var userEmail = User.FindFirstValue(ClaimTypes.NameIdentifier);
             Account? account = _crmService.contacts.GetContactByEmail(userEmail)?.Account;

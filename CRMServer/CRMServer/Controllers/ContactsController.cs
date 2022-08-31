@@ -24,7 +24,7 @@ namespace CRMServer.Controllers
         }
         // GET: api/Contacts
         [HttpGet]
-        /*[Authorize(Roles = "Admin")]*/
+        [Authorize(Roles = "Admin")]
         public IEnumerable<Contact> GetContacts()
         {
             return _crmService.contacts.GetAllContacts();

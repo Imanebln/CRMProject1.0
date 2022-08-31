@@ -24,7 +24,7 @@ namespace CRMServer.Controllers
 
         // GET: api/Accounts
         [HttpGet]
-        /*[Authorize(Roles = "Admin")]*/
+        [Authorize(Roles = "Admin")]
         public IEnumerable<Account> GetAccounts()
         {
             return _crmService.accounts.GetAllAccounts();
@@ -56,7 +56,7 @@ namespace CRMServer.Controllers
 
         // PUT: api/Accounts
         [HttpPut("UpdateAccount")]
-        /*[Authorize(Roles = "Primary")]*/
+        [Authorize(Roles = "Primary")]
         public IActionResult UpdateAccount(AccountDTO accountdto)
         {
             Account? account = _mapper.Map<Account>(accountdto);
@@ -84,7 +84,7 @@ namespace CRMServer.Controllers
 
         // DELETE: api/Accounts
         [HttpDelete("DeleteAccount")]
-        [Authorize(Roles = "Primary, Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteAccount(Guid id)
         {
             Account? account = _crmService.accounts.GetAccountById(id);
