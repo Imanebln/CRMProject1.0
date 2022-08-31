@@ -93,12 +93,38 @@
                   </div>   
               </div>
           </div>
-          <div class="toggle-address align-self-end">
+          <div class="toggle-address align-self-end" (click) ="showContacts()">
               <i class="fa-solid fa-people-group"></i>
           </div>
       </div>
   </div>
+  <div  *ngIf = "contactShowed == true">
+  <div class="row justify-content-center">
+    <div class="row col-12 col-lg-8 px-0">
+     
+        <div *ngFor="let contact of ourData.contacts; let i = index;" class="col-6 col-lg-4 px-1 mt-5">
+          <div class="card"  [style.box-shadow]="contact.isPrimary == true ? '5px 5px 20px #95274e' : ' 5px 5px 20px rgba(0, 0, 0, 0.20)'">
+            <div class ="holder">
+              <div class="card-body">
+                <h5 class="card-title">
+                  {{ contact.firstname + " " + contact.lastname }}
+                </h5>
+                <p class="card-text">
+                  {{ contact.email }}
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+ 
+
+
 
 <div class="modal fade" id="EditContactModal" tabindex="-1" aria-labelledby="EditContactModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">

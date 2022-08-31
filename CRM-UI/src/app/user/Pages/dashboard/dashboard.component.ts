@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
     });
     this.opportunityService.getOpportunitys().subscribe((value) => {
       value.forEach((v) => this.datasetsdataBar.push(v.closeProbability));
-      value.forEach((v) => this.labelsBar.push(v.stepName));
+      value.forEach((v) => this.labelsBar.push(v.name));
       value.forEach((v) => {
         this.datasetsLabelsLine.push(v.estimatedValue);
       });
