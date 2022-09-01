@@ -18,9 +18,7 @@
   border: 5px solid #ad2d5a;
   border-radius: 50%;
 }
-.card {
-  margin: 10px;
-}
+
 .btnEdit {
   background-color: #ad2d5a;
   border: none;
@@ -46,10 +44,24 @@ input[readonly]:focus {
 .card {
   position: relative;
   border-radius: 10px;
-  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.20);
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
   padding: 0;
   z-index: 5;
+  cursor: default;
 
+}
+.holder {
+  top: -1px;
+  left: -1px;
+  width: 101%;
+  height:101%;
+  background-color: #ffffff;
+  opacity: 0.9;
+  border-radius: 10px;
+  justify-content: center;
+}
+.card-text{
+  font-size: 14px;
 }
 
 .header {
@@ -233,5 +245,6 @@ input[type="file"] {
       transform: translateY(calc(-50% + 20px));
   }
 }
+
 
 /* End Card Styles */

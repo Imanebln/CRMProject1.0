@@ -27,6 +27,9 @@ export class AccountsComponent implements OnInit {
   isPrimary: boolean = false;
   ImageUrl : string;
 
+  //ContactShowed
+  contactShowed : boolean = false ;
+
   @ViewChild(ToasterComponent)
   toaster : ToasterComponent;
 
@@ -72,4 +75,28 @@ export class AccountsComponent implements OnInit {
     });
     window.location.reload();
   }
+  showContacts = () =>{
+    let i = 0;
+    if (!this.contactShowed) {
+      document.querySelectorAll('.contacts').forEach((elm: any) => {
+        setTimeout(() => {
+          elm.style.display = 'block';
+          elm.style.animation = 'ShowContact 600ms ease-out';
+        }, i * 200);
+        i++;
+      });
+    } else {
+      document.querySelectorAll('.contacts').forEach((elm: any) => {
+        setTimeout(() => {
+          elm.style.animation = 'HideContact 600ms ease-out';
+          setTimeout(() => {
+            elm.style.display = 'none';
+          }, 300);
+        }, i * 200);
+        i++;
+      });
+    }
+    this.contactShowed = !this.contactShowed;
+  };  
 }
+ 

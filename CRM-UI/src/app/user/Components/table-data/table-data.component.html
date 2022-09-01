@@ -224,7 +224,7 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
-<table
+<table id="sheetTable"
   *ngIf="dataSource1 != null"
   mat-table
   [dataSource]="dataSource1"
